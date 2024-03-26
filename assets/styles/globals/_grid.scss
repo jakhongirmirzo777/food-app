@@ -1,0 +1,133 @@
+@use 'sass:math';
+
+.container-fluid {
+  width: 100%;
+  //overflow-x: hidden;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+
+  @media only screen and (min-width: 320px) {
+    margin: 0 -5px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    margin: 0 -7px;
+  }
+
+  @media only screen and (min-width: 1000px) {
+    margin: 0 -10px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    margin: 0 -10px;
+  }
+}
+
+.col {
+  @media only screen and (min-width: 320px) {
+    padding: 5px 5px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    padding: 5px 7px;
+  }
+
+  @media only screen and (min-width: 1000px) {
+    padding: 5px 10px;
+  }
+
+  @media only screen and (min-width: 1440px) {
+    padding: 5px 10px;
+  }
+}
+
+@mixin grid($media: false) {
+  @for $i from 1 through 12 {
+    @if $media {
+      .col-#{$media}-#{$i} {
+        flex: 0 0 math.div($i * 100%, 12);
+        max-width: math.div($i * 100%, 12);
+
+        @media only screen and (min-width: 320px) {
+          padding: 5px 5px;
+        }
+
+        @media only screen and (min-width: 768px) {
+          padding: 5px 7px;
+        }
+
+        @media only screen and (min-width: 1000px) {
+          padding: 5px 10px;
+        }
+
+        @media only screen and (min-width: 1440px) {
+          padding: 5px 10px;
+        }
+      }
+    } @else {
+      .col-#{$i} {
+        flex: 0 0 math.div($i * 100%, 12);
+        max-width: math.div($i * 100%, 12);
+
+        @media only screen and (min-width: 320px) {
+          padding: 5px 5px;
+        }
+
+        @media only screen and (min-width: 768px) {
+          padding: 5px 7px;
+        }
+
+        @media only screen and (min-width: 1000px) {
+          padding: 5px 10px;
+        }
+
+        @media only screen and (min-width: 1440px) {
+          padding: 5px 10px;
+        }
+      }
+    }
+  }
+
+  @if $media {
+    .col-#{$media}-dense {
+      @media only screen and (min-width: 320px) {
+        padding: 0 5px !important;
+      }
+
+      @media only screen and (min-width: 768px) {
+        padding: 0 7px !important;
+      }
+
+      @media only screen and (min-width: 1000px) {
+        padding: 0 10px !important;
+      }
+
+      @media only screen and (min-width: 1440px) {
+        padding: 0 10px !important;
+      }
+    }
+  } @else {
+    .col-dense {
+      @media only screen and (min-width: 320px) {
+        padding: 0 5px !important;
+      }
+
+      @media only screen and (min-width: 768px) {
+        padding: 0 7px !important;
+      }
+
+      @media only screen and (min-width: 1000px) {
+        padding: 0 10px !important;
+      }
+
+      @media only screen and (min-width: 1440px) {
+        padding: 0 10px !important;
+      }
+    }
+  }
+}
+
+@include grid();

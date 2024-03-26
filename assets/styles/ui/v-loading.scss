@@ -1,0 +1,83 @@
+.v-loading {
+  &--container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &--linear {
+    overflow: hidden;
+    width: 100%;
+    height: 4px;
+    background-color: #b3e5fc;
+    margin: auto;
+    border-radius: 4px;
+  }
+
+  &--indeterminate {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  &--indeterminate:before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    background-color: #03a9f4;
+    animation: indeterminate_first 1.5s infinite ease-out;
+  }
+
+  &--indeterminate:after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    background-color: #4fc3f7;
+    animation: indeterminate_second 1.5s infinite ease-in;
+  }
+
+  &--spinner {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    animation-name: rotation;
+    animation-duration: 0.9s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    transform-origin: center;
+  }
+}
+
+@keyframes indeterminate_first {
+  0% {
+    left: -100%;
+    width: 100%;
+  }
+  100% {
+    left: 100%;
+    width: 10%;
+  }
+}
+
+@keyframes indeterminate_second {
+  0% {
+    left: -150%;
+    width: 100%;
+  }
+  100% {
+    left: 100%;
+    width: 10%;
+  }
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
+}

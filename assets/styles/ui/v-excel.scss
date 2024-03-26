@@ -1,0 +1,20 @@
+.v-excel {
+  &__btn {
+    min-width: 162.27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: var(--color-green);
+    color: var(--color-white);
+    padding: 10px 14px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: lighten(#28b446, 3);
+    }
+  }
+}

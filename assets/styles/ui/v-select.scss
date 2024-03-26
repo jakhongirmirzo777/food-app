@@ -1,0 +1,127 @@
+.v-select {
+  &__v-select-block {
+    position: relative;
+
+    &__add {
+      &:hover {
+        background: #f5f7fa;
+      }
+    }
+
+    &__label {
+      position: absolute;
+      z-index: 1000;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 14px;
+      font-size: 16px;
+      transition: 0.3s all;
+      line-height: 16px;
+      max-width: 75%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &--label-up {
+        top: -9px;
+        left: 16px;
+        font-size: 12px;
+        background: white;
+        padding: 0 4px;
+      }
+
+      &--error {
+        color: var(--color-dark-red);
+      }
+    }
+  }
+
+  &__label--top {
+    display: block;
+    color: var(--color-dark-black);
+    font-weight: 400;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+
+  &__error-message {
+    font-size: 12px;
+    text-align: left;
+    margin-top: 3px;
+    color: var(--color-dark-red);
+  }
+}
+
+.el-form-item__error {
+  font-size: 12px !important;
+  margin-top: 3px;
+}
+
+.el-select .el-input {
+  height: 42px !important;
+}
+
+.el-input__wrapper {
+  box-shadow: 0 0 0 1px var(--color-dark-gray) inset !important;
+  height: var(--height);
+}
+
+.el-select .el-input.is-focus .el-input__wrapper {
+  box-shadow: 0 0 0 1px var(--color-dark-black) inset !important;
+}
+
+.el-select .el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--color-dark-black) inset !important;
+}
+
+.el-select.error .el-input.is-focus .el-input__wrapper {
+  box-shadow: 0 0 0 1px var(--color-dark-red) inset !important;
+}
+
+.el-select.error .el-input__wrapper.is-focus {
+  box-shadow: 0 0 0 1px var(--color-dark-red) inset !important;
+}
+
+.el-select.error .el-input__wrapper {
+  box-shadow: 0 0 0 1px var(--color-dark-red) inset !important;
+}
+
+.v-select__v-select-block .el-input__inner {
+  color: var(--color-dark-black);
+}
+
+.v-select__v-select-block .el-input__inner::placeholder {
+  color: var(--color-light-black);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.el-select .el-input .el-select__caret {
+  color: var(--color-dark-black);
+}
+
+.v-select__v-select-block.dark {
+  .el-input__inner {
+    color: var(--color-white);
+  }
+
+  .el-input__wrapper {
+    background-color: var(--color-dark-blue);
+  }
+
+  .v-select__v-select-block__label {
+    color: var(--color-white);
+    background-color: var(--color-dark-blue);
+  }
+
+  .el-tag {
+    border: 1px solid var(--color-white);
+    color: var(--color-white);
+  }
+}
+
+html.dark .el-select-dropdown__empty {
+  &:hover {
+    background-color: var(--el-fill-color-light);
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <Tutorial />
+  <div>dfd</div>
 </template>
 
 <script>

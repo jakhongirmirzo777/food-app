@@ -1,4 +1,4 @@
-# food-app-frontend-2
+# food-app-frontend
 
 ## Build Setup
 

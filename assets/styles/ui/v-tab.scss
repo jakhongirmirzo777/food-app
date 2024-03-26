@@ -1,0 +1,114 @@
+// VTabs
+
+.v-tabs {
+  display: flex;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+// VTab
+
+.v-tabs.dark {
+  .v-tab {
+    color: var(--color-white);
+    background-color: var(--color-dark-blue);
+    border-color: var(--color-dark-blue);
+  }
+}
+
+.v-tab-items.dark {
+  background-color: var(--color-dark-blue);
+  border-color: var(--color-dark-blue);
+}
+
+.v-tab {
+  padding: 14px 24px;
+  min-width: 110px;
+  position: relative;
+  background: var(--color-white);
+  z-index: 3;
+  margin-right: 5px;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: var(--color-gray);
+  border: 1px solid #e3e3f1;
+
+  &--active {
+    border-bottom: unset;
+  }
+
+  @each $name,
+    $value
+      in (
+        'gray': var(--color-gray),
+        'default': var(--color-light-green),
+        'green': var(--color-green),
+        'danger': var(--color-dark-red),
+        'light-red': var(--color-light-red),
+        'warning': var(--color-yellow)
+      )
+  {
+    &__active--#{$name} {
+      color: $value !important;
+    }
+  }
+
+  &__first {
+    border-radius: 12px 0 0 0;
+  }
+
+  &__last {
+    border-radius: 0 12px 0 0;
+  }
+}
+
+// VTabItems
+
+.v-tab-items {
+  background: var(--color-white);
+  margin-top: -1px;
+  padding: 16px;
+  border: 1px solid #e3e3f1;
+  box-shadow: 0 2px 2px rgba(15, 23, 77, 0.16);
+  border-radius: 0 12px 12px 12px;
+  overflow: hidden;
+  position: relative;
+  min-height: 100px;
+}
+
+// VTabItem
+
+.v-tab-item {
+}
+
+@media screen and (max-width: 1700px) {
+  .v-tab {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+.tab-enter-active,
+.tab-leave-active {
+  position: absolute;
+  transition: all 0.2s ease;
+}
+
+.tab-enter-from {
+  left: -100%;
+}
+
+.tab-enter-to {
+  left: 0;
+}
+
+.tab-leave-from {
+  transform: scale(1);
+}
+
+.tab-leave-to {
+  left: 100%;
+}

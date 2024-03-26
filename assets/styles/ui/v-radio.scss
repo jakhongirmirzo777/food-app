@@ -1,0 +1,128 @@
+.v-radio {
+  padding-left: 28px;
+  position: relative;
+  min-height: 25px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  $self: &;
+
+  &__label {
+    font-size: 16px;
+    color: var(--color-dark-black);
+    font-weight: 400;
+  }
+
+  &__label-error {
+    color: var(--color-dark-red);
+  }
+
+  &__input {
+    display: none;
+
+    &:checked + #{$self}__indicator {
+      border: 2px solid var(--color-light-green);
+
+      &::before {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+
+  &__indicator {
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #c8c8c8;
+    display: inline-block;
+
+    &--error {
+      border-color: var(--color-dark-red);
+    }
+
+    &::before {
+      content: '';
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.25s;
+      background: var(--color-light-green);
+      border-radius: 50%;
+    }
+  }
+
+  @each $name,
+    $value
+      in (
+        theme__default: var(--color-light-green),
+        theme__danger: var(--color-dark-red),
+        theme__warning: var(--color-yellow),
+        theme__green: var(--color-green),
+        theme__blue: var(--color-blue),
+        theme__light-red: var(--color-light-red),
+        theme__gray: var(--color-gray),
+        theme__black: var(--color-dark-black)
+      )
+  {
+    &__indicator--#{$name} {
+      &::before {
+        background: $value;
+      }
+    }
+  }
+
+  @each $name,
+    $value
+      in (
+        theme__default: var(--color-light-green),
+        theme__danger: var(--color-dark-red),
+        theme__warning: var(--color-yellow),
+        theme__green: var(--color-green),
+        theme__blue: var(--color-blue),
+        theme__light-red: var(--color-light-red),
+        theme__gray: var(--color-gray),
+        theme__black: var(--color-dark-black)
+      )
+  {
+    &__input--#{$name} {
+      &:checked + #{$self}__indicator {
+        border: 2px solid $value;
+      }
+    }
+  }
+}
+
+.v-radio-group {
+  width: fit-content;
+
+  &--error {
+    .v-radio__indicator {
+      border: 2px solid var(--color-dark-red);
+    }
+
+    .v-radio__label {
+      color: var(--color-dark-red);
+    }
+  }
+
+  &-error {
+    height: 14.4px;
+    margin-top: 5px;
+    color: var(--color-dark-red);
+    font-size: 12px;
+    display: block;
+    text-align: left;
+
+    &.hidden {
+      height: 0;
+    }
+  }
+}

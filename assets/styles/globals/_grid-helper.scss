@@ -1,0 +1,132 @@
+@import 'vars';
+@import 'grid';
+@import 'mixins';
+
+@mixin content($name: '') {
+  .h#{$name}-100 {
+    height: 100%;
+  }
+  .w#{$name}-100 {
+    width: 100%;
+  }
+  .h#{$name}-unset {
+    height: unset;
+  }
+  .w#{$name}-unset {
+    width: unset;
+  }
+  .text#{$name}-start {
+    text-align: start;
+  }
+  .text#{$name}-end {
+    text-align: end;
+  }
+  .text#{$name}-center {
+    text-align: center;
+  }
+  .text#{$name}-upper {
+    text-transform: uppercase;
+  }
+  .text#{$name}-no-wrap {
+    white-space: nowrap;
+  }
+  .d#{$name}-flex {
+    display: flex;
+  }
+  .d#{$name}-none {
+    display: none;
+  }
+  .d#{$name}-block {
+    display: block;
+  }
+  .d#{$name}-inline-block {
+    display: inline-block;
+  }
+  .justify#{$name}-start {
+    justify-content: flex-start;
+  }
+  .justify#{$name}-end {
+    justify-content: flex-end;
+  }
+  .justify#{$name}-center {
+    justify-content: center;
+  }
+  .justify#{$name}-between {
+    justify-content: space-between;
+  }
+  .justify#{$name}-around {
+    justify-content: space-around;
+  }
+  .justify#{$name}-evenly {
+    justify-content: space-evenly;
+  }
+  .align#{$name}-start {
+    align-items: flex-start;
+  }
+  .align#{$name}-end {
+    align-items: flex-end;
+  }
+  .align#{$name}-center {
+    align-items: center;
+  }
+  .flex#{$name}-row {
+    flex-direction: row;
+  }
+  .flex#{$name}-column {
+    flex-direction: column;
+  }
+  .flex-grow#{$name} {
+    flex-grow: 1;
+  }
+  .no-flex-shrink#{$name} {
+    flex-shrink: 0;
+  }
+  .display-none#{$name} {
+    display: none;
+  }
+  .wrap#{$name} {
+    flex-wrap: wrap;
+  }
+  .no-wrap#{$name} {
+    flex-wrap: nowrap;
+  }
+  .text-right#{$name} {
+    text-align: right;
+  }
+
+  @for $i from 1 through 12 {
+    .order#{$name}-#{$i} {
+      order: $i;
+    }
+  }
+}
+
+@include content();
+@include spaces(1, 40, '');
+@include radius(1, 40, '');
+
+@each $n in $grid-widths {
+  @media (min-width: $n) {
+    @if $n == 320px {
+      @include content('-sm');
+      @include grid('sm');
+      @include spaces(1, 40, '-sm');
+      @include radius(1, 40, '-sm');
+    } @else if $n == 768px {
+      @include content('-md');
+      @include grid('md');
+      @include spaces(1, 40, '-md');
+      @include radius(1, 40, '-md');
+    } @else if $n == 1000px {
+      @include content('-lg');
+      @include grid('lg');
+      @include spaces(1, 40, '-lg');
+      @include radius(1, 40, '-lg');
+    } @else if $n == 1440px {
+      @include content('-xl');
+      @include grid('xl');
+      @include spaces(1, 40, '-xl');
+      @include radius(1, 40, '-xl');
+    }
+  }
+}

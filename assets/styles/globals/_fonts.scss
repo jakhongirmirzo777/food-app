@@ -1,0 +1,18 @@
+$font: (
+  ('ExtraBold', 800),
+  ('Bold', 700),
+  ('SemiBold', 600),
+  ('Medium', 500),
+  ('Regular', 400)
+);
+
+@each $name, $weight in $font {
+  $url: '../fonts/Inter/Inter-' + $name;
+  @font-face {
+    font-family: 'Inter';
+    src: url($url + '.ttf') format('truetype');
+    font-style: normal;
+    font-weight: $weight;
+    font-display: swap;
+  }
+}

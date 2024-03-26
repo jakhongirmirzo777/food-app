@@ -1,0 +1,46 @@
+$font-main: 'Inter', sans-serif;
+
+$font-weights: (
+  ('extra-bold', 800),
+  ('bold', 700),
+  ('semi-bold', 600),
+  ('medium', 500),
+  ('regular', 400)
+);
+
+$colors: (
+  'bg-color-light': #eff7ff,
+  'bg-color-dark': #3a3f5c,
+  'dark-blue': #263054,
+  'darker-blue': '#18275D',
+  'blue': #284056,
+  'light-blue': #323948,
+  'thin-blue': rgba(24, 39, 93, 0.24),
+  'green': #28b446,
+  'light-green': #17bdc0,
+  'cloud': #dfe6ee,
+  'light-cloud': #f5f5f5,
+  'gray': #e8e8e8,
+  'dark-gray': #eaedf6,
+  'light-gray': #f5f8fb,
+  'dark-red': #eb5757,
+  'red': #ff5656,
+  'light-red': #ff2090,
+  'yellow': #e6a812,
+  'white': #fff,
+  'black': #000,
+  'dark-black': '#1B1B1B',
+  'light-black': '#5A5A5A',
+);
+
+$offset-laptop: 1199px;
+$offset-tablet: 999px;
+$offset-mobile: 767px;
+
+$grid-widths: (320px, 768px, 1000px, 1440px);
+
+:root {
+  @each $name, $color in $colors {
+    --#{'color-' + $name}: #{$color};
+  }
+}

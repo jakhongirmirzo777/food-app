@@ -1,0 +1,9 @@
+@import '../globals/vars';
+
+.v-text {
+  color: var(--color-gray);
+
+  &.dark {
+    color: var(--color-white) !important;
+  }
+}

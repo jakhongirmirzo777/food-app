@@ -1,0 +1,284 @@
+.dark {
+  .v-btn {
+    background: transparent;
+  }
+}
+
+.v-btn {
+  font-size: 13px;
+  background: transparent;
+  border-radius: 6px;
+  outline: none;
+  border: none;
+  padding: 0 12px;
+  cursor: pointer;
+  transition: 0.3s all;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+
+  &_dark {
+    color: white;
+  }
+
+  &__click-animate {
+    transform: scale(0.92) !important;
+  }
+
+  &__disabled {
+    pointer-events: none;
+    &:after {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      background: rgba(255, 255, 255, 0.5);
+      z-index: 10;
+      cursor: no-drop;
+    }
+  }
+
+  &__fab {
+    border-radius: 50%;
+    height: 42px !important;
+    max-height: 42px !important;
+    width: 42px !important;
+    max-width: 42px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__fab.v-btn__small {
+    height: 32px !important;
+    max-width: 32px !important;
+    width: 32px !important;
+    max-height: 32px !important;
+  }
+
+  &__absolute {
+    position: absolute;
+  }
+
+  &__small {
+    max-height: 32px !important;
+    max-width: 32px !important;
+    min-width: 32px !important;
+    width: 32px !important;
+    padding: 0;
+  }
+
+  &__theme-blue {
+    color: white;
+    background: var(--color-dark-blue);
+  }
+
+  &__theme-primary {
+    color: white;
+    background: var(--color-dark-black);
+  }
+
+  &__theme-primary.v-btn__outlined {
+    color: var(--color-dark-black) !important;
+    background: white !important;
+    border: 1px solid var(--color-dark-black) !important;
+  }
+
+  &__theme-primary.v-btn__flat {
+    color: var(--color-light-green) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-primary.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--light-green) !important;
+  }
+
+  &__theme-success {
+    color: white;
+    background: var(--color-green);
+  }
+
+  &__theme-success.v-btn__outlined {
+    color: var(--color-green) !important;
+    background: white !important;
+    border: 1px solid var(--color-green) !important;
+  }
+
+  &__theme-success.v-btn__flat {
+    color: var(--color-green) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-success.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--color-green) !important;
+  }
+
+  &__theme-gray {
+    color: white;
+    background: var(--color-gray);
+  }
+
+  &__theme-gray.v-btn__outlined {
+    color: var(--color-gray) !important;
+    background: white !important;
+    border: 1px solid var(--color-gray) !important;
+  }
+
+  &__theme-gray.v-btn__flat {
+    color: var(--color-gray) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-gray.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--color-gray) !important;
+  }
+
+  &__theme-danger {
+    color: white;
+    background: var(--color-dark-red);
+  }
+
+  &__theme-danger.v-btn__outlined {
+    color: var(--color-dark-red) !important;
+    background: white !important;
+    border: 1px solid var(--color-dark-red) !important;
+  }
+
+  &__theme-danger.v-btn__flat {
+    color: var(--color-dark-red) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-danger.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--color-dark-red) !important;
+  }
+
+  &__theme-warning {
+    color: white;
+    background: var(--color-yellow);
+  }
+
+  &__theme-warning.v-btn__outlined {
+    color: var(--color-yellow) !important;
+    background: white !important;
+    border: 1px solid var(--color-yellow) !important;
+  }
+
+  &__theme-warning.v-btn__flat {
+    color: var(--color-yellow) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-warning.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--color-yellow) !important;
+  }
+
+  &__theme-light-red {
+    color: white;
+    background: var(--color-light-red);
+  }
+
+  &__theme-light-red.v-btn__outlined {
+    color: var(--color-light-red) !important;
+    background: white !important;
+    border: 1px solid var(--color-light-red) !important;
+  }
+
+  &__theme-light-red.v-btn__flat {
+    color: var(--color-light-red) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-light-red.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--color-light-red) !important;
+  }
+
+  &__theme-blue.v-btn__flat {
+    color: var(--color-blue) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-blue.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--color-blue) !important;
+  }
+
+  &__theme-default.v-btn__flat {
+    color: var(--color-blue) !important;
+    background: white !important;
+    border: unset !important;
+  }
+
+  &__theme-default.v-btn__text {
+    box-shadow: unset;
+    background: transparent !important;
+    color: var(--color-blue) !important;
+  }
+
+  &__outlined {
+    background: var(--color-white);
+    color: var(--color-gray);
+    border: 1px solid var(--color-gray);
+  }
+
+  &__loading {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    &.loading {
+      display: block;
+    }
+  }
+
+  &__content.loading {
+    opacity: 0;
+  }
+
+  &__loading:before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border-top: 2px solid #284056;
+    border-right: 2px solid transparent;
+    animation: spinner 0.6s linear infinite;
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
