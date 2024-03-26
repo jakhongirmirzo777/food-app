@@ -10,6 +10,7 @@ body {
   color: map-get($colors, 'dark-black');
   font-family: $font-main;
   font-weight: 500;
+  background-color: map-get($colors, 'bg-color-light');
 }
 
 *,
