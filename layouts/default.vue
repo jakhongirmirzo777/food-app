@@ -1,7 +1,7 @@
 <template>
   <div class="layout__wrapper">
     <VCard background-color="var(--color-red)" class="layout__box">
-      <NuxtLink to="/" class="layout__back__btn">
+      <NuxtLink v-if="$route.path !== '/'" to="/" class="layout__back__btn">
         <VIcon icon="arrow-left" size="16" color="var(--color-black)" />
       </NuxtLink>
       <div class="d-flex justify-center py-20">
@@ -41,6 +41,7 @@
           </VTag>
         </div>
         <ValidationObserver
+          v-if="$route.path === '/'"
           v-slot="{ handleSubmit }"
           ref="formRef"
           class="layout__search__wrapper"

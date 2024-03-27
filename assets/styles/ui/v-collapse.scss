@@ -1,9 +1,0 @@
-.v-collapse {
-  &__top,
-  &__bottom {
-    border-bottom: 1px solid var(--color-dark-gray);
-    &.open {
-      overflow: unset !important;
-    }
-  }
-}

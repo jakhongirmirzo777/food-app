@@ -34,21 +34,5 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.svg-icon {
-  *,
-  [fill] {
-    fill: currentColor;
-  }
-
-  &[stroke] *,
-  [stroke-width],
-  [stroke] {
-    fill: none;
-    stroke: currentColor;
-  }
-  [fill]:not([fill='none']) {
-    // If there is problems with svg remove this
-    fill: currentColor;
-  }
-}
+@import '../../assets/styles/ui/v-icon';
 </style>
