@@ -14,7 +14,30 @@
             <span class="category__price__text">SO'M</span>
           </div>
           <div>
-            <button class="category__add__btn">
+            <div v-if="isOrderedMeal(meal.id)" class="d-flex align-center">
+              <VIcon
+                class="cursor-pointer"
+                icon="minus"
+                size="24"
+                color="var(--color-red)"
+                @click="decrementOrder(meal)"
+              />
+              <span class="category__count">
+                {{ getMealQuantity(meal.id) }}
+              </span>
+              <VIcon
+                class="cursor-pointer"
+                icon="plus"
+                size="24"
+                color="var(--color-red)"
+                @click="incrementOrder(meal)"
+              />
+            </div>
+            <button
+              v-else
+              class="category__add__btn"
+              @click="addMealToOrder(meal)"
+            >
               <VIcon icon="plus" size="20" color="#fff" />
             </button>
           </div>
@@ -44,6 +67,40 @@ export default {
         meals: [],
       },
     }
+  },
+  computed: {
+    orderedMeals() {
+      return this.$store.state.meals
+    },
+  },
+  methods: {
+    isOrderedMeal(mealId) {
+      return this.orderedMeals.find((meal) => meal.mealId === mealId)
+    },
+    addMealToOrder(meal) {
+      this.$store.commit('addMeal', {
+        mealId: meal.id,
+        mealQuantity: 1,
+      })
+    },
+    getMealQuantity(mealId) {
+      const meal = this.orderedMeals.find((meal) => meal.mealId === mealId)
+      return meal ? meal.mealQuantity : 0
+    },
+    incrementOrder(meal) {
+      const quantity = this.getMealQuantity(meal.id)
+      this.$store.commit('addMeal', {
+        mealId: meal.id,
+        mealQuantity: quantity + 1,
+      })
+    },
+    decrementOrder(meal) {
+      const quantity = this.getMealQuantity(meal.id)
+      this.$store.commit('removeMeal', {
+        mealId: meal.id,
+        mealQuantity: quantity - 1,
+      })
+    },
   },
 }
 </script>
