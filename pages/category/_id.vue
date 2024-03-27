@@ -87,8 +87,10 @@ export default {
     },
     addMealToOrder(meal) {
       this.$store.commit('addMeal', {
+        title: meal.title,
         mealId: meal.id,
         mealQuantity: 1,
+        price: meal.price,
       })
     },
     getMealQuantity(mealId) {
@@ -98,15 +100,19 @@ export default {
     incrementOrder(meal) {
       const quantity = this.getMealQuantity(meal.id)
       this.$store.commit('addMeal', {
+        title: meal.title,
         mealId: meal.id,
         mealQuantity: quantity + 1,
+        price: meal.price,
       })
     },
     decrementOrder(meal) {
       const quantity = this.getMealQuantity(meal.id)
       this.$store.commit('removeMeal', {
+        title: meal.title,
         mealId: meal.id,
         mealQuantity: quantity - 1,
+        price: meal.price,
       })
     },
     openImage(imageUrl) {

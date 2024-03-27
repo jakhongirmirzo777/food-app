@@ -15,7 +15,7 @@
         padding="24px 16px 0 16px"
       >
         <div class="layout__info mb-16">
-          <h1>Turka Saray</h1>
+          <h1>{{ restaurantName }}</h1>
           <p>
             <span class="layout__address mb-8">
               <a class="mr-12" :href="addressMap">
@@ -30,7 +30,7 @@
             <span class="layout__text">Xizmat ko'rsatish bepul</span>
           </p>
         </div>
-        <div class="layout__tags">
+        <div v-if="$route.name !== 'order'" class="layout__tags">
           <VTag
             v-for="tag in tags"
             :key="tag.id"
@@ -63,7 +63,13 @@
         <Nuxt />
       </VCard>
     </VCard>
-    <NuxtLink to="/" class="layout__order__btn">Buyurtmani ko'rish</NuxtLink>
+    <NuxtLink
+      v-if="$route.name !== 'order'"
+      to="/order"
+      class="layout__order__btn"
+    >
+      Buyurtmani ko'rish
+    </NuxtLink>
     <CoolLightBox
       :effect="'fade'"
       :items="images"
@@ -100,6 +106,9 @@ export default {
     },
     phoneUrl() {
       return this.$config.PHONE_NUMBER_SHORT
+    },
+    restaurantName() {
+      return this.$config.RESTAURANT_NAME
     },
     tags() {
       return this.$store.state.tags

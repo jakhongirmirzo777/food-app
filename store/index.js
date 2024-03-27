@@ -10,8 +10,10 @@ export const state = () => ({
 export const mutations = {
   addMeal: (state, meal) => {
     const newMeal = {
+      title: meal.title,
       mealId: meal.mealId,
       mealQuantity: meal.mealQuantity,
+      price: meal.price,
     }
     const oldMealIndex = state.meals.findIndex(
       (m) => m.mealId === newMeal.mealId
@@ -24,8 +26,10 @@ export const mutations = {
   },
   removeMeal(state, meal) {
     const newMeal = {
+      title: meal.title,
       mealId: meal.mealId,
       mealQuantity: meal.mealQuantity,
+      price: meal.price,
     }
     const oldMealIndex = state.meals.findIndex(
       (m) => m.mealId === newMeal.mealId
@@ -35,6 +39,9 @@ export const mutations = {
     } else {
       state.meals.splice(oldMealIndex, 1)
     }
+  },
+  clearMeals(state) {
+    state.meals = []
   },
   setTags(state, tags) {
     state.tags = tags
