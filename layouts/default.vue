@@ -41,7 +41,7 @@
           </VTag>
         </div>
         <ValidationObserver
-          v-if="$route.path === '/'"
+          v-if="$route.name === 'index' || $route.name === 'search-slug'"
           v-slot="{ handleSubmit }"
           ref="formRef"
           class="layout__search__wrapper"
@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      console.log('111')
+      this.$router.push(`/search/${this.searchQuery}`)
     },
     handleTagClick(tagId) {
       this.$store.dispatch('getCategories', tagId)

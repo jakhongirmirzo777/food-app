@@ -1,8 +1,8 @@
 <template>
   <div class="category__wrapper">
-    <h1>{{ category && category.title }}</h1>
-    <template v-if="category && category.meals">
-      <div v-for="meal in category.meals" :key="meal.id" class="category__item">
+    <h1>Qidiruv natijasi:</h1>
+    <template v-if="meals && meals.length">
+      <div v-for="meal in meals" :key="meal.id" class="category__item">
         <img
           :src="meal.imageUrl"
           :alt="meal.title"
@@ -61,19 +61,14 @@ import VIcon from '~/components/ui/VIcon.vue'
 export default {
   components: { VIcon },
   async asyncData({ $axios, params }) {
-    const { data } = await $axios.get(`/category/${params.id}`)
+    const { data } = await $axios.get(`/meals?title=${params.slug}`)
     return {
-      category: data,
+      meals: data,
     }
   },
   data() {
     return {
-      category: {
-        title: '',
-        description: '',
-        tagId: '',
-        meals: [],
-      },
+      meals: [],
     }
   },
   computed: {
