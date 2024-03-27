@@ -34,8 +34,8 @@
           <VTag
             v-for="tag in tags"
             :key="tag.id"
-            :active="tag.id === search.tag"
-            @click.native="search.tag = tag.id"
+            :active="tag.id === activeTagId"
+            @click.native="handleTagClick(tag.id)"
           >
             {{ tag.title }}
           </VTag>
@@ -49,7 +49,7 @@
         >
           <form class="layout__search" @submit.prevent="handleSubmit(onSubmit)">
             <VInput
-              v-model="search.query"
+              v-model="searchQuery"
               class="layout__search__input"
               placeholder="Qidiruv"
               vid="search"
@@ -64,25 +64,28 @@
       </VCard>
     </VCard>
     <NuxtLink to="/" class="layout__order__btn">Buyurtmani ko'rish</NuxtLink>
+    <CoolLightBox
+      :effect="'fade'"
+      :items="images"
+      :index="activeImageIndex"
+      @close="$store.commit('removeImages')"
+    />
   </div>
 </template>
 
 <script>
+import CoolLightBox from 'vue-cool-lightbox'
+import 'vue-cool-lightbox/dist/vue-cool-lightbox.min.css'
 import VCard from '~/components/ui/VCard.vue'
 import VIcon from '~/components/ui/VIcon.vue'
 import VTag from '~/components/ui/VTag.vue'
 import VInput from '~/components/ui/VInput.vue'
-
 export default {
   name: 'DefaultLayout',
-  components: { VInput, VTag, VIcon, VCard },
+  components: { VInput, VTag, VIcon, VCard, CoolLightBox },
   data() {
     return {
-      tags: [],
-      search: {
-        tag: '',
-        query: '',
-      },
+      searchQuery: '',
     }
   },
   computed: {
@@ -98,18 +101,26 @@ export default {
     phoneUrl() {
       return this.$config.PHONE_NUMBER_SHORT
     },
-  },
-  created() {
-    this.fetchTags()
+    tags() {
+      return this.$store.state.tags
+    },
+    activeTagId() {
+      return this.$store.state.activeTagId
+    },
+    activeImageIndex() {
+      return this.$store.state.activeImageIndex
+    },
+    images() {
+      return this.$store.state.images
+    },
   },
   methods: {
-    async fetchTags() {
-      const { data } = await this.$axios.get('/tags')
-      this.tags = data
-      this.search.tag = this.tags?.[0]?.id
-    },
     onSubmit() {
       console.log('111')
+    },
+    handleTagClick(tagId) {
+      this.$store.dispatch('getCategories', tagId)
+      this.$router.push('/')
     },
   },
 }

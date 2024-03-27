@@ -3,7 +3,12 @@
     <h1>{{ category && category.title }}</h1>
     <template v-if="category && category.meals">
       <div v-for="meal in category.meals" :key="meal.id" class="category__item">
-        <img :src="meal.imageUrl" :alt="meal.title" class="category__img" />
+        <img
+          :src="meal.imageUrl"
+          :alt="meal.title"
+          class="category__img"
+          @click="openImage(meal.imageUrl)"
+        />
         <h3 class="category__title">{{ meal.title }}</h3>
         <p class="category__description">{{ meal.description }}</p>
         <div class="category__bottom">
@@ -100,6 +105,9 @@ export default {
         mealId: meal.id,
         mealQuantity: quantity - 1,
       })
+    },
+    openImage(imageUrl) {
+      this.$store.commit('setImages', [imageUrl])
     },
   },
 }

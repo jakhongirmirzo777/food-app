@@ -4,7 +4,7 @@
       v-for="category in categories"
       :key="category.id"
       class="home__category"
-      :to="`/category/${category.id}?title=${category.title}`"
+      :to="`/category/${category.id}`"
     >
       <img :src="category.imageUrl" :alt="category.title" />
       <h1>{{ category.title }}</h1>
@@ -15,18 +15,11 @@
 <script>
 export default {
   name: 'IndexPage',
-  async asyncData({ $axios }) {
-    const { data } = await $axios.get('/category')
-    return {
-      categories: data,
-    }
+  computed: {
+    categories() {
+      return this.$store.state.categories
+    },
   },
-  data() {
-    return {
-      categories: [],
-    }
-  },
-  computed: {},
 }
 </script>
 
