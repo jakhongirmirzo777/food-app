@@ -31,8 +31,14 @@
           </p>
         </div>
         <div class="layout__tags">
-          <VTag active>Меню</VTag>
-          <VTag>Бар</VTag>
+          <VTag
+            v-for="tag in tags"
+            :key="tag.id"
+            :active="tag.id === search.tag"
+            @click.native="search.tag = tag.id"
+          >
+            {{ tag.title }}
+          </VTag>
         </div>
         <ValidationObserver
           v-slot="{ handleSubmit }"
@@ -97,7 +103,9 @@ export default {
   },
   methods: {
     async fetchTags() {
-      this.tags = await this.$axios.get('/tags')
+      const { data } = await this.$axios.get('/tags')
+      this.tags = data
+      this.search.tag = this.tags?.[0]?.id
     },
     onSubmit() {
       console.log('111')

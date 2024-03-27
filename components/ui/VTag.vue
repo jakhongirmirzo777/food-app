@@ -1,5 +1,5 @@
 <template>
-  <div class="v-tag" :class="{ active: active }">
+  <div role="button" class="v-tag" :class="{ active: active }">
     <slot />
   </div>
 </template>
