@@ -18,7 +18,7 @@ export default {
   css: ['@/assets/styles/index.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{ src: '@/plugins/vee-validate.js', ssr: false }],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -27,6 +27,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/svg',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -38,9 +39,17 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.API_BASE_URL,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  publicRuntimeConfig: {
+    API_BASE_URL: process.env.API_BASE_URL,
+    PHONE_NUMBER_LONG: process.env.PHONE_NUMBER_LONG,
+    PHONE_NUMBER_SHORT: process.env.PHONE_NUMBER_LONG,
+    ADDRESS_MAP: process.env.ADDRESS_MAP,
+    ADDRESS_TEXT: process.env.ADDRESS_TEXT,
+  },
 }

@@ -7,7 +7,7 @@ $font: (
 );
 
 @each $name, $weight in $font {
-  $url: '../fonts/Inter/Inter-' + $name;
+  $url: '../fonts/Rubik/Rubik-' + $name;
   @font-face {
     font-family: 'Inter';
     src: url($url + '.ttf') format('truetype');

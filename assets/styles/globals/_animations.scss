@@ -12,3 +12,21 @@ span.ripple {
     opacity: 0;
   }
 }
+
+.fade-up-enter-active,
+.fade-up-leave-active {
+  transition: all 0.35s;
+}
+.fade-up-enter,
+.fade-up-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.35s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

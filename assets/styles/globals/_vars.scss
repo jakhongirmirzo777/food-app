@@ -1,4 +1,4 @@
-$font-main: 'Inter', sans-serif;
+$font-main: 'Rubik', sans-serif;
 
 $font-weights: (
   ('extra-bold', 800),
@@ -12,6 +12,8 @@ $colors: (
   'bg-color-light': #f3f1ef,
   'red': #b2000e,
   'white': #fff,
+  'black': #000,
+  'gray': #676767,
 );
 
 $device-max-width: 560px;
