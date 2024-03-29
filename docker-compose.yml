@@ -4,6 +4,6 @@ services:
     build: ./
     container_name: food_app_frontend_c
     ports:
-      - '3000:3000'
+      - 3000:3000
     stdin_open: true
     tty: true

@@ -11,9 +11,9 @@
           <h4 class="order__item__title">{{ meal.title }}</h4>
           <div class="order__item__detail">
             <div class="order__item__info">
-              <span class="amount">{{
-                meal.price | $formatMoneyWithSpace
-              }}</span>
+              <span class="amount">
+                {{ meal.price | $formatMoneyWithSpace }}
+              </span>
               <span class="text">so'm</span>
             </div>
             <div class="order__item__quantity">
@@ -54,6 +54,13 @@
               vid="userPhoneNumber"
               rules="required"
             />
+            <VInput
+              v-model="address"
+              class="mb-10"
+              placeholder="Manzilni kiriting"
+              vid="address"
+              rules="required"
+            />
             <button class="order__btn" type="submit">Buyurtma berish</button>
           </form>
         </ValidationObserver>
@@ -79,6 +86,7 @@ export default {
   components: { VInput, VIcon },
   data() {
     return {
+      address: '',
       userPhoneNumber: '',
       hasOrdered: false,
     }
@@ -120,6 +128,7 @@ export default {
     async onSubmit() {
       try {
         await this.$axios.post('/orders', {
+          address: this.address,
           userPhoneNumber: this.userPhoneNumber.replace(/\D/g, ''),
           orderItems: this.orderedMeals.map((meal) => ({
             mealId: meal.mealId,
@@ -127,7 +136,10 @@ export default {
           })),
         })
         await this.$store.commit('clearMeals')
+        this.userPhoneNumber = ''
+        this.address = ''
         this.hasOrdered = true
+        await this.$refs.formRef?.reset()
       } catch (err) {
         console.log(err)
       }
