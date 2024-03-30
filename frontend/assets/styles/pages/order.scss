@@ -11,6 +11,23 @@
     margin-bottom: 22px;
     padding-bottom: 22px;
     border-bottom: 1px solid #f3f3f3;
+    display: flex;
+    align-items: center;
+
+    &__img {
+      height: 80px;
+      width: 100px;
+      border-radius: 5px;
+      object-fit: cover;
+      background-size: cover;
+      margin-right: 15px;
+    }
+
+    &__box {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
 
     &__title {
       font-size: 14px;

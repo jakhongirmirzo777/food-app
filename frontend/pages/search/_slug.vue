@@ -6,7 +6,7 @@
         <img
           :src="meal.imageUrl"
           :alt="meal.title"
-          class="category__img"
+          class="category__img cursor-pointer"
           @click="openImage(meal.imageUrl)"
         />
         <h3 class="category__title">{{ meal.title }}</h3>
@@ -86,6 +86,7 @@ export default {
         mealId: meal.id,
         mealQuantity: 1,
         price: meal.price,
+        imageUrl: meal.imageUrl
       })
     },
     getMealQuantity(mealId) {
@@ -99,6 +100,7 @@ export default {
         mealId: meal.id,
         mealQuantity: quantity + 1,
         price: meal.price,
+        imageUrl: meal.imageUrl
       })
     },
     decrementOrder(meal) {
@@ -108,6 +110,7 @@ export default {
         mealId: meal.id,
         mealQuantity: quantity - 1,
         price: meal.price,
+        imageUrl: meal.imageUrl
       })
     },
     openImage(imageUrl) {

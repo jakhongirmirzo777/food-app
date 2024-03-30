@@ -47,10 +47,10 @@ export default {
     baseURL: process.env.API_BASE_URL,
   },
 
-  server: {
-    host: '0',
-    port: 3000,
-  },
+  // server: {
+  //   host: '0',
+  //   port: 3000,
+  // },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
