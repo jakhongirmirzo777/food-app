@@ -1,0 +1,7 @@
+export const QUERY_CURRENT_ADMIN = 'current-admin'
+export const QUERY_ORDERS = 'orders'
+export const QUERY_ORDER = 'order'
+export const QUERY_CATEGORIES = 'categories'
+export const QUERY_MEALS = 'meals'
+export const QUERY_TAGS = 'tags'
+export const QUERY_ADMINS = 'admins'

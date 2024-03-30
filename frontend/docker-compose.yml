@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    container_name: food_app_frontend_c
+    restart: unless-stopped
+    ports:
+      - 3002:3000
+    stdin_open: true
+    tty: true
