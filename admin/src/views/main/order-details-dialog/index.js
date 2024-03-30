@@ -25,7 +25,7 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
         <>
           <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', position: 'relative' }}>
             <DialogTitle variant='subtitle1' sx={{ py: 3 }} color='text.primary' fontWeight={500}>
-              Buyurtma #12
+              Buyurtma #{data?.id}
               <Typography component='span' variant='subtitle2' sx={{ display: 'block' }}>
                 {isFetching ? <Skeleton width={150} /> : formatDate(data?.createdAt)}
               </Typography>
