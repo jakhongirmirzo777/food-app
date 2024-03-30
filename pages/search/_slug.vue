@@ -63,7 +63,7 @@ export default {
   async asyncData({ $axios, params }) {
     const { data } = await $axios.get(`/meals?title=${params.slug}`)
     return {
-      meals: data,
+      meals: data?.data ?? [],
     }
   },
   data() {
