@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'food-app-frontend',
+    title: 'Food app',
     htmlAttrs: {
       lang: 'en',
     },
