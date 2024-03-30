@@ -16,7 +16,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - 5434:5432
 
   backend:
     restart: on-failure
@@ -26,7 +26,6 @@ services:
 
     ports:
       - 3000:3000
-      - 5555:5555
 
     depends_on:
       postgres:
@@ -54,7 +53,7 @@ services:
       dockerfile: Dockerfile
 
     ports:
-      - 5000:3000
+      - 4001:3000
 
 
   
