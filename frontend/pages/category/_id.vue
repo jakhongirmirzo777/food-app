@@ -1,7 +1,7 @@
 <template>
   <div class="category__wrapper">
     <h1>{{ category && category.title }}</h1>
-    <template v-if="category && category.meals">
+    <template v-if="category && category.meals && category.meals.length">
       <div v-for="meal in category.meals" :key="meal.id" class="category__item">
         <img
           :src="meal.imageUrl"
@@ -91,7 +91,7 @@ export default {
         mealId: meal.id,
         mealQuantity: 1,
         price: meal.price,
-        imageUrl: meal.imageUrl
+        imageUrl: meal.imageUrl,
       })
     },
     getMealQuantity(mealId) {
@@ -105,7 +105,7 @@ export default {
         mealId: meal.id,
         mealQuantity: quantity + 1,
         price: meal.price,
-        imageUrl: meal.imageUrl
+        imageUrl: meal.imageUrl,
       })
     },
     decrementOrder(meal) {
@@ -115,7 +115,7 @@ export default {
         mealId: meal.id,
         mealQuantity: quantity - 1,
         price: meal.price,
-        imageUrl: meal.imageUrl
+        imageUrl: meal.imageUrl,
       })
     },
     openImage(imageUrl) {

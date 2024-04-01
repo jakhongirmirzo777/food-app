@@ -1,15 +1,67 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Food app',
+    title: 'Fantasy Burgers | fantasy-burgers.uz',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'uz',
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Mazali fast food taomlari',
+      },
+      {
+        hid: 'image',
+        name: 'image',
+        content: '/logo.jpg',
+      },
+      {
+        hid: 'og:title',
+        property: 'og:title',
+        content: 'Fantasy Burgers | fantasy-burgers.uz',
+      },
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content: 'Mazali fast food taomlari',
+      },
+      {
+        hid: 'og:image',
+        property: 'og:image',
+        content: '/logo.jpg',
+      },
+      {
+        hid: 'og:type',
+        property: 'og:type',
+        content: 'website',
+      },
+      {
+        hid: 'og:locale',
+        property: 'og:locale',
+        content: 'uz_UZ',
+      },
+      {
+        hid: 'og:site_name',
+        property: 'og:site_name',
+        content: 'fantasy-burgers.uz',
+      },
+      {
+        hid: 'og:image:alt',
+        property: 'og:image:alt',
+        content: 'Fantasy Burgers | fantasy-burgers.uz',
+      },
+      { hid: 'robots', name: 'robots', content: 'index, follow' },
+      { hid: 'yandex', name: 'yandex', content: 'noindex, follow' },
+      {
+        hid: 'keywords',
+        property: 'keywords',
+        content: 'burger, chizburgerlar, hot dog, fast food, mazali taomlar',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },

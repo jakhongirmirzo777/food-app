@@ -6,7 +6,7 @@
       </NuxtLink>
       <div class="d-flex justify-center py-20">
         <NuxtLink to="/">
-          <img class="layout__logo" src="/logo.jpeg" alt="logo" />
+          <img class="layout__logo" src="/logo.jpg" alt="logo" />
         </NuxtLink>
       </div>
       <VCard
@@ -64,7 +64,7 @@
       </VCard>
     </VCard>
     <NuxtLink
-      v-if="$route.name !== 'order'"
+      v-if="$route.name !== 'order' && !!$route.name"
       to="/order"
       class="layout__order__btn"
     >

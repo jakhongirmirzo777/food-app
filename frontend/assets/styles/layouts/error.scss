@@ -1,0 +1,33 @@
+.error__layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 25px;
+
+  h1 {
+    font-size: 24px;
+    color: #4c4c4c;
+    font-weight: 600;
+  }
+}
+
+.error__btn {
+  height: 50px;
+  width: 100%;
+  border: none;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  border-radius: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: #c40e1c;
+  }
+}

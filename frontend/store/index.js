@@ -14,7 +14,7 @@ export const mutations = {
       mealId: meal.mealId,
       mealQuantity: meal.mealQuantity,
       price: meal.price,
-      imageUrl: meal.imageUrl
+      imageUrl: meal.imageUrl,
     }
     const oldMealIndex = state.meals.findIndex(
       (m) => m.mealId === newMeal.mealId
@@ -31,7 +31,7 @@ export const mutations = {
       mealId: meal.mealId,
       mealQuantity: meal.mealQuantity,
       price: meal.price,
-      imageUrl: meal.imageUrl
+      imageUrl: meal.imageUrl,
     }
     const oldMealIndex = state.meals.findIndex(
       (m) => m.mealId === newMeal.mealId
