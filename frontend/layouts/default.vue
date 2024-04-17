@@ -5,8 +5,8 @@
         <VIcon icon="arrow-left" size="16" color="var(--color-black)" />
       </NuxtLink>
       <div class="d-flex justify-center py-20">
-        <NuxtLink to="/">
-          <img class="layout__logo" src="/logo.jpg" alt="logo" />
+        <NuxtLink to="/" class="layout__logo__text">
+          <span>Yalla</span>
         </NuxtLink>
       </div>
       <VCard
@@ -55,17 +55,26 @@
               vid="search"
               rules="required"
             />
-            <button class="layout__search__btn" type="submit">
+            <button class="layout__search__btn" type="submit" aria-label="search">
               <VIcon icon="search" size="16" color="#4c4c4c" />
             </button>
           </form>
         </ValidationObserver>
         <Nuxt />
+        <div style="margin-bottom: 100px">
+          <h4>Aloqa</h4>
+          <div>
+            <a :href="`tel:${OUR_CONTACT_1_LINK}`">{{OUR_CONTACT_1}}</a>
+            <a :href="`tel:${OUR_CONTACT_2_LINK}`">{{OUR_CONTACT_2}}</a>
+            <a :href="`tel:${OUR_CONTACT_3_LINK}`">{{OUR_CONTACT_3}}</a>
+          </div>
+          <p>{{OUR_BRAND_NAME_AND_CC}}</p>
+        </div>
       </VCard>
     </VCard>
     <NuxtLink
       v-if="$route.name !== 'order' && !!$route.name"
-      to="/order"
+      to="/order/"
       class="layout__order__btn"
     >
       Buyurtmani ko'rish
@@ -109,6 +118,27 @@ export default {
     },
     restaurantName() {
       return this.$config.RESTAURANT_NAME
+    },
+    OUR_CONTACT_1() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_CONTACT_1_LINK() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_CONTACT_2() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_CONTACT_2_LINK() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_CONTACT_3() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_CONTACT_3_LINK() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_BRAND_NAME_AND_CC() {
+      return this.$config.OUR_CONTACT_1
     },
     tags() {
       return this.$store.state.tags

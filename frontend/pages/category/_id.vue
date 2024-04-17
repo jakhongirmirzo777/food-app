@@ -43,7 +43,7 @@
               class="category__add__btn"
               @click="addMealToOrder(meal)"
             >
-              <VIcon icon="plus" size="20" color="#fff" />
+              <VIcon icon="plus" size="20" color="var(--color-btn-text)" />
             </button>
           </div>
         </div>
