@@ -18,16 +18,21 @@
           <div class="layout__info mb-16">
             <h1>{{ restaurantName }}</h1>
             <p>
-            <span class="layout__address mb-8">
-              <a class="mr-12" :href="addressMap">
-                <VIcon class="mr-5" icon="location" size="14" color="#676767" />
-                {{ addressText }}
-              </a>
-              <a :href="`tel:${phoneUrl}`">
-                <VIcon class="mr-5" icon="phone" size="14" color="#676767" />
-                {{ phoneText }}
-              </a>
-            </span>
+              <span class="layout__address mb-8">
+                <a class="mr-12" :href="addressMap">
+                  <VIcon
+                    class="mr-5"
+                    icon="location"
+                    size="14"
+                    color="#676767"
+                  />
+                  {{ addressText }}
+                </a>
+                <a :href="`tel:${phoneUrl}`">
+                  <VIcon class="mr-5" icon="phone" size="14" color="#676767" />
+                  {{ phoneText }}
+                </a>
+              </span>
               <span class="layout__text">Xizmat ko'rsatish bepul</span>
             </p>
           </div>
@@ -48,7 +53,10 @@
             class="layout__search__wrapper"
             tag="div"
           >
-            <form class="layout__search" @submit.prevent="handleSubmit(onSubmit)">
+            <form
+              class="layout__search"
+              @submit.prevent="handleSubmit(onSubmit)"
+            >
               <VInput
                 v-model="searchQuery"
                 class="layout__search__input"
@@ -56,22 +64,77 @@
                 vid="search"
                 rules="required"
               />
-              <button class="layout__search__btn" type="submit" aria-label="search">
+              <button
+                class="layout__search__btn"
+                type="submit"
+                aria-label="search"
+              >
                 <VIcon icon="search" size="16" color="#4c4c4c" />
               </button>
             </form>
           </ValidationObserver>
           <Nuxt />
         </div>
-        <div :style="{margin: $route.name === 'order' ? '0' : '50px 0 30px'}" class="layout__contacts">
-          <h4>Aloqa</h4>
-          <div class="layout__contacts__phones">
-            <a :href="`tel:${OUR_CONTACT_1_LINK}`"> <VIcon class="mr-8" icon="phone" size="14" color="var(--color-red)"/> {{OUR_CONTACT_1}}</a>
-            <a :href="`tel:${OUR_CONTACT_2_LINK}`"><VIcon class="mr-8"  icon="phone" size="14" color="var(--color-red)"/>  {{OUR_CONTACT_2}}</a>
-            <a :href="OUR_TELEGRAM_LINK"><VIcon class="mr-8"  icon="telegram" size="14" color="var(--color-red)"/>  {{OUR_TELEGRAM_TEXT}}</a>
-            <a v-if="OUR_WHATSAPP_LINK && OUR_WHATSAPP_TEXT" :href="OUR_WHATSAPP_LINK"><VIcon class="mr-8"  icon="whatsapp" size="14" color="var(--color-red)"/>  {{OUR_WHATSAPP_TEXT}}</a>
-          </div>
-          <p>{{OUR_BRAND_NAME_AND_CC}}</p>
+        <div
+          :style="{ margin: $route.name === 'order' ? '0' : '50px 0 30px' }"
+          class="layout__contacts"
+        >
+          <h4>Web Sayt boyicha aloqa</h4>
+          <!--          <div class="layout__contacts__phones">-->
+          <!--            <a :href="`tel:${OUR_CONTACT_1_LINK}`">-->
+          <!--              <VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="phone"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_CONTACT_1 }}-->
+          <!--            </a>-->
+          <!--            <a :href="`tel:${OUR_CONTACT_2_LINK}`"-->
+          <!--              ><VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="phone"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_CONTACT_2 }}-->
+          <!--            </a>-->
+          <!--            <a :href="OUR_TELEGRAM_LINK"-->
+          <!--              ><VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="telegram"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_TELEGRAM_TEXT }}-->
+          <!--            </a>-->
+          <!--            <a-->
+          <!--              v-if="OUR_WHATSAPP_LINK && OUR_WHATSAPP_TEXT"-->
+          <!--              :href="OUR_WHATSAPP_LINK"-->
+          <!--              ><VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="whatsapp"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_WHATSAPP_TEXT }}-->
+          <!--            </a>-->
+          <!--          </div>-->
+          <p>
+            <span>{{ OUR_BRAND_NAME_AND_CC }}</span>
+            <a
+              :href="OUR_TELEGRAM_LINK"
+              class="d-flex align-center justify-center"
+            >
+              <VIcon
+                class="mr-8"
+                icon="telegram"
+                size="14"
+                color="var(--color-red)"
+              />
+              {{ OUR_TELEGRAM_TEXT }}
+            </a>
+          </p>
         </div>
       </VCard>
     </VCard>
