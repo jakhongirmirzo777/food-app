@@ -56,11 +56,9 @@ const AppDateRangePicker = ({ value, onChange, onClose, buttonSize = 'medium' })
   }
 
   const handleSubmit = () => {
-    const areDatesEqual = compareAsc(ranges[0].startDate, ranges[0].endDate) === 0
-
     onChange({
       startDate: ranges[0].startDate,
-      endDate: areDatesEqual ? endOfDay(ranges[0].endDate) : ranges[0].endDate
+      endDate: endOfDay(ranges[0].endDate)
     })
 
     handleClose()
