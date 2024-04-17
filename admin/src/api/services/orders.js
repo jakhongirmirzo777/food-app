@@ -4,6 +4,8 @@ import axios from '../axios'
 // import { format } from 'date-fns'
 
 export async function getOrders(startDate, endDate) {
+  console.log(startDate, endDate)
+  
   const params = {}
 
   if (startDate) {
