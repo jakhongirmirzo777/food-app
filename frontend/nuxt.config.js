@@ -99,10 +99,10 @@ export default {
     baseURL: process.env.API_BASE_URL,
   },
 
-  // server: {
-  //   host: '0',
-  //   port: 3000,
-  // },
+  server: {
+    host: '0',
+    port: 3000,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
@@ -121,5 +121,9 @@ export default {
     OUR_CONTACT_3: process.env.OUR_CONTACT_3,
     OUR_CONTACT_3_LINK: process.env.OUR_CONTACT_3_LINK,
     OUR_BRAND_NAME_AND_CC: process.env.OUR_BRAND_NAME_AND_CC,
+    OUR_TELEGRAM_TEXT: process.env.OUR_TELEGRAM_TEXT,
+    OUR_TELEGRAM_LINK: process.env.OUR_TELEGRAM_LINK,
+    OUR_WHATSAPP_TEXT: process.env.OUR_WHATSAPP_TEXT,
+    OUR_WHATSAPP_LINK: process.env.OUR_WHATSAPP_LINK,
   },
 }
