@@ -1,16 +1,18 @@
 // ** API Imports
 import axios from '../axios'
 
-import { format } from 'date-fns'
+// import { format } from 'date-fns'
 
 export async function getOrders(startDate, endDate) {
   const params = {}
 
   if (startDate) {
-    params.startDate = format(new Date(startDate), "yyyy-MM-dd'T'HH:mm:ss")
+    params.startDate = new Date(startDate).toISOString();
+    // params.startDate = format(new Date(startDate), "yyyy-MM-dd'T'HH:mm:ss")
   }
   if (endDate) {
-    params.endDate = format(new Date(endDate), "yyyy-MM-dd'T'HH:mm:ss")
+    params.endDate = new Date(endDate).toISOString();
+    // params.endDate = format(new Date(endDate), "yyyy-MM-dd'T'HH:mm:ss")
   }
 
   const res = await axios.get('/orders', {
