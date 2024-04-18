@@ -76,7 +76,9 @@
           <Nuxt />
         </div>
         <div
-          :style="{ margin: $route.name === 'order' ? '0' : '50px 0 30px' }"
+          :style="{
+            margin: $route.name === 'order' ? '70px 0 0' : '50px 0 30px',
+          }"
           class="layout__contacts"
         >
           <h4>Web Sayt boyicha aloqa</h4>
