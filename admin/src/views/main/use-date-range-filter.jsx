@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react'
 
 // ** Utils Imports
 import { updateURLqueries } from 'src/utils/url-queries'
+import debounce from 'lodash.debounce'
 
 import { format, startOfToday, endOfToday } from 'date-fns'
 
@@ -24,11 +25,13 @@ export const getValueFromUrl = queryObject => {
 export const useDateRangeFilter = () => {
   const router = useRouter()
 
+  const [search, setSearch] = useState(router.query?.search || '')
   const [range, setRange] = useState(getValueFromUrl(router.query))
 
   useEffect(() => {
     if (router.isReady) {
       setRange(getValueFromUrl(router.query))
+      setSearch(router.query?.search || '')
     }
   }, [router.isReady, router.query])
 
@@ -41,5 +44,19 @@ export const useDateRangeFilter = () => {
     })
   }
 
-  return { range, handleRangeChange }
+  const handleSearchChange = newValue => {
+    setSearch(newValue)
+
+    // debounce(() => {
+    //   updateURLqueries(router, {
+    //     search: newValue
+    //   })
+    // }, 300)
+
+    updateURLqueries(router, {
+      search: newValue
+    })
+  }
+
+  return { search, range, handleRangeChange, handleSearchChange }
 }

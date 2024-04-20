@@ -1,11 +1,15 @@
 <template>
   <div class="layout__wrapper">
     <VCard background-color="var(--color-red)" class="layout__box">
-      <NuxtLink v-if="$route.path !== '/'" to="/" class="layout__back__btn">
+      <NuxtLink
+        v-if="$route.path !== '/'"
+        :to="parseUrl('/', $route)"
+        class="layout__back__btn"
+      >
         <VIcon icon="arrow-left" size="16" color="var(--color-black)" />
       </NuxtLink>
       <div class="d-flex justify-center py-20">
-        <NuxtLink to="/" class="layout__logo__text">
+        <NuxtLink :to="parseUrl('/', $route)" class="layout__logo__text">
           <span>Yalla</span>
         </NuxtLink>
       </div>
@@ -142,7 +146,7 @@
     </VCard>
     <NuxtLink
       v-if="$route.name !== 'order' && !!$route.name"
-      to="/order/"
+      :to="parseUrl('/order', $route)"
       class="layout__order__btn"
     >
       Buyurtmani ko'rish
@@ -163,6 +167,7 @@ import VCard from '~/components/ui/VCard.vue'
 import VIcon from '~/components/ui/VIcon.vue'
 import VTag from '~/components/ui/VTag.vue'
 import VInput from '~/components/ui/VInput.vue'
+import { parseUrl } from '~/utils/helpers'
 export default {
   name: 'DefaultLayout',
   components: { VInput, VTag, VIcon, VCard, CoolLightBox },
@@ -234,12 +239,13 @@ export default {
     },
   },
   methods: {
+    parseUrl,
     onSubmit() {
-      this.$router.push(`/search/${this.searchQuery}`)
+      this.$router.push(parseUrl(`/search/${this.searchQuery}`, this.$route))
     },
     handleTagClick(tagId) {
       this.$store.dispatch('getCategories', tagId)
-      this.$router.push('/')
+      this.$router.push(parseUrl('/', this.$route))
     },
   },
 }

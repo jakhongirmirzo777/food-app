@@ -12,6 +12,15 @@
     border: none;
     padding: 0 16px;
     margin-bottom: 4px;
+    transition: all 0.2s;
+
+    &:focus {
+      outline: 1px solid var(--color-red);
+    }
+
+    &.error {
+      outline: 1px solid var(--color-red-2);
+    }
   }
 
   &__error {

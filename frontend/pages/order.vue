@@ -8,14 +8,19 @@
           :key="meal.mealId"
           class="order__item"
         >
-          <img class="order__item__img cursor-pointer" :src="meal.imageUrl" alt="img" @click="openImage(meal.imageUrl)">
+          <img
+            class="order__item__img cursor-pointer"
+            :src="meal.imageUrl"
+            alt="img"
+            @click="openImage(meal.imageUrl)"
+          />
           <div class="order__item__box">
             <h4 class="order__item__title">{{ meal.title }}</h4>
             <div class="order__item__detail">
               <div class="order__item__info">
-              <span class="amount">
-                {{ meal.price | $formatMoneyWithSpace }}
-              </span>
+                <span class="amount">
+                  {{ meal.price | $formatMoneyWithSpace }}
+                </span>
                 <span class="text">so'm</span>
               </div>
               <div class="order__item__quantity">
@@ -27,8 +32,8 @@
                   @click="decrementOrder(meal)"
                 />
                 <span class="order__item__count">
-                {{ getMealQuantity(meal.mealId) }}
-              </span>
+                  {{ getMealQuantity(meal.mealId) }}
+                </span>
                 <VIcon
                   class="cursor-pointer"
                   icon="plus"
@@ -49,21 +54,25 @@
         </div>
         <ValidationObserver v-slot="{ handleSubmit }" ref="formRef" tag="div">
           <form @submit.prevent="handleSubmit(onSubmit)">
-            <VInput
-              v-model="userPhoneNumber"
-              v-mask="'+998(##) ###-##-##'"
-              class="mb-10"
-              placeholder="Telefon raqamingizni kiriting"
-              vid="userPhoneNumber"
-              rules="required"
-            />
-            <VInput
-              v-model="address"
-              class="mb-10"
-              placeholder="Manzilni kiriting"
-              vid="address"
-              rules="required"
-            />
+            <Transition name="fade">
+              <div v-if="!tableNumber">
+                <VInput
+                  v-model="userPhoneNumber"
+                  v-mask="'+998(##) ###-##-##'"
+                  class="mb-10"
+                  placeholder="Telefon raqamingizni kiriting"
+                  vid="userPhoneNumber"
+                  rules="required"
+                />
+                <VInput
+                  v-model="address"
+                  class="mb-10"
+                  placeholder="Manzilni kiriting"
+                  vid="address"
+                  rules="required"
+                />
+              </div>
+            </Transition>
             <button class="order__btn" type="submit">Buyurtma berish</button>
           </form>
         </ValidationObserver>
@@ -74,7 +83,11 @@
     </div>
     <div v-else>
       <h1 class="order__title text-center">Buyurtmangiz qabul qilindi</h1>
-      <button class="order__btn" type="button" @click="$router.push('/')">
+      <button
+        class="order__btn"
+        type="button"
+        @click="$router.push(parseUrl('/', $route))"
+      >
         Asosiy menuga qaytish
       </button>
     </div>
@@ -84,6 +97,7 @@
 <script>
 import VIcon from '~/components/ui/VIcon.vue'
 import VInput from '~/components/ui/VInput.vue'
+import { parseUrl } from '~/utils/helpers'
 
 export default {
   components: { VInput, VIcon },
@@ -104,8 +118,13 @@ export default {
         0
       )
     },
+    tableNumber() {
+      const tableNumber = this.$route.query?.tableNumber
+      return tableNumber ? +tableNumber : 0
+    },
   },
   methods: {
+    parseUrl,
     getMealQuantity(mealId) {
       const meal = this.orderedMeals.find((meal) => meal.mealId === mealId)
       return meal ? meal.mealQuantity : 0
@@ -131,6 +150,7 @@ export default {
     async onSubmit() {
       try {
         await this.$axios.post('/orders', {
+          tableNumber: this.tableNumber,
           address: this.address,
           userPhoneNumber: this.userPhoneNumber.replace(/\D/g, ''),
           orderItems: this.orderedMeals.map((meal) => ({

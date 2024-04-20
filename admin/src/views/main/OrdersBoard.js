@@ -6,7 +6,7 @@ import LinearProgress from '@mui/material/LinearProgress'
 import BoardColumn from './BoardColumn'
 import ReactSortableWrapperStyled from 'src/@core/styles/libs/react-sortable'
 
-import { useGetOrders, useUpdateOrder } from 'src/api/hooks/orders'
+import { useGetOrders, useUpdateOrderStatus } from 'src/api/hooks/orders'
 
 import { ORDER_STATUSES } from 'src/utils/constants/orders'
 
@@ -23,7 +23,7 @@ const boardColumnStyles = {
   }
 }
 
-const OrdersBoard = ({ dateRange }) => {
+const OrdersBoard = ({ dateRange, search }) => {
   const [orders, setOrders] = useState({
     [ORDER_STATUSES.NEW]: [],
     [ORDER_STATUSES.PENDING]: [],
@@ -31,7 +31,7 @@ const OrdersBoard = ({ dateRange }) => {
     [ORDER_STATUSES.REJECTED]: []
   })
 
-  const { data, isLoading, isFetching } = useGetOrders(dateRange)
+  const { data, isLoading, isFetching } = useGetOrders({ ...dateRange, search })
 
   useEffect(() => {
     const filterByStatus = status => data?.filter(order => order.status === status) ?? []
@@ -44,7 +44,7 @@ const OrdersBoard = ({ dateRange }) => {
     })
   }, [data])
 
-  const { mutate } = useUpdateOrder()
+  const { mutate } = useUpdateOrderStatus()
 
   const handleChange = (status, data) => {
     const prevData = orders[status]
