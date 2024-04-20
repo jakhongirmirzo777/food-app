@@ -113,7 +113,7 @@ const UserDropdown = () => {
         <Divider sx={{ mt: 0, mb: 1 }} />
         <MenuItem sx={{ py: 2 }} onClick={handleLogout}>
           <LogoutVariant sx={{ marginRight: 2, fontSize: '1.375rem', color: 'text.secondary' }} />
-          Logout
+          Chiqish
         </MenuItem>
       </Menu>
 

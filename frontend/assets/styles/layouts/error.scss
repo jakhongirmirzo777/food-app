@@ -17,7 +17,7 @@
   width: 100%;
   border: none;
   background-color: var(--color-red);
-  color: var(--color-white);
+  color: var(--color-btn-text);
   border-radius: 32px;
   display: flex;
   justify-content: center;
@@ -28,6 +28,10 @@
   transition: all 0.2s;
 
   &:hover {
-    background-color: #c40e1c;
+    background-color: #444343;
+  }
+
+  &:active {
+    scale: (0.9);
   }
 }

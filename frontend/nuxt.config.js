@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Fantasy Burgers | fantasy-burgers.uz',
+    title: 'Yalla cafe | yalla-cafe.uz',
     htmlAttrs: {
       lang: 'uz',
     },
@@ -18,12 +18,12 @@ export default {
       {
         hid: 'image',
         name: 'image',
-        content: '/logo.jpg',
+        content: '/logo.png',
       },
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'Fantasy Burgers | fantasy-burgers.uz',
+        content: 'Yalla cafe | yalla-cafe.uz',
       },
       {
         hid: 'og:description',
@@ -33,7 +33,7 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: '/logo.jpg',
+        content: '/logo.png',
       },
       {
         hid: 'og:type',
@@ -48,12 +48,12 @@ export default {
       {
         hid: 'og:site_name',
         property: 'og:site_name',
-        content: 'fantasy-burgers.uz',
+        content: 'yalla-cafe.uz',
       },
       {
         hid: 'og:image:alt',
         property: 'og:image:alt',
-        content: 'Fantasy Burgers | fantasy-burgers.uz',
+        content: 'Yalla cafe | yalla-cafe.uz',
       },
       { hid: 'robots', name: 'robots', content: 'index, follow' },
       { hid: 'yandex', name: 'yandex', content: 'noindex, follow' },
@@ -114,5 +114,16 @@ export default {
     ADDRESS_MAP: process.env.ADDRESS_MAP,
     ADDRESS_TEXT: process.env.ADDRESS_TEXT,
     RESTAURANT_NAME: process.env.RESTAURANT_NAME,
+    OUR_CONTACT_1: process.env.OUR_CONTACT_1,
+    OUR_CONTACT_1_LINK: process.env.OUR_CONTACT_1_LINK,
+    OUR_CONTACT_2: process.env.OUR_CONTACT_2,
+    OUR_CONTACT_2_LINK: process.env.OUR_CONTACT_2_LINK,
+    OUR_CONTACT_3: process.env.OUR_CONTACT_3,
+    OUR_CONTACT_3_LINK: process.env.OUR_CONTACT_3_LINK,
+    OUR_BRAND_NAME_AND_CC: process.env.OUR_BRAND_NAME_AND_CC,
+    OUR_TELEGRAM_TEXT: process.env.OUR_TELEGRAM_TEXT,
+    OUR_TELEGRAM_LINK: process.env.OUR_TELEGRAM_LINK,
+    OUR_WHATSAPP_TEXT: process.env.OUR_WHATSAPP_TEXT,
+    OUR_WHATSAPP_LINK: process.env.OUR_WHATSAPP_LINK,
   },
 }

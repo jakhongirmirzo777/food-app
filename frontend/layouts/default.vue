@@ -5,8 +5,8 @@
         <VIcon icon="arrow-left" size="16" color="var(--color-black)" />
       </NuxtLink>
       <div class="d-flex justify-center py-20">
-        <NuxtLink to="/">
-          <img class="layout__logo" src="/logo.jpg" alt="logo" />
+        <NuxtLink to="/" class="layout__logo__text">
+          <span>Yalla</span>
         </NuxtLink>
       </div>
       <VCard
@@ -14,58 +14,135 @@
         radius="24px 24px 0 0"
         padding="24px 16px 0 16px"
       >
-        <div class="layout__info mb-16">
-          <h1>{{ restaurantName }}</h1>
+        <div>
+          <div class="layout__info mb-16">
+            <h1>{{ restaurantName }}</h1>
+            <p>
+              <span class="layout__address mb-8">
+                <a class="mr-12" :href="addressMap">
+                  <VIcon
+                    class="mr-5"
+                    icon="location"
+                    size="14"
+                    color="#676767"
+                  />
+                  {{ addressText }}
+                </a>
+                <a :href="`tel:${phoneUrl}`">
+                  <VIcon class="mr-5" icon="phone" size="14" color="#676767" />
+                  {{ phoneText }}
+                </a>
+              </span>
+              <span class="layout__text">Xizmat ko'rsatish bepul</span>
+            </p>
+          </div>
+          <div v-if="$route.name !== 'order'" class="layout__tags">
+            <VTag
+              v-for="tag in tags"
+              :key="tag.id"
+              :active="tag.id === activeTagId"
+              @click.native="handleTagClick(tag.id)"
+            >
+              {{ tag.title }}
+            </VTag>
+          </div>
+          <ValidationObserver
+            v-if="$route.name === 'index' || $route.name === 'search-slug'"
+            v-slot="{ handleSubmit }"
+            ref="formRef"
+            class="layout__search__wrapper"
+            tag="div"
+          >
+            <form
+              class="layout__search"
+              @submit.prevent="handleSubmit(onSubmit)"
+            >
+              <VInput
+                v-model="searchQuery"
+                class="layout__search__input"
+                placeholder="Qidiruv"
+                vid="search"
+                rules="required"
+              />
+              <button
+                class="layout__search__btn"
+                type="submit"
+                aria-label="search"
+              >
+                <VIcon icon="search" size="16" color="#4c4c4c" />
+              </button>
+            </form>
+          </ValidationObserver>
+          <Nuxt />
+        </div>
+        <div
+          :style="{
+            margin: $route.name === 'order' ? '70px 0 0' : '50px 0 30px',
+          }"
+          class="layout__contacts"
+        >
+          <h4>Web Sayt boyicha aloqa</h4>
+          <!--          <div class="layout__contacts__phones">-->
+          <!--            <a :href="`tel:${OUR_CONTACT_1_LINK}`">-->
+          <!--              <VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="phone"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_CONTACT_1 }}-->
+          <!--            </a>-->
+          <!--            <a :href="`tel:${OUR_CONTACT_2_LINK}`"-->
+          <!--              ><VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="phone"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_CONTACT_2 }}-->
+          <!--            </a>-->
+          <!--            <a :href="OUR_TELEGRAM_LINK"-->
+          <!--              ><VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="telegram"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_TELEGRAM_TEXT }}-->
+          <!--            </a>-->
+          <!--            <a-->
+          <!--              v-if="OUR_WHATSAPP_LINK && OUR_WHATSAPP_TEXT"-->
+          <!--              :href="OUR_WHATSAPP_LINK"-->
+          <!--              ><VIcon-->
+          <!--                class="mr-8"-->
+          <!--                icon="whatsapp"-->
+          <!--                size="14"-->
+          <!--                color="var(&#45;&#45;color-red)"-->
+          <!--              />-->
+          <!--              {{ OUR_WHATSAPP_TEXT }}-->
+          <!--            </a>-->
+          <!--          </div>-->
           <p>
-            <span class="layout__address mb-8">
-              <a class="mr-12" :href="addressMap">
-                <VIcon class="mr-5" icon="location" size="14" color="#676767" />
-                {{ addressText }}
-              </a>
-              <a :href="`tel:${phoneUrl}`">
-                <VIcon class="mr-5" icon="phone" size="14" color="#676767" />
-                {{ phoneText }}
-              </a>
-            </span>
-            <span class="layout__text">Xizmat ko'rsatish bepul</span>
+            <span>{{ OUR_BRAND_NAME_AND_CC }}</span>
+            <a
+              :href="OUR_TELEGRAM_LINK"
+              class="d-flex align-center justify-center"
+            >
+              <VIcon
+                class="mr-8"
+                icon="telegram"
+                size="14"
+                color="var(--color-red)"
+              />
+              {{ OUR_TELEGRAM_TEXT }}
+            </a>
           </p>
         </div>
-        <div v-if="$route.name !== 'order'" class="layout__tags">
-          <VTag
-            v-for="tag in tags"
-            :key="tag.id"
-            :active="tag.id === activeTagId"
-            @click.native="handleTagClick(tag.id)"
-          >
-            {{ tag.title }}
-          </VTag>
-        </div>
-        <ValidationObserver
-          v-if="$route.name === 'index' || $route.name === 'search-slug'"
-          v-slot="{ handleSubmit }"
-          ref="formRef"
-          class="layout__search__wrapper"
-          tag="div"
-        >
-          <form class="layout__search" @submit.prevent="handleSubmit(onSubmit)">
-            <VInput
-              v-model="searchQuery"
-              class="layout__search__input"
-              placeholder="Qidiruv"
-              vid="search"
-              rules="required"
-            />
-            <button class="layout__search__btn" type="submit">
-              <VIcon icon="search" size="16" color="#4c4c4c" />
-            </button>
-          </form>
-        </ValidationObserver>
-        <Nuxt />
       </VCard>
     </VCard>
     <NuxtLink
       v-if="$route.name !== 'order' && !!$route.name"
-      to="/order"
+      to="/order/"
       class="layout__order__btn"
     >
       Buyurtmani ko'rish
@@ -109,6 +186,39 @@ export default {
     },
     restaurantName() {
       return this.$config.RESTAURANT_NAME
+    },
+    OUR_CONTACT_1() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_CONTACT_1_LINK() {
+      return this.$config.OUR_CONTACT_1
+    },
+    OUR_CONTACT_2() {
+      return this.$config.OUR_CONTACT_2
+    },
+    OUR_CONTACT_2_LINK() {
+      return this.$config.OUR_CONTACT_2
+    },
+    OUR_CONTACT_3() {
+      return this.$config.OUR_CONTACT_3
+    },
+    OUR_CONTACT_3_LINK() {
+      return this.$config.OUR_CONTACT_3
+    },
+    OUR_BRAND_NAME_AND_CC() {
+      return this.$config.OUR_BRAND_NAME_AND_CC
+    },
+    OUR_TELEGRAM_TEXT() {
+      return this.$config.OUR_TELEGRAM_TEXT
+    },
+    OUR_TELEGRAM_LINK() {
+      return this.$config.OUR_TELEGRAM_LINK
+    },
+    OUR_WHATSAPP_TEXT() {
+      return this.$config.OUR_WHATSAPP_TEXT
+    },
+    OUR_WHATSAPP_LINK() {
+      return this.$config.OUR_WHATSAPP_LINK
     },
     tags() {
       return this.$store.state.tags

@@ -1,15 +1,13 @@
 $font: (
-  ('ExtraBold', 800),
-  ('Bold', 700),
-  ('SemiBold', 600),
-  ('Medium', 500),
-  ('Regular', 400)
+  ('ExtraBold', 700),
+  ('Bold', 600),
+  ('Regular', 500)
 );
 
 @each $name, $weight in $font {
-  $url: '../fonts/Rubik/Rubik-' + $name;
+  $url: '../fonts/Kaleko205Round/Kaleko205Round-' + $name;
   @font-face {
-    font-family: 'Inter';
+    font-family: 'Kaleko205Round';
     src: url($url + '.ttf') format('truetype');
     font-style: normal;
     font-weight: $weight;

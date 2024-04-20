@@ -11,12 +11,12 @@
   transition: all 0.2s;
 
   &:hover {
-    color: var(--color-white);
+    color: var(--color-btn-text);
     background-color: var(--color-red);
   }
 
   &.active {
-    color: var(--color-white);
+    color: var(--color-btn-text);
     background-color: var(--color-red);
   }
 }
