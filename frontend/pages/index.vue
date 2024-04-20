@@ -4,7 +4,7 @@
       v-for="category in categories"
       :key="category.id"
       class="home__category"
-      :to="`/category/${category.id}`"
+      :to="`/category/${category.id}/`"
     >
       <img :src="category.imageUrl" :alt="category.title" />
       <h1>{{ category.title }}</h1>
