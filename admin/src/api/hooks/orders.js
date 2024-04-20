@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { QUERY_ORDERS, QUERY_ORDER } from '../query-keys'
-import { getOrders, getOrder, updateOrderStatus, deleteOrder } from '../services/orders'
+import { getOrders, getOrder, updateOrderStatus, deleteOrder, resetCounterOrder } from '../services/orders'
 
 export const useGetOrders = params => {
-  return useQuery([QUERY_ORDERS, params], () => getOrders(params.startDate, params.endDate), {
+  return useQuery([QUERY_ORDERS, params], () => getOrders(params.startDate, params.endDate, params.search), {
     refetchInterval: 10_000, // 10 seconds
     refetchIntervalInBackground: true
   })
@@ -13,7 +13,7 @@ export const useGetOrder = (orderId, options) => {
   return useQuery([QUERY_ORDER, orderId], () => getOrder(orderId), options)
 }
 
-export const useUpdateOrder = () => {
+export const useUpdateOrderStatus = () => {
   const queryClient = useQueryClient()
 
   return useMutation(
@@ -21,6 +21,23 @@ export const useUpdateOrder = () => {
       queryClient.cancelQueries(QUERY_ORDERS)
 
       return updateOrderStatus(orderId, status)
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_ORDERS)
+      }
+    }
+  )
+}
+
+export const useResetCounterOrder = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    () => {
+      queryClient.cancelQueries(QUERY_ORDERS)
+
+      return resetCounterOrder()
     },
     {
       onSuccess: () => {

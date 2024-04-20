@@ -14,7 +14,7 @@ import OrderDetailsDialog from './order-details-dialog'
 
 import { formatDate } from 'src/utils/formatDate'
 import { formatNumber } from 'src/utils/formatNumber'
-import { useUpdateOrder } from '../../api/hooks/orders'
+import { useUpdateOrderStatus } from '../../api/hooks/orders'
 import { ORDER_STATUSES } from '../../utils/constants/orders'
 
 const RoundedButton = styled(Button)(({ theme }) => ({
@@ -35,7 +35,7 @@ const RoundedButton = styled(Button)(({ theme }) => ({
 }))
 
 const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status }) => {
-  const { mutate } = useUpdateOrder()
+  const { mutate } = useUpdateOrderStatus()
 
   const [showDetails, setShowDetails] = useState(false)
 
