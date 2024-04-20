@@ -37,7 +37,7 @@ model Admins {
 model Order {
   id              Int         @id @default(autoincrement())
   totalCost       Int
-  userPhoneNumber String
+  userPhoneNumber String?
   address         String?
   status          OrderStatus
   orderItems      OrderItem[]
