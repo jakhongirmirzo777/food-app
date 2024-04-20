@@ -49,8 +49,18 @@ export class OrdersController {
   @ApiBearerAuth()
   @UseGuards(AdminGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
+  update(@Param('id') id: string, @Body() updateOrderDto: CreateOrderDto) {
     return this.ordersService.update(+id, updateOrderDto);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AdminGuard)
+  @Patch('update-status/:id')
+  updateStatus(
+    @Param('id') id: string,
+    @Body() updateOrderDto: UpdateOrderDto,
+  ) {
+    return this.ordersService.updateStatus(+id, updateOrderDto);
   }
 
   @ApiBearerAuth()
