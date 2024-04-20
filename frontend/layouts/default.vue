@@ -241,11 +241,13 @@ export default {
   methods: {
     parseUrl,
     onSubmit() {
-      this.$router.push(parseUrl(`/search/${this.searchQuery}`, this.$route))
+      this.$router.push(
+        this.parseUrl(`/search/${this.searchQuery}`, this.$route)
+      )
     },
     handleTagClick(tagId) {
       this.$store.dispatch('getCategories', tagId)
-      this.$router.push(parseUrl('/', this.$route))
+      this.$router.push(this.parseUrl('/', this.$route))
     },
   },
 }

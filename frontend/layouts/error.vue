@@ -4,7 +4,7 @@
     <button
       class="error__btn"
       type="button"
-      @click="$router.push(parseUrl('/', this.$route))"
+      @click="$router.push(parseUrl('/', $route))"
     >
       Asosiy menuga qaytish
     </button>

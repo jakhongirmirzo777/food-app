@@ -5,5 +5,7 @@ export const parseUrl = (path, route) => {
     return `${path}?tableNumber=${tableNumber}`
   }
 
+  if (path === '/') return '/'
+
   return path + '/'
 }
