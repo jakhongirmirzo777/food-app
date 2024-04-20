@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { OrderStatus } from '@prisma/client';
 import { GetOrderDto } from './dto/get-orders.dto';
 import { DailyCounterService } from './daily-counter.service';
+import { UpdateOrderDto } from './dto/update-order.dto';
 
 @Injectable()
 export class OrdersService {
@@ -59,6 +59,65 @@ export class OrdersService {
     });
 
     return order;
+  }
+
+  async update(id: number, updateOrderDto: CreateOrderDto) {
+    const existingOrder = await this.prisma.order.findUnique({
+      where: { id },
+      include: { orderItems: true },
+    });
+
+    if (!existingOrder) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+
+    const meals = await this.prisma.meal.findMany({
+      where: {
+        id: {
+          in: updateOrderDto.orderItems.map((item) => item.mealId),
+        },
+      },
+    });
+
+    const totalCost = updateOrderDto.orderItems.reduce((acc, item) => {
+      const meal = meals.find((m) => m.id === item.mealId);
+      if (!meal) {
+        throw new NotFoundException(`Meal with ID ${item.mealId} not found`);
+      }
+      return acc + meal.price * item.mealQuantity;
+    }, 0);
+
+    await this.prisma.orderItem.deleteMany({
+      where: { orderId: id },
+    });
+
+    const updatedOrder = await this.prisma.order.update({
+      where: { id },
+      data: {
+        totalCost,
+        userPhoneNumber: updateOrderDto.userPhoneNumber || null,
+        address: updateOrderDto.address || null,
+        tableNumber: updateOrderDto.tableNumber || null,
+        orderItems: {
+          createMany: {
+            data: updateOrderDto.orderItems.map((item) => ({
+              mealId: item.mealId,
+              mealQuantity: item.mealQuantity,
+            })),
+          },
+        },
+      },
+
+      include: {
+        orderItems: {
+          include: {
+            meal: true,
+          },
+        },
+      },
+    });
+
+    return updatedOrder;
   }
 
   async findAll(query: GetOrderDto) {
@@ -142,7 +201,7 @@ export class OrdersService {
     return order;
   }
 
-  async update(id: number, updateOrderDto: UpdateOrderDto) {
+  async updateStatus(id: number, updateOrderDto: UpdateOrderDto) {
     const existingOrder = await this.prisma.order.findUnique({
       where: { id },
     });
