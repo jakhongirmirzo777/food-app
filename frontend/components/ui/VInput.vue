@@ -10,6 +10,7 @@
     <input
       :ref="vid"
       class="v-input__input"
+      :class="{ error: errors && errors.length && errors[0] }"
       type="text"
       :placeholder="placeholder"
       :value="value"

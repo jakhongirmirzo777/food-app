@@ -54,21 +54,25 @@
         </div>
         <ValidationObserver v-slot="{ handleSubmit }" ref="formRef" tag="div">
           <form @submit.prevent="handleSubmit(onSubmit)">
-            <VInput
-              v-model="userPhoneNumber"
-              v-mask="'+998(##) ###-##-##'"
-              class="mb-10"
-              placeholder="Telefon raqamingizni kiriting"
-              vid="userPhoneNumber"
-              rules="required"
-            />
-            <VInput
-              v-model="address"
-              class="mb-10"
-              placeholder="Manzilni kiriting"
-              vid="address"
-              rules="required"
-            />
+            <Transition name="fade">
+              <div v-if="!tableNumber">
+                <VInput
+                  v-model="userPhoneNumber"
+                  v-mask="'+998(##) ###-##-##'"
+                  class="mb-10"
+                  placeholder="Telefon raqamingizni kiriting"
+                  vid="userPhoneNumber"
+                  rules="required"
+                />
+                <VInput
+                  v-model="address"
+                  class="mb-10"
+                  placeholder="Manzilni kiriting"
+                  vid="address"
+                  rules="required"
+                />
+              </div>
+            </Transition>
             <button class="order__btn" type="submit">Buyurtma berish</button>
           </form>
         </ValidationObserver>
@@ -79,7 +83,11 @@
     </div>
     <div v-else>
       <h1 class="order__title text-center">Buyurtmangiz qabul qilindi</h1>
-      <button class="order__btn" type="button" @click="$router.push('/')">
+      <button
+        class="order__btn"
+        type="button"
+        @click="$router.push(parseUrl('/', $route))"
+      >
         Asosiy menuga qaytish
       </button>
     </div>
@@ -89,6 +97,7 @@
 <script>
 import VIcon from '~/components/ui/VIcon.vue'
 import VInput from '~/components/ui/VInput.vue'
+import { parseUrl } from '~/utils/helpers'
 
 export default {
   components: { VInput, VIcon },
@@ -109,8 +118,13 @@ export default {
         0
       )
     },
+    tableNumber() {
+      const tableNumber = this.$route.query?.tableNumber
+      return tableNumber ? +tableNumber : 0
+    },
   },
   methods: {
+    parseUrl,
     getMealQuantity(mealId) {
       const meal = this.orderedMeals.find((meal) => meal.mealId === mealId)
       return meal ? meal.mealQuantity : 0
@@ -136,6 +150,7 @@ export default {
     async onSubmit() {
       try {
         await this.$axios.post('/orders', {
+          tableNumber: this.tableNumber,
           address: this.address,
           userPhoneNumber: this.userPhoneNumber.replace(/\D/g, ''),
           orderItems: this.orderedMeals.map((meal) => ({
