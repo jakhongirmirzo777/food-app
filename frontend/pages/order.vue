@@ -136,7 +136,6 @@ export default {
     async onSubmit() {
       try {
         await this.$axios.post('/orders', {
-          tableNumber: 1,
           address: this.address,
           userPhoneNumber: this.userPhoneNumber.replace(/\D/g, ''),
           orderItems: this.orderedMeals.map((meal) => ({

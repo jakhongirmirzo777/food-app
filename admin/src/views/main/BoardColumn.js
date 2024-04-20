@@ -1,11 +1,13 @@
 import { useState, useCallback } from 'react'
 
-import { Box, Card, CardContent, CardHeader, Typography } from '@mui/material'
+import { Box, Card, CardContent, Typography } from '@mui/material'
 import { ReactSortable } from 'react-sortablejs'
 
 import BoardCard from './BoardCard'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const BoardColumn = ({ title, data, isLoading, onChange, borderColor = 'divider' }) => {
+  const isDisabledDragging = useMediaQuery(theme => theme.breakpoints.down('md'))
   const [isDragging, setIsDragging] = useState(false)
 
   const handleStart = useCallback(() => {
@@ -39,6 +41,7 @@ const BoardColumn = ({ title, data, isLoading, onChange, borderColor = 'divider'
       </Box>
       <CardContent sx={{ mt: 1, p: 2, display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         <ReactSortable
+          disabled={isDisabledDragging}
           group='shared'
           animation={300}
           filter='.ignoreDrag'
@@ -69,6 +72,8 @@ const BoardColumn = ({ title, data, isLoading, onChange, borderColor = 'divider'
                   price={item.totalCost}
                   createdAt={item.createdAt}
                   tableNumber={item.tableNumber}
+                  orderNumber={item.orderNumber}
+                  status={item.status}
                 />
               ))}
 
