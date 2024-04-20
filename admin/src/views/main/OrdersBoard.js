@@ -23,7 +23,7 @@ const boardColumnStyles = {
   }
 }
 
-const OrdersBoard = ({ dateRange, search }) => {
+const OrdersBoard = ({ dateRange, searchQuery }) => {
   const [orders, setOrders] = useState({
     [ORDER_STATUSES.NEW]: [],
     [ORDER_STATUSES.PENDING]: [],
@@ -31,7 +31,7 @@ const OrdersBoard = ({ dateRange, search }) => {
     [ORDER_STATUSES.REJECTED]: []
   })
 
-  const { data, isLoading, isFetching } = useGetOrders({ ...dateRange, search })
+  const { data, isLoading, isFetching } = useGetOrders({ ...dateRange, search: searchQuery })
 
   useEffect(() => {
     const filterByStatus = status => data?.filter(order => order.status === status) ?? []

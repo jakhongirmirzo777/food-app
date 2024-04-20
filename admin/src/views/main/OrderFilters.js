@@ -12,13 +12,14 @@ import LoadingButton from '@mui/lab/LoadingButton'
 import { useResetCounterOrder } from '../../api/hooks/orders'
 import { useSnackbar } from '../../@core/context/snackbarContext'
 import AppConfirmationDialog from '../../@core/components/AppConfirmationDialog'
+import CloseIcon from 'mdi-material-ui/Close'
 
 // ** Components Imports
 const AppDateRangePicker = dynamic(() => import('src/@core/components/react-date-range/app-date-range-picker'), {
   ssr: false
 })
 
-const OrderFilters = ({ range, search, handleRangeChange, handleSearchChange }) => {
+const OrderFilters = ({ range, search, handleRangeChange, handleSearchChange, handleSearchQueryChange }) => {
   const isMobile = useMediaQuery(theme => theme.breakpoints.up('md'))
   const [showResetConfirmDialog, setShowResetConfirmDialog] = useState(false)
   const { mutate, isLoading: isResetLoading } = useResetCounterOrder()
@@ -59,12 +60,27 @@ const OrderFilters = ({ range, search, handleRangeChange, handleSearchChange }) 
                 sx={{ width: '100%' }}
                 name='search'
                 value={search}
-                onChange={e => handleSearchChange(e.target.value)}
+                onChange={e => {
+                  handleSearchChange(e.target.value)
+                  handleSearchQueryChange(e.target.value)
+                }}
                 placeholder='Qidirish'
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position='start'>
                       <MagnifyIcon fontSize='small' />
+                    </InputAdornment>
+                  ),
+                  endAdornment: search && (
+                    <InputAdornment
+                      position='end'
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        handleSearchChange('')
+                        handleSearchQueryChange('')
+                      }}
+                    >
+                      <CloseIcon fontSize='small' color='error' />
                     </InputAdornment>
                   )
                 }}

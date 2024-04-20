@@ -2,11 +2,11 @@
 import { useRouter } from 'next/router'
 
 // ** React Imports
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 // ** Utils Imports
 import { updateURLqueries } from 'src/utils/url-queries'
-import debounce from 'lodash.debounce'
+import _debounce from 'lodash.debounce'
 
 import { format, startOfToday, endOfToday } from 'date-fns'
 
@@ -26,12 +26,23 @@ export const useDateRangeFilter = () => {
   const router = useRouter()
 
   const [search, setSearch] = useState(router.query?.search || '')
+  const [searchQuery, setSearchQuery] = useState(router.query?.search || '')
   const [range, setRange] = useState(getValueFromUrl(router.query))
+
+  const debounceFn = searchQueryValue => {
+    setSearchQuery(searchQueryValue)
+    updateURLqueries(router, {
+      search: searchQueryValue
+    })
+  }
+
+  const handleSearchQueryChange = useCallback(_debounce(debounceFn, 1000), [])
 
   useEffect(() => {
     if (router.isReady) {
       setRange(getValueFromUrl(router.query))
       setSearch(router.query?.search || '')
+      setSearchQuery(router.query?.search || '')
     }
   }, [router.isReady, router.query])
 
@@ -46,17 +57,7 @@ export const useDateRangeFilter = () => {
 
   const handleSearchChange = newValue => {
     setSearch(newValue)
-
-    // debounce(() => {
-    //   updateURLqueries(router, {
-    //     search: newValue
-    //   })
-    // }, 300)
-
-    updateURLqueries(router, {
-      search: newValue
-    })
   }
 
-  return { search, range, handleRangeChange, handleSearchChange }
+  return { search, searchQuery, range, handleRangeChange, handleSearchChange, handleSearchQueryChange }
 }

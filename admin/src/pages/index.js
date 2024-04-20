@@ -10,7 +10,8 @@ import OrderFilters from 'src/views/main/OrderFilters'
 import { useDateRangeFilter } from 'src/views/main/use-date-range-filter'
 
 const MainPage = () => {
-  const { search, range, handleRangeChange, handleSearchChange } = useDateRangeFilter()
+  const { search, searchQuery, range, handleRangeChange, handleSearchChange, handleSearchQueryChange } =
+    useDateRangeFilter()
 
   return (
     <>
@@ -19,8 +20,9 @@ const MainPage = () => {
         range={range}
         handleRangeChange={handleRangeChange}
         handleSearchChange={handleSearchChange}
+        handleSearchQueryChange={handleSearchQueryChange}
       />
-      <OrdersBoard search={search} dateRange={range} />
+      <OrdersBoard searchQuery={searchQuery} dateRange={range} />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 // ** MUI Imports
 import Paper from '@mui/material/Paper'
@@ -25,6 +25,7 @@ import Divider from '@mui/material/Divider'
 import PencilIcon from 'mdi-material-ui/Pencil'
 import DeleteIcon from 'mdi-material-ui/Delete'
 import MagnifyIcon from 'mdi-material-ui/Magnify'
+import CloseIcon from 'mdi-material-ui/Close'
 
 // ** Components Imports
 import AppImage from 'src/@core/components/AppImage'
@@ -40,20 +41,28 @@ import { usePagination } from 'src/@core/hooks/use-pagination'
 
 import { formatNumber } from 'src/utils/formatNumber'
 import { PAGINATION_VALUE } from 'src/utils/constants/pagination'
+import _debounce from 'lodash.debounce'
 
 const MealsCRUD = () => {
   const [page, updatePage] = usePagination()
 
   const [search, setSearch] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
 
   const offset = page * PAGINATION_VALUE
 
-  const { data: mealsResponse, isFetching } = useGetMeals({ offset, search })
+  const { data: mealsResponse, isFetching } = useGetMeals({ offset, search: searchQuery })
   const meals = mealsResponse?.data ?? []
   const total = mealsResponse?.count ?? 0
 
-  const handleSearchChange = e => {
-    setSearch(e.target.value)
+  const debounceFn = searchQueryValue => {
+    setSearchQuery(searchQueryValue)
+  }
+
+  const handleSearchQueryChange = useCallback(_debounce(debounceFn, 1000), [])
+
+  const handleSearchChange = value => {
+    setSearch(value)
     updatePage(0)
   }
 
@@ -122,12 +131,27 @@ const MealsCRUD = () => {
               sx={{ width: 300 }}
               name='search'
               value={search}
-              onChange={handleSearchChange}
+              onChange={e => {
+                handleSearchChange(e.target.value)
+                handleSearchQueryChange(e.target.value)
+              }}
               placeholder='Qidirish'
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
                     <MagnifyIcon fontSize='small' />
+                  </InputAdornment>
+                ),
+                endAdornment: search && (
+                  <InputAdornment
+                    position='end'
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      handleSearchChange('')
+                      handleSearchQueryChange('')
+                    }}
+                  >
+                    <CloseIcon fontSize='small' color='error' />
                   </InputAdornment>
                 )
               }}
