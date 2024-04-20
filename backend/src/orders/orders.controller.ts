@@ -41,13 +41,6 @@ export class OrdersController {
 
   @ApiBearerAuth()
   @UseGuards(AdminGuard)
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.ordersService.findOne(+id);
-  }
-
-  @ApiBearerAuth()
-  @UseGuards(AdminGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrderDto: CreateOrderDto) {
     return this.ordersService.update(+id, updateOrderDto);
@@ -75,5 +68,22 @@ export class OrdersController {
   @Post('reset-counter')
   resetCounter() {
     return this.dailyCounterService.reset();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AdminGuard)
+  @Get('statistics')
+  async getOrderStatistics(
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+  ): Promise<any> {
+    return this.ordersService.getOrderStatistics(startDate, endDate);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AdminGuard)
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.ordersService.findOne(+id);
   }
 }
