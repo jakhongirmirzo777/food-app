@@ -4,10 +4,14 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { OrderStatus } from '@prisma/client';
 import { GetOrderDto } from './dto/get-orders.dto';
+import { DailyCounterService } from './daily-counter.service';
 
 @Injectable()
 export class OrdersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly dailyCounterService: DailyCounterService,
+  ) {}
   async create(createOrderDto: CreateOrderDto) {
     const meals = await this.prisma.meal.findMany({
       where: {
@@ -25,6 +29,9 @@ export class OrdersService {
       return acc + meal.price * item.mealQuantity;
     }, 0);
 
+    const today = new Date();
+    const counter = await this.dailyCounterService.incrementDailyCounter(today);
+
     const order = await this.prisma.order.create({
       data: {
         totalCost,
@@ -32,6 +39,7 @@ export class OrdersService {
         address: createOrderDto.address,
         tableNumber: createOrderDto.tableNumber,
         status: OrderStatus.NEW,
+        orderNumber: counter,
         orderItems: {
           createMany: {
             data: createOrderDto.orderItems.map((item) => ({
