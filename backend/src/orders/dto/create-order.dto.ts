@@ -26,4 +26,8 @@ export class CreateOrderDto {
   @IsOptional()
   @IsString()
   address?: string;
+
+  @IsOptional()
+  @IsInt()
+  tableNumber?: number;
 }

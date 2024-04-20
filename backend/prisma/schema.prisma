@@ -43,6 +43,7 @@ model Order {
   orderItems      OrderItem[]
   createdAt       DateTime    @default(now())
   meals           Meal[]
+  tableNumber     Int?
 }
 
 model OrderItem {

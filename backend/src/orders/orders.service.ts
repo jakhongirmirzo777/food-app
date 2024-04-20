@@ -30,6 +30,7 @@ export class OrdersService {
         totalCost,
         userPhoneNumber: createOrderDto.userPhoneNumber,
         address: createOrderDto.address,
+        tableNumber: createOrderDto.tableNumber,
         status: OrderStatus.NEW,
         orderItems: {
           createMany: {
