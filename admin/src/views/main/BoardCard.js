@@ -90,12 +90,16 @@ const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status }) =
                 {formatNumber(price)} so'm
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px' }}>
-                <RoundedButton size='small' color='secondary' variant='outlined' onClick={updateStatusPrev}>
-                  <ArrowLeftIcon />
-                </RoundedButton>
-                <RoundedButton size='small' color='secondary' variant='outlined' onClick={updateStatusNext}>
-                  <ArrowRightIcon />
-                </RoundedButton>
+                {status !== ORDER_STATUSES.NEW && (
+                  <RoundedButton size='small' color='secondary' variant='outlined' onClick={updateStatusPrev}>
+                    <ArrowLeftIcon />
+                  </RoundedButton>
+                )}
+                {status !== ORDER_STATUSES.REJECTED && (
+                  <RoundedButton size='small' color='secondary' variant='outlined' onClick={updateStatusNext}>
+                    <ArrowRightIcon />
+                  </RoundedButton>
+                )}
               </Box>
             </Box>
           </Box>
