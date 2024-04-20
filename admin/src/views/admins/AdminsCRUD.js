@@ -30,6 +30,7 @@ import AdminsForm from './AdminsForm'
 // ** Hooks Imports
 import { useSnackbar } from 'src/@core/context/snackbarContext'
 import { useGetAdmins, useDeleteAdmin } from 'src/api/hooks/admins'
+import { ROLES } from '../../utils/constants/roles'
 
 const AdminsCRUD = () => {
   const { data: admins = [], isFetching } = useGetAdmins()
@@ -131,9 +132,11 @@ const AdminsCRUD = () => {
                       <IconButton onClick={startEditing.bind(null, admin)}>
                         <PencilIcon />
                       </IconButton>
-                      <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, admin.id)}>
-                        <DeleteIcon />
-                      </IconButton>
+                      {admin.role !== ROLES.SUPER_ADMIN && (
+                        <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, admin.id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      )}
                     </TableCell>
                   </StripedTableRow>
                 ))}
