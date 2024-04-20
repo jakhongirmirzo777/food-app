@@ -238,4 +238,80 @@ export class OrdersService {
 
     return updatedOrder;
   }
+
+  async getOrderStatistics(start: string, end: string): Promise<any> {
+    const startDate = new Date(start);
+    startDate.setUTCHours(0, 0, 0, 0);
+    const endDate = new Date(end);
+    endDate.setUTCHours(0, 0, 0, 0);
+    endDate.setDate(endDate.getDate() + 1);
+
+    const orders = await this.prisma.order.findMany({
+      where: {
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      select: {
+        id: true,
+        createdAt: true,
+        totalCost: true,
+        status: true,
+        isDeleted: true,
+      },
+    });
+
+    const stats = {};
+    orders.forEach((order) => {
+      const date = order.createdAt.toISOString().split('T')[0]; // Extract date without time
+      if (!stats[date]) {
+        stats[date] = {
+          totalOrders: 0,
+          totalPrice: 0,
+          totalNewOrders: 0,
+          totalNewOrdersPrice: 0,
+          totalPendingOrders: 0,
+          totalPendingOrdersPrice: 0,
+          totalRejectedOrders: 0,
+          totalRejectedOrdersPrice: 0,
+          totalCompletedOrders: 0,
+          totalCompletedOrdersPrice: 0,
+          totalDeletedOrders: 0,
+          totalDeletedOrdersPrice: 0,
+        };
+      }
+      stats[date].totalOrders++;
+      stats[date].totalPrice += order.totalCost;
+
+      if (order.isDeleted) {
+        stats[date].totalDeletedOrders++;
+        stats[date].totalDeletedOrdersPrice += order.totalCost;
+        return;
+      }
+
+      switch (order.status) {
+        case OrderStatus.NEW:
+          stats[date].totalNewOrders++;
+          stats[date].totalNewOrdersPrice += order.totalCost;
+          break;
+        case OrderStatus.PENDING:
+          stats[date].totalPendingOrders++;
+          stats[date].totalPendingOrdersPrice += order.totalCost;
+          break;
+        case OrderStatus.REJECTED:
+          stats[date].totalRejectedOrders++;
+          stats[date].totalRejectedOrdersPrice += order.totalCost;
+          break;
+        case OrderStatus.COMPLETED:
+          stats[date].totalCompletedOrders++;
+          stats[date].totalCompletedOrdersPrice += order.totalCost;
+          break;
+        default:
+          break;
+      }
+    });
+
+    return stats;
+  }
 }
