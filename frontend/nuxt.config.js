@@ -1,4 +1,4 @@
-// const axios = require('axios')
+import axios from 'axios'
 
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -102,33 +102,40 @@ export default {
     baseURL: process.env.API_BASE_URL,
   },
 
-  // server: {
-  //   host: '0',
-  //   port: 3000,
-  // },
+  server: {
+    host: '0',
+    port: 3000,
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 
-  // sitemap: {
-  // hostname: process.env.APP_BASE_URL,
-  // gzip: true,
-  // trailingSlash: true,
-  // exclude: ['/error'],
-  // defaults: {
-  //   changefreq: 'daily',
-  //   priority: 1,
-  //   lastmod: new Date(),
-  // },
-  // routes: async () => {
-  //   const { data } = await axios.get('/tags')
-  //   const requests = data?.map(
-  //     async (tag) => await axios.get(`/category?tagId=${tag.id}`)
-  //   )
-  //   const responses = await Promise.all(requests)
-  //   return responses.map((data) => `/category/${data.id}`)
-  // },
-  // },
+  sitemap: {
+    hostname: process.env.APP_BASE_URL,
+    gzip: true,
+    trailingSlash: true,
+    exclude: ['/error'],
+    defaults: {
+      changefreq: 'daily',
+      priority: 1,
+      lastmod: new Date(),
+    },
+    routes: async () => {
+      const { data } = await axios.get(process.env.API_BASE_URL + '/tags')
+      const requests =
+        data?.map((tag) =>
+          axios.get(process.env.API_BASE_URL + `/category?tagId=${tag.id}`)
+        ) || []
+      const responses = await Promise.all(requests)
+      const categories =
+        responses
+          ?.map((response) => {
+            return response.data
+          })
+          ?.flat() || []
+      return categories?.map((category) => `/category/${category.id}`) || []
+    },
+  },
 
   publicRuntimeConfig: {
     APP_BASE_URL: process.env.APP_BASE_URL,
