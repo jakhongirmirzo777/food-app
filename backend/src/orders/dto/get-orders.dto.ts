@@ -1,4 +1,4 @@
-import { IsDate, IsEnum, IsOptional } from 'class-validator';
+import { IsString, IsDate, IsEnum, IsOptional } from 'class-validator';
 import { OrderStatus } from '@prisma/client';
 import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
@@ -26,4 +26,8 @@ export class GetOrderDto {
     description: 'YYYY-MM-DDTHH:mm:ss',
   })
   endDate?: Date;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
 }

@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus, Prisma } from '@prisma/client';
 import { GetOrderDto } from './dto/get-orders.dto';
 import { DailyCounterService } from './daily-counter.service';
 import { UpdateOrderDto } from './dto/update-order.dto';
@@ -121,7 +121,7 @@ export class OrdersService {
   }
 
   async findAll(query: GetOrderDto) {
-    const { orderByOrderStatus, startDate, endDate } = query;
+    const { orderByOrderStatus, startDate, endDate, search } = query;
     const findOrderQuery: {
       include: {
         orderItems: true;
@@ -129,11 +129,7 @@ export class OrdersService {
       orderBy: {
         createdAt: 'desc';
       };
-      where?: {
-        status?: any;
-        createdAt?: any;
-        isDeleted: boolean;
-      };
+      where: Prisma.OrderWhereInput;
     } = {
       include: {
         orderItems: true,
@@ -161,6 +157,26 @@ export class OrdersService {
         status: {
           equals: orderByOrderStatus,
         },
+      };
+    }
+
+    if (search) {
+      findOrderQuery.where = {
+        ...findOrderQuery.where,
+        OR: [
+          {
+            userPhoneNumber: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+          {
+            address: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          },
+        ],
       };
     }
 
