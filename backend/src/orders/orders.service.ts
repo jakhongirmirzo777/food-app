@@ -73,6 +73,7 @@ export class OrdersService {
       where?: {
         status?: any;
         createdAt?: any;
+        isDeleted: boolean;
       };
     } = {
       include: {
@@ -81,9 +82,13 @@ export class OrdersService {
       orderBy: {
         createdAt: 'desc',
       },
+      where: {
+        isDeleted: false,
+      },
     };
     if (startDate && endDate) {
       findOrderQuery.where = {
+        isDeleted: false,
         createdAt: {
           gte: startDate,
           lte: endDate,
@@ -93,6 +98,7 @@ export class OrdersService {
 
     if (orderByOrderStatus) {
       findOrderQuery.where = {
+        isDeleted: false,
         status: {
           equals: orderByOrderStatus,
         },
@@ -108,6 +114,7 @@ export class OrdersService {
       );
 
       delete order.orderItems;
+      delete order.isDeleted;
 
       return {
         ...order,
@@ -147,6 +154,27 @@ export class OrdersService {
     const updatedOrder = await this.prisma.order.update({
       where: { id },
       data: updateOrderDto,
+    });
+
+    return updatedOrder;
+  }
+
+  async remove(id: number) {
+    const existingOrder = await this.prisma.order.findUnique({
+      where: { id },
+    });
+
+    if (!existingOrder) {
+      throw new NotFoundException('Order not found');
+    }
+
+    const updatedOrder = await this.prisma.order.update({
+      where: {
+        id,
+      },
+      data: {
+        isDeleted: true,
+      },
     });
 
     return updatedOrder;

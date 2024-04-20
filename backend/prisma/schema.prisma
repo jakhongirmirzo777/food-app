@@ -45,6 +45,7 @@ model Order {
   meals           Meal[]
   tableNumber     Int?
   orderNumber     Int?
+  isDeleted       Boolean     @default(false)
 }
 
 model OrdersDailyCounter {

@@ -4,6 +4,7 @@ import {
   Post,
   Body,
   Patch,
+  Delete,
   Param,
   UseGuards,
   Query,
@@ -50,6 +51,13 @@ export class OrdersController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
     return this.ordersService.update(+id, updateOrderDto);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(AdminGuard)
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.ordersService.remove(+id);
   }
 
   @ApiBearerAuth()
