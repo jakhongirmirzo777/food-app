@@ -5,7 +5,9 @@ import Card from '@mui/material/Card'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
-import ChevronRightIcon from 'mdi-material-ui/ChevronRight'
+import Chip from '@mui/material/Chip'
+import ArrowLeftIcon from 'mdi-material-ui/ArrowLeft'
+import ArrowRightIcon from 'mdi-material-ui/ArrowRight'
 import { styled } from '@mui/material/styles'
 
 import OrderDetailsDialog from './order-details-dialog'
@@ -30,7 +32,7 @@ const RoundedButton = styled(Button)(({ theme }) => ({
   }
 }))
 
-const BoardCard = ({ id, price, createdAt }) => {
+const BoardCard = ({ id, price, createdAt, tableNumber }) => {
   const [showDetails, setShowDetails] = useState(false)
 
   const openDetails = () => setShowDetails(true)
@@ -42,12 +44,17 @@ const BoardCard = ({ id, price, createdAt }) => {
         <Card sx={{ height: '100%', position: 'relative' }} variant='outlined' onClick={openDetails}>
           <Box sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-              <Typography variant='subtitle' fontWeight={500}>
-                Buyurtma{' '}
-                <Typography component='span' variant='subtitle' fontWeight={600}>
-                  #{id}
-                </Typography>
-              </Typography>
+              {/* <Typography variant='subtitle' fontWeight={500}> */}
+              {/*   Buyurtma{' '} */}
+              {/*   <Typography component='span' variant='subtitle' fontWeight={600}> */}
+              {/*     #{id} */}
+              {/*   </Typography> */}
+              {/* </Typography> */}
+              <Chip
+                label={`Buyurtma #${id} ${tableNumber ? '(ST-' + tableNumber + ')' : ''}`}
+                color={tableNumber ? 'info' : 'success'}
+                size='small'
+              />
               <Typography variant='subtitle2' fontWeight={500}>
                 {formatDate(createdAt)}
               </Typography>
@@ -56,9 +63,17 @@ const BoardCard = ({ id, price, createdAt }) => {
               <Typography variant='subtitle1' color='primary' fontWeight={500}>
                 {formatNumber(price)} so'm
               </Typography>
-              <RoundedButton size='small' color='secondary' variant='outlined'>
-                <ChevronRightIcon />
-              </RoundedButton>
+              {/* <RoundedButton size='small' color='secondary' variant='outlined'> */}
+              {/*   <ChevronRightIcon /> */}
+              {/* </RoundedButton> */}
+              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px' }}>
+                <RoundedButton size='small' color='secondary' variant='outlined'>
+                  <ArrowLeftIcon />
+                </RoundedButton>
+                <RoundedButton size='small' color='secondary' variant='outlined'>
+                  <ArrowRightIcon />
+                </RoundedButton>
+              </Box>
             </Box>
           </Box>
         </Card>

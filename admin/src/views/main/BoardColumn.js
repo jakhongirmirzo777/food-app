@@ -63,7 +63,13 @@ const BoardColumn = ({ title, data, isLoading, onChange, borderColor = 'divider'
 
             {!isLoading &&
               data.map(item => (
-                <BoardCard id={item.id} key={item.id} price={item.totalCost} createdAt={item.createdAt} />
+                <BoardCard
+                  id={item.id}
+                  key={item.id}
+                  price={item.totalCost}
+                  createdAt={item.createdAt}
+                  tableNumber={item.tableNumber}
+                />
               ))}
 
             {!isLoading && data.length === 0 && (

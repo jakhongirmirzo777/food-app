@@ -2,15 +2,13 @@
 import axios from '../axios'
 
 export async function getOrders(startDate, endDate) {
-  
-  
   const params = {}
 
   if (startDate) {
-    params.startDate = new Date(startDate).toISOString();
+    params.startDate = new Date(startDate).toISOString()
   }
   if (endDate) {
-    params.endDate = new Date(endDate).toISOString();
+    params.endDate = new Date(endDate).toISOString()
   }
 
   const res = await axios.get('/orders', {
@@ -28,4 +26,8 @@ export async function getOrder(orderId) {
 
 export async function updateOrderStatus(orderId, status) {
   return await axios.patch(`/orders/${orderId}`, { status })
+}
+
+export async function deleteOrder(orderId) {
+  return await axios.delete(`/orders/${orderId}`)
 }

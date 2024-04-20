@@ -8,14 +8,19 @@
           :key="meal.mealId"
           class="order__item"
         >
-          <img class="order__item__img cursor-pointer" :src="meal.imageUrl" alt="img" @click="openImage(meal.imageUrl)">
+          <img
+            class="order__item__img cursor-pointer"
+            :src="meal.imageUrl"
+            alt="img"
+            @click="openImage(meal.imageUrl)"
+          />
           <div class="order__item__box">
             <h4 class="order__item__title">{{ meal.title }}</h4>
             <div class="order__item__detail">
               <div class="order__item__info">
-              <span class="amount">
-                {{ meal.price | $formatMoneyWithSpace }}
-              </span>
+                <span class="amount">
+                  {{ meal.price | $formatMoneyWithSpace }}
+                </span>
                 <span class="text">so'm</span>
               </div>
               <div class="order__item__quantity">
@@ -27,8 +32,8 @@
                   @click="decrementOrder(meal)"
                 />
                 <span class="order__item__count">
-                {{ getMealQuantity(meal.mealId) }}
-              </span>
+                  {{ getMealQuantity(meal.mealId) }}
+                </span>
                 <VIcon
                   class="cursor-pointer"
                   icon="plus"
@@ -131,6 +136,7 @@ export default {
     async onSubmit() {
       try {
         await this.$axios.post('/orders', {
+          tableNumber: 1,
           address: this.address,
           userPhoneNumber: this.userPhoneNumber.replace(/\D/g, ''),
           orderItems: this.orderedMeals.map((meal) => ({
