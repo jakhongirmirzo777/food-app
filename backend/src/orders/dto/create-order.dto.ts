@@ -20,8 +20,9 @@ export class CreateOrderDto {
   @IsArray()
   orderItems: OrderItemDto[];
 
+  @IsOptional()
   @IsString()
-  userPhoneNumber: string;
+  userPhoneNumber?: string;
 
   @IsOptional()
   @IsString()

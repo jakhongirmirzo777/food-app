@@ -37,13 +37,21 @@ model Admins {
 model Order {
   id              Int         @id @default(autoincrement())
   totalCost       Int
-  userPhoneNumber String
+  userPhoneNumber String?
   address         String?
   status          OrderStatus
   orderItems      OrderItem[]
   createdAt       DateTime    @default(now())
   meals           Meal[]
   tableNumber     Int?
+  orderNumber     Int?
+  isDeleted       Boolean     @default(false)
+}
+
+model OrdersDailyCounter {
+  id    Int    @id @default(autoincrement())
+  date  String
+  value Int    @default(1)
 }
 
 model OrderItem {

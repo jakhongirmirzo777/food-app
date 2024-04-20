@@ -4,10 +4,14 @@ import { UpdateOrderDto } from './dto/update-order.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { OrderStatus } from '@prisma/client';
 import { GetOrderDto } from './dto/get-orders.dto';
+import { DailyCounterService } from './daily-counter.service';
 
 @Injectable()
 export class OrdersService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly dailyCounterService: DailyCounterService,
+  ) {}
   async create(createOrderDto: CreateOrderDto) {
     const meals = await this.prisma.meal.findMany({
       where: {
@@ -25,6 +29,9 @@ export class OrdersService {
       return acc + meal.price * item.mealQuantity;
     }, 0);
 
+    const today = new Date();
+    const counter = await this.dailyCounterService.incrementDailyCounter(today);
+
     const order = await this.prisma.order.create({
       data: {
         totalCost,
@@ -32,6 +39,7 @@ export class OrdersService {
         address: createOrderDto.address,
         tableNumber: createOrderDto.tableNumber,
         status: OrderStatus.NEW,
+        orderNumber: counter,
         orderItems: {
           createMany: {
             data: createOrderDto.orderItems.map((item) => ({
@@ -65,6 +73,7 @@ export class OrdersService {
       where?: {
         status?: any;
         createdAt?: any;
+        isDeleted: boolean;
       };
     } = {
       include: {
@@ -73,9 +82,13 @@ export class OrdersService {
       orderBy: {
         createdAt: 'desc',
       },
+      where: {
+        isDeleted: false,
+      },
     };
     if (startDate && endDate) {
       findOrderQuery.where = {
+        isDeleted: false,
         createdAt: {
           gte: startDate,
           lte: endDate,
@@ -85,6 +98,7 @@ export class OrdersService {
 
     if (orderByOrderStatus) {
       findOrderQuery.where = {
+        isDeleted: false,
         status: {
           equals: orderByOrderStatus,
         },
@@ -100,6 +114,7 @@ export class OrdersService {
       );
 
       delete order.orderItems;
+      delete order.isDeleted;
 
       return {
         ...order,
@@ -139,6 +154,27 @@ export class OrdersService {
     const updatedOrder = await this.prisma.order.update({
       where: { id },
       data: updateOrderDto,
+    });
+
+    return updatedOrder;
+  }
+
+  async remove(id: number) {
+    const existingOrder = await this.prisma.order.findUnique({
+      where: { id },
+    });
+
+    if (!existingOrder) {
+      throw new NotFoundException('Order not found');
+    }
+
+    const updatedOrder = await this.prisma.order.update({
+      where: {
+        id,
+      },
+      data: {
+        isDeleted: true,
+      },
     });
 
     return updatedOrder;
