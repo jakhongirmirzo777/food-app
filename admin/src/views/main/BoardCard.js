@@ -10,7 +10,7 @@ import ArrowLeftIcon from 'mdi-material-ui/ArrowLeft'
 import ArrowRightIcon from 'mdi-material-ui/ArrowRight'
 import { styled } from '@mui/material/styles'
 
-import OrderDetailsDialog from './order-details-dialog'
+import OrderDetailsDialog from './order-details-dialog/OrderDetailsDialog'
 
 import { formatDate } from 'src/utils/formatDate'
 import { formatNumber } from 'src/utils/formatNumber'

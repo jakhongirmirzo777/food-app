@@ -8,18 +8,21 @@ import IconButton from '@mui/material/IconButton'
 import Skeleton from '@mui/material/Skeleton'
 import CloseIcon from 'mdi-material-ui/Close'
 import DeleteIcon from 'mdi-material-ui/Delete'
+import PencilIcon from 'mdi-material-ui/Pencil'
 import LoadingButton from '@mui/lab/LoadingButton'
+import Button from '@mui/material/Button'
+import Chip from '@mui/material/Chip'
 
+import AppConfirmationDialog from '../../../@core/components/AppConfirmationDialog'
+import OrderCreateUpdateDialog from '../order-create-update-dialog/OrderCreateUpdateDialog'
 import OrderItem from './OrderItem'
 
+import { styled } from '@mui/material/styles'
 import { useDeleteOrder, useGetOrder } from 'src/api/hooks/orders'
 import { formatDate } from 'src/utils/formatDate'
 import { formatNumber } from 'src/utils/formatNumber'
-import { styled } from '@mui/material/styles'
-import Chip from '@mui/material/Chip'
 import { useState } from 'react'
 import { useSnackbar } from '../../../@core/context/snackbarContext'
-import AppConfirmationDialog from '../../../@core/components/AppConfirmationDialog'
 import { useRole } from '../../../layouts/useRole'
 import { ROLES } from '../../../utils/constants/roles'
 
@@ -38,9 +41,10 @@ const DeleteButton = styled(LoadingButton)(({ theme }) => ({
 const OrderDetailsDialog = ({ id, open, onClose }) => {
   const { data, isFetching } = useGetOrder(id, { enabled: open })
   const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false)
+  const [isOrderCreateUpdateDialogOpen, setIsOrderCreateUpdateDialogOpen] = useState(false)
   const [itemToDeleteId, setItemToDeleteId] = useState(null)
   const validateRole = useRole()
-  const hasAccessToDelete = validateRole(ROLES.SUPER_ADMIN)
+  const hasAccessToEditAndDelete = validateRole(ROLES.SUPER_ADMIN)
 
   const openDeleteConfirmation = id => {
     setItemToDeleteId(id)
@@ -155,19 +159,40 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
                     {isFetching ? <Skeleton width={100} /> : `${formatNumber(data?.totalCost)} so'm`}
                   </Typography>
                 </Box>
-                {hasAccessToDelete && (
-                  <DeleteButton
-                    loading={isDeleteLoading}
-                    size='small'
-                    color='error'
-                    variant='contained'
-                    onClick={openDeleteConfirmation.bind(null, data?.id)}
+                {hasAccessToEditAndDelete && (
+                  <Box
+                    sx={{
+                      width: '100%',
+                      display: 'flex',
+                      justifyContent: 'flex-end',
+                      alignItems: 'center'
+                    }}
                   >
-                    <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
-                      O'chirish
-                    </Typography>
-                    <DeleteIcon fontSize='small' color='white' />
-                  </DeleteButton>
+                    <Button
+                      size='small'
+                      color='warning'
+                      variant='contained'
+                      onClick={() => setIsOrderCreateUpdateDialogOpen(true)}
+                      style={{ marginRight: 10 }}
+                    >
+                      <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
+                        Tahrirlash
+                      </Typography>
+                      <PencilIcon fontSize='small' color='white' />
+                    </Button>
+                    <DeleteButton
+                      loading={isDeleteLoading}
+                      size='small'
+                      color='error'
+                      variant='contained'
+                      onClick={openDeleteConfirmation.bind(null, data?.id)}
+                    >
+                      <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
+                        O'chirish
+                      </Typography>
+                      <DeleteIcon fontSize='small' color='white' />
+                    </DeleteButton>
+                  </Box>
                 )}
               </Box>
             </DialogActions>
@@ -179,6 +204,11 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
         open={showDeleteConfirmDialog}
         onClose={closeDeleteConfirmation}
         onConfirm={handleDelete}
+      />
+      <OrderCreateUpdateDialog
+        data={data}
+        isDialogOpen={isOrderCreateUpdateDialogOpen}
+        setIsDialogOpen={setIsOrderCreateUpdateDialogOpen}
       />
     </>
   )
