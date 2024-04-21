@@ -29,14 +29,10 @@ const OrderCreateUpdateDialog = ({ data, isDialogOpen, setIsDialogOpen }) => {
               <CloseIcon fontSize='small' />
             </IconButton>
           </Box>
-          {data && (
-            <>
-              <Box sx={{ padding: 5 }}>
-                <OrderForm setIsDialogOpen={setIsDialogOpen} data={data} orderItems={orderItems} />
-                <Divider sx={{ mt: 10 }} />
-              </Box>
-            </>
-          )}
+          <Box sx={{ padding: 5 }}>
+            <OrderForm setIsDialogOpen={setIsDialogOpen} data={data} orderItems={orderItems} />
+            <Divider sx={{ mt: 10 }} />
+          </Box>
           {orderItems.length > 0 && (
             <>
               <Box sx={{ padding: 5 }}>

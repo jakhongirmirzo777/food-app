@@ -19,7 +19,14 @@ const AppDateRangePicker = dynamic(() => import('src/@core/components/react-date
   ssr: false
 })
 
-const OrderFilters = ({ range, search, handleRangeChange, handleSearchChange, handleSearchQueryChange }) => {
+const OrderFilters = ({
+  range,
+  search,
+  handleRangeChange,
+  handleSearchChange,
+  handleSearchQueryChange,
+  setOrderCreateDialogOpen
+}) => {
   const isMobile = useMediaQuery(theme => theme.breakpoints.up('md'))
   const [showResetConfirmDialog, setShowResetConfirmDialog] = useState(false)
   const { mutate, isLoading: isResetLoading } = useResetCounterOrder()
@@ -97,14 +104,14 @@ const OrderFilters = ({ range, search, handleRangeChange, handleSearchChange, ha
               color='secondary'
               onClick={openResetConfirmation}
             >
-              yangilash
+              Yangilash
             </LoadingButton>
           </Box>
         </Grid>
         <Grid item xs={12} md={2} pl={isMobile ? 2 : 0}>
           <Box sx={{ mb: 4 }}>
-            <LoadingButton loading={isResetLoading} fullWidth variant='contained'>
-              qo'shish
+            <LoadingButton fullWidth variant='contained' onClick={() => setOrderCreateDialogOpen(true)}>
+              Qo'shish
             </LoadingButton>
           </Box>
         </Grid>

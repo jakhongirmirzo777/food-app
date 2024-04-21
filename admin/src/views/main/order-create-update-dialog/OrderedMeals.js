@@ -7,6 +7,10 @@ import PlusIcon from 'mdi-material-ui/Plus'
 import CardHeader from '@mui/material/CardHeader'
 
 const OrderedMeals = ({ orderItems, setOrderItems }) => {
+  const totalAmount = orderItems.reduce((acc, cur) => {
+    return acc + cur.mealQuantity * cur.meal.price
+  }, 0)
+
   const onRemoveMeal = meal => {
     const orders = JSON.parse(JSON.stringify(orderItems))
     const orderIndex = orders.findIndex(order => order.mealId === meal.mealId)
@@ -67,6 +71,7 @@ const OrderedMeals = ({ orderItems, setOrderItems }) => {
           </Box>
         </Box>
       ))}
+      <CardHeader title={`Ja'mi: ${formatNumber(totalAmount)} so'm`} sx={{ padding: 0, mt: 8 }} />
     </>
   )
 }

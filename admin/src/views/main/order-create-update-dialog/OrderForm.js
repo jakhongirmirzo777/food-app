@@ -53,12 +53,16 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
     : null
 
   useEffect(() => {
-    if (data.tableNumber) {
-      setOrderType(ORDER_TYPE.TABLE)
+    if (data) {
+      if (data.tableNumber) {
+        setOrderType(ORDER_TYPE.TABLE)
+      } else {
+        setOrderType(ORDER_TYPE.TAKE_AWAY)
+      }
     } else {
-      setOrderType(ORDER_TYPE.TAKE_AWAY)
+      setOrderType(ORDER_TYPE.TABLE)
     }
-  }, [data.tableNumber])
+  }, [data?.tableNumber])
 
   const validationSchema =
     orderType === ORDER_TYPE.TABLE

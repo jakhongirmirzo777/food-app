@@ -33,6 +33,7 @@ export const useUpdateOrder = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(QUERY_ORDER)
+        queryClient.invalidateQueries(QUERY_ORDERS)
       }
     }
   )
