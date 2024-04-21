@@ -8,22 +8,18 @@ import { useRouter } from 'next/router'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import InputLabel from '@mui/material/InputLabel'
-import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import CardContent from '@mui/material/CardContent'
 import FormControl from '@mui/material/FormControl'
 import LoadingButton from '@mui/lab/LoadingButton'
 import OutlinedInput from '@mui/material/OutlinedInput'
-import { styled, useTheme } from '@mui/material/styles'
+import { styled } from '@mui/material/styles'
 import MuiCard from '@mui/material/Card'
 import InputAdornment from '@mui/material/InputAdornment'
 
 // ** Icons Imports
 import EyeOutline from 'mdi-material-ui/EyeOutline'
 import EyeOffOutline from 'mdi-material-ui/EyeOffOutline'
-
-// ** Configs
-import themeConfig from 'src/configs/themeConfig'
 
 // ** Form Validation
 import { useFormik } from 'formik'
@@ -73,7 +69,6 @@ const LoginPage = () => {
   })
 
   // ** Hook
-  const theme = useTheme()
   const router = useRouter()
 
   const handleClickShowPassword = () => {
