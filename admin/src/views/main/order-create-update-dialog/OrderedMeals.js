@@ -4,6 +4,7 @@ import { formatNumber } from '../../../utils/formatNumber'
 import IconButton from '@mui/material/IconButton'
 import MinusIcon from 'mdi-material-ui/Minus'
 import PlusIcon from 'mdi-material-ui/Plus'
+import CardHeader from '@mui/material/CardHeader'
 
 const OrderedMeals = ({ orderItems, setOrderItems }) => {
   const onRemoveMeal = meal => {
@@ -34,6 +35,7 @@ const OrderedMeals = ({ orderItems, setOrderItems }) => {
 
   return (
     <>
+      <CardHeader title='Buyurtmalar' sx={{ padding: 0, mb: 8 }} />
       {orderItems.map(orderItem => (
         <Box
           key={orderItem.mealId}

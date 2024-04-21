@@ -92,7 +92,7 @@ const MealsTable = ({ orderItems, setOrderItems }) => {
           mb: 4
         }}
       >
-        <CardHeader title='Taomlar' />
+        <CardHeader title='Taomlar' sx={{ mb: 2 }} />
         <TextField
           sx={{ width: isMobile ? 1 : 300 }}
           size='small'

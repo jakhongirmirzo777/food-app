@@ -1,6 +1,14 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
 import { QUERY_ORDERS, QUERY_ORDER } from '../query-keys'
-import { getOrders, getOrder, updateOrderStatus, deleteOrder, resetCounterOrder } from '../services/orders'
+import {
+  getOrders,
+  getOrder,
+  updateOrderStatus,
+  deleteOrder,
+  resetCounterOrder,
+  updateOrder,
+  addOrder
+} from '../services/orders'
 
 export const useGetOrders = params => {
   return useQuery([QUERY_ORDERS, params], () => getOrders(params.startDate, params.endDate, params.search), {
@@ -11,6 +19,40 @@ export const useGetOrders = params => {
 
 export const useGetOrder = (orderId, options) => {
   return useQuery([QUERY_ORDER, orderId], () => getOrder(orderId), options)
+}
+
+export const useUpdateOrder = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    ({ orderId, formData }) => {
+      queryClient.cancelQueries(QUERY_ORDER)
+
+      return updateOrder(orderId, formData)
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_ORDER)
+      }
+    }
+  )
+}
+
+export const useAddOrder = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation(
+    formData => {
+      queryClient.cancelQueries(QUERY_ORDERS)
+
+      return addOrder(formData)
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(QUERY_ORDERS)
+      }
+    }
+  )
 }
 
 export const useUpdateOrderStatus = () => {

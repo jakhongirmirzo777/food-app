@@ -32,6 +32,14 @@ export async function updateOrderStatus(orderId, status) {
   return await axios.patch(`/orders/update-status/${orderId}`, { status })
 }
 
+export async function updateOrder(orderId, formData) {
+  return await axios.patch(`/orders/${orderId}`, formData)
+}
+
+export async function addOrder(formData) {
+  return await axios.post(`/orders`, formData)
+}
+
 export async function resetCounterOrder() {
   return await axios.post(`/orders/reset-counter`)
 }
