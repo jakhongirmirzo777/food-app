@@ -142,7 +142,7 @@ const NotificationDropdown = () => {
           </MenuItem>
           <MenuItem onClick={handleDropdownClose}>
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-              <Avatar sx={{ color: 'common.white', backgroundColor: 'primary.main' }}>VU</Avatar>
+              <Avatar sx={{ color: 'common.white', backgroundColor: 'primary.orders' }}>VU</Avatar>
               <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
                 <MenuItemTitle>New user registered.</MenuItemTitle>
                 <MenuItemSubtitle variant='body2'>5 hours ago</MenuItemSubtitle>

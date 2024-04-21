@@ -1,14 +1,14 @@
 import dynamic from 'next/dynamic'
 
 // ! To avoid 'Window is not defined' error
-const OrdersBoard = dynamic(() => import('src/views/main/OrdersBoard'), {
+const OrdersBoard = dynamic(() => import('src/views/orders/OrdersBoard'), {
   ssr: false
 })
 
-import OrderFilters from 'src/views/main/OrderFilters'
+import OrderFilters from 'src/views/orders/OrderFilters'
 
-import { useDateRangeFilter } from 'src/views/main/use-date-range-filter'
-import OrderCreateUpdateDialog from '../views/main/order-create-update-dialog/OrderCreateUpdateDialog'
+import { useDateRangeFilter } from 'src/views/orders/use-date-range-filter'
+import OrderCreateUpdateDialog from '../views/orders/order-create-update-dialog/OrderCreateUpdateDialog'
 import { useState } from 'react'
 
 const OrdersPage = () => {

@@ -47,7 +47,7 @@ const OrderedMeals = ({ orderItems, setOrderItems }) => {
         >
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <AppImage
-              sx={{ width: 70, minWidth: 70, height: 70, border: 1, borderColor: 'primary.main', borderRadius: 1 }}
+              sx={{ width: 70, minWidth: 70, height: 70, border: 1, borderColor: 'primary.orders', borderRadius: 1 }}
               src={orderItem?.meal?.imageUrl}
               alt={orderItem?.meal?.title}
             />

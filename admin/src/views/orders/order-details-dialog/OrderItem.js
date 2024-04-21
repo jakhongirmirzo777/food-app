@@ -10,7 +10,7 @@ const OrderItem = ({ data }) => {
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', my: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <AppImage
-          sx={{ width: 70, minWidth: 70, height: 70, border: 1, borderColor: 'primary.main', borderRadius: 1 }}
+          sx={{ width: 70, minWidth: 70, height: 70, border: 1, borderColor: 'primary.orders', borderRadius: 1 }}
           src={data?.meal?.imageUrl}
           alt={data?.meal?.title}
         />

@@ -32,7 +32,7 @@ const CardStatsVertical = props => {
           <Typography
             component='sup'
             variant='caption'
-            sx={{ color: trend === 'positive' ? 'success.main' : 'error.main' }}
+            sx={{ color: trend === 'positive' ? 'success.orders' : 'error.orders' }}
           >
             {trendNumber}
           </Typography>

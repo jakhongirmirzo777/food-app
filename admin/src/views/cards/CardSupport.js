@@ -21,7 +21,7 @@ const CardSupport = () => {
         }}
       >
         <Avatar
-          sx={{ width: 50, height: 50, marginBottom: 2.25, color: 'common.white', backgroundColor: 'primary.main' }}
+          sx={{ width: 50, height: 50, marginBottom: 2.25, color: 'common.white', backgroundColor: 'primary.orders' }}
         >
           <HelpCircleOutline sx={{ fontSize: '2rem' }} />
         </Avatar>
