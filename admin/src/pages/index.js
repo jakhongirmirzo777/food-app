@@ -378,7 +378,7 @@ const MainPage = () => {
           </Card>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Card sx={{ p: 4 }}>
+          <Card sx={{ p: 4, height: '100%' }}>
             <CardHeader title="Jami buyurtmalar narxi kategoriya bo'yicha" />
             {!isLoading && (
               <ApexChart
