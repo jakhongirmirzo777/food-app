@@ -407,7 +407,7 @@ const MainPage = () => {
                   <CircularProgress color='inherit' />
                 </Backdrop>
                 <WithEmptyState show={!isLoading}>
-                  <Table aria-label='simple table' sx={{ minWidth: 650 }}>
+                  <Table aria-label='simple table'>
                     <TableHead>
                       <TableRow>
                         <TableCell>Nomi</TableCell>
