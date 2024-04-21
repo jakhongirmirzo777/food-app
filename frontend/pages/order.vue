@@ -120,7 +120,7 @@ export default {
     },
     tableNumber() {
       const tableNumber = this.$route.query?.tableNumber
-      return tableNumber ? +tableNumber : 0
+      return tableNumber ? +tableNumber : null
     },
   },
   methods: {
@@ -150,9 +150,11 @@ export default {
     async onSubmit() {
       try {
         await this.$axios.post('/orders', {
-          tableNumber: this.tableNumber,
-          address: this.address,
-          userPhoneNumber: this.userPhoneNumber.replace(/\D/g, ''),
+          tableNumber: this.tableNumber ? this.tableNumber : null,
+          address: this.tableNumber ? null : this.address,
+          userPhoneNumber: this.tableNumber
+            ? null
+            : this.userPhoneNumber.replace(/\D/g, ''),
           orderItems: this.orderedMeals.map((meal) => ({
             mealId: meal.mealId,
             mealQuantity: meal.mealQuantity,
