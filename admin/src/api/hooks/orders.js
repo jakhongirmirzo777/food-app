@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from 'react-query'
-import { QUERY_ORDERS, QUERY_ORDER } from '../query-keys'
+import { QUERY_ORDERS, QUERY_ORDER, QUERY_STATISTICS } from '../query-keys'
 import {
   getOrders,
   getOrder,
@@ -34,6 +34,7 @@ export const useUpdateOrder = () => {
       onSuccess: () => {
         queryClient.invalidateQueries(QUERY_ORDER)
         queryClient.invalidateQueries(QUERY_ORDERS)
+        queryClient.invalidateQueries(QUERY_STATISTICS)
       }
     }
   )
@@ -51,6 +52,7 @@ export const useAddOrder = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(QUERY_ORDERS)
+        queryClient.invalidateQueries(QUERY_STATISTICS)
       }
     }
   )
@@ -68,6 +70,7 @@ export const useUpdateOrderStatus = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(QUERY_ORDERS)
+        queryClient.invalidateQueries(QUERY_STATISTICS)
       }
     }
   )
