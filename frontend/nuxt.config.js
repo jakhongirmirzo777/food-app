@@ -10,7 +10,11 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Mazali fast food taomlari',
+      },
       { name: 'format-detection', content: 'telephone=no' },
       {
         hid: 'description',
@@ -35,7 +39,7 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: '/logo.png',
+        content: '/logo_1200x630.png',
       },
       {
         hid: 'og:type',
@@ -52,10 +56,41 @@ export default {
         property: 'og:site_name',
         content: 'yalla-cafe.uz',
       },
+      { hid: 'og:url', property: 'og:url', content: 'https://yalla-cafe.uz/' },
       {
         hid: 'og:image:alt',
         property: 'og:image:alt',
         content: 'Yalla cafe | yalla-cafe.uz',
+      },
+      {
+        hid: 'twitter:card',
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
+      {
+        hid: 'twitter:domain',
+        property: 'twitter:domain',
+        content: 'yalla-cafe.uz',
+      },
+      {
+        hid: 'twitter:url',
+        name: 'twitter:url',
+        content: 'https://yalla-cafe.uz/',
+      },
+      {
+        hid: 'twitter:title',
+        name: 'twitter:title',
+        content: 'Yalla cafe | yalla-cafe.uz',
+      },
+      {
+        hid: 'twitter:description',
+        name: 'twitter:description',
+        content: 'Mazali fast food taomlari',
+      },
+      {
+        hid: 'twitter:image',
+        name: 'twitter:image',
+        content: '/logo_1200x630.png',
       },
       { hid: 'robots', name: 'robots', content: 'index, follow' },
       { hid: 'yandex', name: 'yandex', content: 'noindex, follow' },
