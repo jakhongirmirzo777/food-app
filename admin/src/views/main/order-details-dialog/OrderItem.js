@@ -10,13 +10,13 @@ const OrderItem = ({ data }) => {
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', my: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <AppImage
-          sx={{ width: 70, height: 70, border: 1, borderColor: 'primary.main', borderRadius: 1 }}
+          sx={{ width: 70, minWidth: 70, height: 70, border: 1, borderColor: 'primary.main', borderRadius: 1 }}
           src={data?.meal?.imageUrl}
           alt={data?.meal?.title}
         />
 
         <Box sx={{ ml: 3 }}>
-          <Typography variant='subtitle2' fontWeight={600} color='text.primary'>
+          <Typography variant='subtitle2' fontWeight={600} color='text.primary' className='oneLineText'>
             {data?.meal?.title}
           </Typography>
           <Typography variant='subtitle2'>x{data?.mealQuantity}</Typography>

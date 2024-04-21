@@ -4,8 +4,18 @@ import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import CloseIcon from 'mdi-material-ui/Close'
 import MealsTable from './MealsTable'
+import OrderedMeals from './OrderedMeals'
+import { useEffect, useState } from 'react'
+import Divider from '@mui/material/Divider'
 
 const OrderCreateUpdateDialog = ({ data, isDialogOpen, setIsDialogOpen }) => {
+  const [orderItems, setOrderItems] = useState([])
+
+  useEffect(() => {
+    const orderedMeals = data?.orderItems?.length > 0 ? data.orderItems : []
+    setOrderItems(orderedMeals)
+  }, [data?.orderItems, isDialogOpen])
+
   return (
     <Dialog maxWidth='lg' scroll='paper' open={isDialogOpen} fullWidth onClose={() => setIsDialogOpen(false)}>
       {isDialogOpen && (
@@ -18,8 +28,16 @@ const OrderCreateUpdateDialog = ({ data, isDialogOpen, setIsDialogOpen }) => {
               <CloseIcon fontSize='small' />
             </IconButton>
           </Box>
+          {orderItems.length > 0 && (
+            <>
+              <Box sx={{ padding: 5 }}>
+                <OrderedMeals orderItems={orderItems} setOrderItems={setOrderItems} />
+              </Box>
+              <Divider sx={{ mt: 4 }} />
+            </>
+          )}
           <Box sx={{ padding: 5 }}>
-            <MealsTable />
+            <MealsTable orderItems={orderItems} setOrderItems={setOrderItems} />
           </Box>
         </>
       )}

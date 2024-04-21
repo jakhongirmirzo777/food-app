@@ -32,7 +32,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 const ROWS_PER_PAGE_OPTIONS = []
 
-const MealsTable = () => {
+const MealsTable = ({ orderItems, setOrderItems }) => {
   const isMobile = useMediaQuery(theme => theme.breakpoints.down('md'))
 
   const [page, setPage] = useState(0)
@@ -44,6 +44,12 @@ const MealsTable = () => {
   const { data: mealsResponse, isFetching } = useGetMeals({ offset, search: searchQuery })
   const meals = mealsResponse?.data ?? []
   const total = mealsResponse?.count ?? 0
+
+  const addedMeals = orderItems?.reduce((acc, cur) => {
+    acc[cur.mealId] = true
+
+    return acc
+  }, {})
 
   const debounceFn = searchQueryValue => {
     setPage(0)
@@ -59,6 +65,20 @@ const MealsTable = () => {
 
   const handleChangePage = async (_, page) => {
     setPage(+page)
+  }
+
+  const addMealToOrder = meal => {
+    const newMeal = {
+      mealId: meal.id,
+      mealQuantity: 1,
+      meal: {
+        title: meal.title,
+        description: meal.description,
+        price: meal.price,
+        imageUrl: meal.imageUrl
+      }
+    }
+    setOrderItems([...orderItems, newMeal])
   }
 
   return (
@@ -151,9 +171,13 @@ const MealsTable = () => {
                     />
                   </TableCell>
                   <TableCell width='15%' align='center'>
-                    <IconButton>
-                      <PlusIcon />
-                    </IconButton>
+                    {!addedMeals[meal.id] ? (
+                      <IconButton onClick={() => addMealToOrder(meal)}>
+                        <PlusIcon />
+                      </IconButton>
+                    ) : (
+                      "Qo'shilgan"
+                    )}
                   </TableCell>
                 </StripedTableRow>
               ))}
