@@ -19,8 +19,10 @@ import { useAddTag, useUpdateTag } from 'src/api/hooks/tags'
 // ** Utils Imports
 import PropTypes from 'prop-types'
 import { getError } from 'src/utils/getError'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const TagsForm = ({ onClose, initialValues }) => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const [isLoading, setIsLoading] = useState(false)
 
   const { setSnackbar } = useSnackbar()
@@ -71,11 +73,11 @@ const TagsForm = ({ onClose, initialValues }) => {
           />
         </Box>
 
-        <Box sx={{ textAlign: 'right' }}>
-          <Button color='secondary' variant='outlined' onClick={onClose}>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 3, flexWrap: 'wrap' }}>
+          <Button fullWidth={isMobile} color='secondary' variant='outlined' onClick={onClose}>
             Bekor qilish
           </Button>
-          <LoadingButton loading={isLoading} sx={{ ml: 4 }} type='submit' variant='contained'>
+          <LoadingButton fullWidth={isMobile} loading={isLoading} type='submit' variant='contained'>
             Saqlash
           </LoadingButton>
         </Box>

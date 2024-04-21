@@ -30,6 +30,7 @@ import BlankLayout from 'src/@core/layouts/BlankLayout'
 
 import { login } from 'src/api/services/admins'
 import AppImage from '../@core/components/AppImage'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 // ** Styled Components
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -42,6 +43,7 @@ const validationSchema = yup.object({
 })
 
 const LoginPage = () => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -82,7 +84,7 @@ const LoginPage = () => {
   return (
     <Box className='content-center'>
       <Card sx={{ zIndex: 1 }}>
-        <CardContent sx={{ padding: theme => `${theme.spacing(12, 9, 7)} !important` }}>
+        <CardContent sx={{ padding: isMobile ? 6 : 9 }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <AppImage
               alt='Logo'

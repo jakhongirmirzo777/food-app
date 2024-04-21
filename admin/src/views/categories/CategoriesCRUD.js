@@ -32,8 +32,10 @@ import CategoriesForm from './CategoriesForm'
 // ** Hooks Imports
 import { useSnackbar } from 'src/@core/context/snackbarContext'
 import { useGetCategories, useDeleteCategory } from 'src/api/hooks/categories'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const CategoriesCRUD = () => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { data: categories = [], isFetching } = useGetCategories()
 
   const [showForm, setShowForm] = useState(false)
@@ -87,18 +89,14 @@ const CategoriesCRUD = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
+            flexWrap: 'wrap',
             alignItems: 'center'
           }}
         >
           <CardHeader title='Categoriyalar' />
-          <CardHeader
-            sx={{ p: 3, pr: 5 }}
-            title={
-              <Button variant='contained' onClick={openForm}>
-                Categoriya qo'shish
-              </Button>
-            }
-          />
+          <Button sx={{ m: 3 }} fullWidth={isMobile} variant='contained' onClick={openForm}>
+            Categoriya qo'shish
+          </Button>
         </Box>
         <Divider sx={{ my: 0 }} />
         <TableContainer component={Paper} sx={{ position: 'relative', minHeight: isFetching ? 200 : null }}>

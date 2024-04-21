@@ -31,8 +31,10 @@ import AdminsForm from './AdminsForm'
 import { useSnackbar } from 'src/@core/context/snackbarContext'
 import { useGetAdmins, useDeleteAdmin } from 'src/api/hooks/admins'
 import { ROLES } from '../../utils/constants/roles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const AdminsCRUD = () => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { data: admins = [], isFetching } = useGetAdmins()
 
   const [showForm, setShowForm] = useState(false)
@@ -81,18 +83,14 @@ const AdminsCRUD = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexWrap: 'wrap'
           }}
         >
           <CardHeader title='Adminlar' />
-          <CardHeader
-            sx={{ p: 3, pr: 5 }}
-            title={
-              <Button variant='contained' onClick={openForm}>
-                Admin qo'shish
-              </Button>
-            }
-          />
+          <Button fullWidth={isMobile} variant='contained' onClick={openForm} sx={{ mx: 3, mb: isMobile ? 4 : 0 }}>
+            Admin qo'shish
+          </Button>
         </Box>
         <Divider sx={{ my: 0 }} />
         <TableContainer component={Paper} sx={{ position: 'relative', minHeight: isFetching ? 200 : null }}>
@@ -129,14 +127,16 @@ const AdminsCRUD = () => {
                       </Typography>
                     </TableCell>
                     <TableCell width='15%'>
-                      <IconButton onClick={startEditing.bind(null, admin)}>
-                        <PencilIcon />
-                      </IconButton>
-                      {admin.role !== ROLES.SUPER_ADMIN && (
-                        <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, admin.id)}>
-                          <DeleteIcon />
+                      <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap' }}>
+                        <IconButton onClick={startEditing.bind(null, admin)}>
+                          <PencilIcon />
                         </IconButton>
-                      )}
+                        {admin.role !== ROLES.SUPER_ADMIN && (
+                          <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, admin.id)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        )}
+                      </Box>
                     </TableCell>
                   </StripedTableRow>
                 ))}
@@ -148,8 +148,8 @@ const AdminsCRUD = () => {
       <Drawer
         anchor='right'
         open={showForm}
-        PaperProps={{ style: { width: 400 } }}
-        sx={{ width: 400 }}
+        PaperProps={{ style: { maxWidth: 400 } }}
+        sx={{ maxWidth: 400 }}
         onClose={closeForm}
       >
         <AdminsForm onClose={closeForm} initialValues={itemToEdit} />

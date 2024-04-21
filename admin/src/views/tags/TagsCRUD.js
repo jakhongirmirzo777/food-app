@@ -32,8 +32,10 @@ import TagsForm from './TagsForm'
 // ** Hooks Imports
 import { useSnackbar } from 'src/@core/context/snackbarContext'
 import { useGetTags, useDeleteTag } from 'src/api/hooks/tags'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const CategoriesCRUD = () => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { data: tags = [], isFetching } = useGetTags()
 
   const [showForm, setShowForm] = useState(false)
@@ -82,18 +84,14 @@ const CategoriesCRUD = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexWrap: 'wrap'
           }}
         >
           <CardHeader title='Teglar' />
-          <CardHeader
-            sx={{ p: 3, pr: 5 }}
-            title={
-              <Button variant='contained' onClick={openForm}>
-                Teg qo'shish
-              </Button>
-            }
-          />
+          <Button fullWidth={isMobile} variant='contained' onClick={openForm} sx={{ mx: 3, mb: isMobile ? 4 : 0 }}>
+            Teg qo'shish
+          </Button>
         </Box>
         <Divider sx={{ my: 0 }} />
         <TableContainer component={Paper} sx={{ position: 'relative', minHeight: isFetching ? 200 : null }}>
@@ -124,12 +122,14 @@ const CategoriesCRUD = () => {
                       </Typography>
                     </TableCell>
                     <TableCell width='15%'>
-                      <IconButton onClick={startEditing.bind(null, tag)}>
-                        <PencilIcon />
-                      </IconButton>
-                      <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, tag.id)}>
-                        <DeleteIcon />
-                      </IconButton>
+                      <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap' }}>
+                        <IconButton onClick={startEditing.bind(null, tag)}>
+                          <PencilIcon />
+                        </IconButton>
+                        <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, tag.id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
                     </TableCell>
                   </StripedTableRow>
                 ))}

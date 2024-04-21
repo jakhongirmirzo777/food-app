@@ -42,8 +42,11 @@ import { usePagination } from 'src/@core/hooks/use-pagination'
 import { formatNumber } from 'src/utils/formatNumber'
 import { PAGINATION_VALUE } from 'src/utils/constants/pagination'
 import _debounce from 'lodash.debounce'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const MealsCRUD = () => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('md'))
+
   const [page, updatePage] = usePagination()
 
   const [search, setSearch] = useState('')
@@ -121,14 +124,24 @@ const MealsCRUD = () => {
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            flexWrap: 'wrap'
           }}
         >
           <CardHeader title='Taomlar' />
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              width: isMobile ? '100%' : undefined,
+              p: 4,
+              gap: 3
+            }}
+          >
             <TextField
               size='small'
-              sx={{ width: 300 }}
+              sx={{ width: isMobile ? '100%' : 300 }}
               name='search'
               value={search}
               onChange={e => {
@@ -156,14 +169,9 @@ const MealsCRUD = () => {
                 )
               }}
             />
-            <CardHeader
-              sx={{ p: 3, pr: 5 }}
-              title={
-                <Button variant='contained' onClick={openForm}>
-                  Taom qo'shish
-                </Button>
-              }
-            />
+            <Button fullWidth={isMobile} variant='contained' onClick={openForm}>
+              Taom qo'shish
+            </Button>
           </Box>
         </Box>
         <Divider sx={{ my: 0 }} />
@@ -214,12 +222,14 @@ const MealsCRUD = () => {
                       />
                     </TableCell>
                     <TableCell width='15%'>
-                      <IconButton onClick={startEditing.bind(null, meal)}>
-                        <PencilIcon />
-                      </IconButton>
-                      <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, meal.id)}>
-                        <DeleteIcon />
-                      </IconButton>
+                      <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap' }}>
+                        <IconButton onClick={startEditing.bind(null, meal)}>
+                          <PencilIcon />
+                        </IconButton>
+                        <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, meal.id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
                     </TableCell>
                   </StripedTableRow>
                 ))}

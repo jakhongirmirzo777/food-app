@@ -33,8 +33,10 @@ import { useUploadImage } from 'src/api/hooks/images'
 // ** Utils Imports
 import PropTypes from 'prop-types'
 import { getError } from 'src/utils/getError'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const CategoriesForm = ({ onClose, initialValues }) => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const [isLoading, setIsLoading] = useState(false)
 
   const { setSnackbar } = useSnackbar()
@@ -175,11 +177,11 @@ const CategoriesForm = ({ onClose, initialValues }) => {
               </CardContent>
             </Card>
           </Grid>
-          <Grid md={9} sx={{ display: 'flex', justifyContent: 'flex-end' }} xs={12} item>
-            <Button color='secondary' variant='outlined' onClick={onClose}>
+          <Grid md={9} sx={{ display: 'flex', justifyContent: 'flex-end', flexWrap: 'wrap', gap: 3 }} xs={12} item>
+            <Button fullWidth={isMobile} color='secondary' variant='outlined' onClick={onClose}>
               Bekor qilish
             </Button>
-            <LoadingButton loading={isLoading} sx={{ ml: 4 }} type='submit' variant='contained'>
+            <LoadingButton fullWidth={isMobile} loading={isLoading} type='submit' variant='contained'>
               Saqlash
             </LoadingButton>
           </Grid>
