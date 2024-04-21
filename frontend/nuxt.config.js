@@ -15,16 +15,10 @@ export default {
         name: 'description',
         content: 'Mazali fast food taomlari',
       },
-      { name: 'format-detection', content: 'telephone=no' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: 'Mazali fast food taomlari',
-      },
       {
         hid: 'image',
         name: 'image',
-        content: '/logo.png',
+        content: '/logo_1200x630.png',
       },
       {
         hid: 'og:title',
@@ -42,6 +36,11 @@ export default {
         content: '/logo_1200x630.png',
       },
       {
+        hid: 'og:image:alt',
+        property: 'og:image:alt',
+        content: 'Yalla cafe | yalla-cafe.uz',
+      },
+      {
         hid: 'og:type',
         property: 'og:type',
         content: 'website',
@@ -57,11 +56,6 @@ export default {
         content: 'yalla-cafe.uz',
       },
       { hid: 'og:url', property: 'og:url', content: 'https://yalla-cafe.uz/' },
-      {
-        hid: 'og:image:alt',
-        property: 'og:image:alt',
-        content: 'Yalla cafe | yalla-cafe.uz',
-      },
       {
         hid: 'twitter:card',
         name: 'twitter:card',
@@ -92,13 +86,14 @@ export default {
         name: 'twitter:image',
         content: '/logo_1200x630.png',
       },
-      { hid: 'robots', name: 'robots', content: 'index, follow' },
-      { hid: 'yandex', name: 'yandex', content: 'noindex, follow' },
       {
         hid: 'keywords',
         property: 'keywords',
         content: 'burger, chizburgerlar, hot dog, fast food, mazali taomlar',
       },
+      { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'robots', name: 'robots', content: 'index, follow' },
+      { hid: 'yandex', name: 'yandex', content: 'noindex, follow' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
