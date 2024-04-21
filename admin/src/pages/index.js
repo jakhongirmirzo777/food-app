@@ -339,7 +339,13 @@ const MainPage = () => {
             </TabList>
           </Box>
         </TabContext>
-        <Button fullWidth={isMedium} size='small' color='primary' variant='contained'>
+        <Button
+          fullWidth={isMedium}
+          size='small'
+          color='primary'
+          variant='contained'
+          onClick={() => setQrCodeOpen(true)}
+        >
           <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
             QR code
           </Typography>

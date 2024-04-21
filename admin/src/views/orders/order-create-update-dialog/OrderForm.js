@@ -69,7 +69,7 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
       ? yup.object({
           userPhoneNumber: yup.string().label('Telefon raqam').nullable(),
           address: yup.string().max(280).label('Manzil').nullable(),
-          tableNumber: yup.string().nullable().label('Stol raqami').required('Stol raqamini kiriting')
+          tableNumber: yup.string().label('Stol raqami').required('Stol raqamini kiriting')
         })
       : yup.object({
           userPhoneNumber: yup.string().label('Telefon raqam').required('Telefon raqamni kiriting'),
