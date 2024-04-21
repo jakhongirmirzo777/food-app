@@ -13,6 +13,8 @@ import { useResetCounterOrder } from '../../api/hooks/orders'
 import { useSnackbar } from '../../@core/context/snackbarContext'
 import AppConfirmationDialog from '../../@core/components/AppConfirmationDialog'
 import CloseIcon from 'mdi-material-ui/Close'
+import { useRole } from '../../layouts/useRole'
+import { ROLES } from '../../utils/constants/roles'
 
 // ** Components Imports
 const AppDateRangePicker = dynamic(() => import('src/@core/components/react-date-range/app-date-range-picker'), {
@@ -27,6 +29,9 @@ const OrderFilters = ({
   handleSearchQueryChange,
   setOrderCreateDialogOpen
 }) => {
+  const validateRole = useRole()
+  const isUserSuperAdmin = validateRole(ROLES.SUPER_ADMIN)
+
   const isMobile = useMediaQuery(theme => theme.breakpoints.up('md'))
   const [showResetConfirmDialog, setShowResetConfirmDialog] = useState(false)
   const { mutate, isLoading: isResetLoading } = useResetCounterOrder()
@@ -95,19 +100,21 @@ const OrderFilters = ({
             </Box>
           </Box>
         </Grid>
-        <Grid item xs={12} md={2} px={isMobile ? 2 : 0}>
-          <Box sx={{ mb: 4 }}>
-            <LoadingButton
-              loading={isResetLoading}
-              fullWidth
-              variant='contained'
-              color='secondary'
-              onClick={openResetConfirmation}
-            >
-              Yangilash
-            </LoadingButton>
-          </Box>
-        </Grid>
+        {isUserSuperAdmin && (
+          <Grid item xs={12} md={2} px={isMobile ? 2 : 0}>
+            <Box sx={{ mb: 4 }}>
+              <LoadingButton
+                loading={isResetLoading}
+                fullWidth
+                variant='contained'
+                color='secondary'
+                onClick={openResetConfirmation}
+              >
+                Yangilash
+              </LoadingButton>
+            </Box>
+          </Grid>
+        )}
         <Grid item xs={12} md={2} pl={isMobile ? 2 : 0}>
           <Box sx={{ mb: 4 }}>
             <LoadingButton fullWidth variant='contained' onClick={() => setOrderCreateDialogOpen(true)}>
