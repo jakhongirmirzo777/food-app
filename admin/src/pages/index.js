@@ -15,7 +15,6 @@ import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import TabContext from '@mui/lab/TabContext'
 import TabList from '@mui/lab/TabList'
-import TabPanel from '@mui/lab/TabPanel'
 import Qrcode from 'mdi-material-ui/Qrcode'
 import StripedTableRow from '../@core/components/styled/StripedTableRow'
 
@@ -251,9 +250,6 @@ const MainPage = () => {
         {
           breakpoint: 480,
           options: {
-            chart: {
-              width: 200
-            },
             legend: {
               position: 'bottom'
             }

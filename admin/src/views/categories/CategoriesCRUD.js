@@ -140,12 +140,14 @@ const CategoriesCRUD = () => {
                       />
                     </TableCell>
                     <TableCell width='15%'>
-                      <IconButton onClick={startEditing.bind(null, category)}>
-                        <PencilIcon />
-                      </IconButton>
-                      <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, category.id)}>
-                        <DeleteIcon />
-                      </IconButton>
+                      <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'nowrap' }}>
+                        <IconButton onClick={startEditing.bind(null, category)}>
+                          <PencilIcon />
+                        </IconButton>
+                        <IconButton sx={{ ml: 1 }} onClick={openDeleteConfirmation.bind(null, category.id)}>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Box>
                     </TableCell>
                   </StripedTableRow>
                 ))}
