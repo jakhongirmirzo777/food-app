@@ -29,10 +29,14 @@ export const useDateRangeFilter = () => {
   const [searchQuery, setSearchQuery] = useState(router.query?.search || '')
   const [range, setRange] = useState(getValueFromUrl(router.query))
 
-  const debounceFn = searchQueryValue => {
+  const debounceFn = (searchQueryValue, range) => {
+    const { startDate, endDate } = getValueFromUrl(range)
+
     setSearchQuery(searchQueryValue)
     updateURLqueries(router, {
-      search: searchQueryValue
+      search: searchQueryValue,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString()
     })
   }
 
