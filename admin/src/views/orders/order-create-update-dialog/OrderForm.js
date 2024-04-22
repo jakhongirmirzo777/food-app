@@ -72,7 +72,11 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
           tableNumber: yup.string().label('Stol raqami').required('Stol raqamini kiriting')
         })
       : yup.object({
-          userPhoneNumber: yup.string().label('Telefon raqam').required('Telefon raqamni kiriting'),
+          userPhoneNumber: yup
+            .string()
+            .label('Telefon raqam')
+            .matches(/^\+\d{3}\(\d{2}\) \d{3}-\d{2}-\d{2}$/, "To'g'ri telefon raqam kiriting")
+            .required('Telefon raqamni kiriting'),
           address: yup.string().max(280).label('Manzil').required('Manzilni kiriting'),
           tableNumber: yup.string().label('Stol raqami').nullable()
         })
