@@ -74,7 +74,7 @@ const OrderFilters = ({
                 value={search}
                 onChange={e => {
                   handleSearchChange(e.target.value)
-                  handleSearchQueryChange(e.target.value)
+                  handleSearchQueryChange(e.target.value, range)
                 }}
                 placeholder='Qidirish'
                 InputProps={{
@@ -89,7 +89,7 @@ const OrderFilters = ({
                       style={{ cursor: 'pointer' }}
                       onClick={() => {
                         handleSearchChange('')
-                        handleSearchQueryChange('')
+                        handleSearchQueryChange('', range)
                       }}
                     >
                       <CloseIcon fontSize='small' color='error' />
