@@ -149,7 +149,7 @@ const MainPage = () => {
           data: totalCompletedOrdersAll
         },
         {
-          name: 'Rad etilgan buyurtmalar',
+          name: "To'langan buyurtmalar",
           data: totalRejectedOrdersAll
         },
         {
@@ -245,7 +245,7 @@ const MainPage = () => {
         'Yangi buyurtmalar narxi',
         "Bajaruvda bo'lgan buyurtmalar narxi",
         "Tayyor bo'lgan buyurtmalar narxi",
-        'Rad etilgan buyurtmalar narxi',
+        "To'lanagan buyurtmalar narxi",
         "O'chirib yuborilgan buyurtmalar narxi"
       ],
       responsive: [
@@ -476,7 +476,7 @@ const MainPage = () => {
                       <StripedTableRow>
                         <TableCell sx={{ position: 'relative' }}>
                           <Typography sx={{ fontWeight: 500 }} variant='subtitle1'>
-                            Rad etilgan
+                            To'langan
                           </Typography>
                         </TableCell>
                         <TableCell width='15%' align='center'>

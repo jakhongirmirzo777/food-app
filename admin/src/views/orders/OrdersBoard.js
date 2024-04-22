@@ -118,7 +118,7 @@ const OrdersBoard = ({ dateRange, searchQuery }) => {
 
             <Box sx={boardColumnStyles}>
               <BoardColumn
-                title='Rad etilgan'
+                title="To'langan"
                 data={orders[ORDER_STATUSES.REJECTED]}
                 isLoading={isLoading}
                 onChange={handleChange.bind(null, ORDER_STATUSES.REJECTED)}
