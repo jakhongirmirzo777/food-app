@@ -159,27 +159,27 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
                     {isFetching ? <Skeleton width={100} /> : `${formatNumber(data?.totalCost)} so'm`}
                   </Typography>
                 </Box>
-                {hasAccessToEditAndDelete && (
-                  <Box
-                    sx={{
-                      width: '100%',
-                      display: 'flex',
-                      justifyContent: 'flex-end',
-                      alignItems: 'center'
-                    }}
+                <Box
+                  sx={{
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center'
+                  }}
+                >
+                  <Button
+                    size='small'
+                    color='warning'
+                    variant='contained'
+                    onClick={() => setIsOrderCreateUpdateDialogOpen(true)}
+                    style={{ marginRight: 10 }}
                   >
-                    <Button
-                      size='small'
-                      color='warning'
-                      variant='contained'
-                      onClick={() => setIsOrderCreateUpdateDialogOpen(true)}
-                      style={{ marginRight: 10 }}
-                    >
-                      <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
-                        Tahrirlash
-                      </Typography>
-                      <PencilIcon fontSize='small' color='white' />
-                    </Button>
+                    <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
+                      Tahrirlash
+                    </Typography>
+                    <PencilIcon fontSize='small' color='white' />
+                  </Button>
+                  {hasAccessToEditAndDelete && (
                     <DeleteButton
                       loading={isDeleteLoading}
                       size='small'
@@ -192,8 +192,8 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
                       </Typography>
                       <DeleteIcon fontSize='small' color='white' />
                     </DeleteButton>
-                  </Box>
-                )}
+                  )}
+                </Box>
               </Box>
             </DialogActions>
           </>
