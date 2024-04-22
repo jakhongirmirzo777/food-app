@@ -86,14 +86,9 @@ const LoginPage = () => {
       <Card sx={{ zIndex: 1 }}>
         <CardContent sx={{ padding: isMobile ? 6 : 9 }}>
           <Box sx={{ mb: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <AppImage
-              alt='Logo'
-              src='/images/logo.png'
-              sx={{
-                borderRadius: '5px',
-                height: { xs: 40, xl: 40 }
-              }}
-            />
+            <span style={{ fontSize: '40px', fontWeight: 600, fontFamily: 'Inter', color: 'rgba(58, 53, 65, 0.87)' }}>
+              Mega
+            </span>
           </Box>
           <form noValidate autoComplete='off' onSubmit={formik.handleSubmit}>
             <TextField

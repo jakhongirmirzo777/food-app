@@ -49,14 +49,9 @@ const VerticalNavHeader = props => {
       ) : (
         <Link href='/' passHref>
           <StyledLink>
-            <AppImage
-              alt='Logo'
-              src='/images/logo.png'
-              sx={{
-                borderRadius: '5px',
-                height: { xs: 40, xl: 40 }
-              }}
-            />
+            <span style={{ fontSize: '40px', fontWeight: 600, fontFamily: 'Inter', color: 'rgba(58, 53, 65, 0.87)' }}>
+              Mega
+            </span>
           </StyledLink>
         </Link>
       )}
