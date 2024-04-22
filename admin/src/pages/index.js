@@ -27,6 +27,8 @@ import WithEmptyState from '../@core/components/app-empty-state/with-empty-state
 import useMediaQuery from '@mui/material/useMediaQuery'
 import QrCodeDialog from '../views/main/QrCodeDialog'
 
+import { ROLES } from 'src/utils/constants/roles'
+
 const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 const MainPage = () => {
@@ -517,5 +519,8 @@ const MainPage = () => {
     </>
   )
 }
+
+// Roles
+MainPage.getRole = () => ROLES.SUPER_ADMIN
 
 export default MainPage

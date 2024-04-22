@@ -5,7 +5,6 @@ import { useGetCurrentAdmin } from 'src/api/hooks/admins'
 import { useAuthContext } from 'src/@core/context/authContext'
 
 import { setupAxiosInterceptors } from 'src/api/axios'
-import { ROLES } from '../utils/constants/roles'
 
 export const useAuth = () => {
   const router = useRouter()
@@ -43,7 +42,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (isLogged) {
-      if (user.role !== ROLES.SUPER_ADMIN) {
+      if (role && role !== user.role) {
         router.push('/orders')
         setTimeout(() => {
           setRolesChecking(false)
