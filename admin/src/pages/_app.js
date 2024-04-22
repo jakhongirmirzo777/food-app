@@ -58,7 +58,7 @@ const App = props => {
   return (
     <CacheProvider value={emotionCache}>
       <Head>
-        <title>Yalla cafe | yalla-cafe.uz</title>
+        <title>Mega coffee | mega-coffee.uz</title>
         <meta name='description' content={'Mazali taomlar'} />
         <meta name='keywords' content='burger, chizburgerlar, hot dog, fast food, mazali taomlar' />
         <meta name='viewport' content='initial-scale=1, width=device-width' />
