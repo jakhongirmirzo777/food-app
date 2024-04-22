@@ -3,7 +3,7 @@ import axios from 'axios'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Yalla cafe | yalla-cafe.uz',
+    title: 'Mega coffee | mega-coffee.uz',
     htmlAttrs: {
       lang: 'uz',
     },
@@ -18,12 +18,12 @@ export default {
       {
         hid: 'image',
         name: 'image',
-        content: '/logo_1200x630.png',
+        content: '/logo_1200x630.jpg',
       },
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'Yalla cafe | yalla-cafe.uz',
+        content: 'Mega coffee | mega-coffee.uz',
       },
       {
         hid: 'og:description',
@@ -33,12 +33,12 @@ export default {
       {
         hid: 'og:image',
         property: 'og:image',
-        content: '/logo_1200x630.png',
+        content: '/logo_1200x630.jpg',
       },
       {
         hid: 'og:image:alt',
         property: 'og:image:alt',
-        content: 'Yalla cafe | yalla-cafe.uz',
+        content: 'Mega coffee | mega-coffee.uz',
       },
       {
         hid: 'og:type',
@@ -53,9 +53,9 @@ export default {
       {
         hid: 'og:site_name',
         property: 'og:site_name',
-        content: 'yalla-cafe.uz',
+        content: 'mega-coffe.uz',
       },
-      { hid: 'og:url', property: 'og:url', content: 'https://yalla-cafe.uz/' },
+      { hid: 'og:url', property: 'og:url', content: 'https://mega-coffee.uz/' },
       {
         hid: 'twitter:card',
         name: 'twitter:card',
@@ -64,17 +64,17 @@ export default {
       {
         hid: 'twitter:domain',
         property: 'twitter:domain',
-        content: 'yalla-cafe.uz',
+        content: 'mega-coffee.uz',
       },
       {
         hid: 'twitter:url',
         name: 'twitter:url',
-        content: 'https://yalla-cafe.uz/',
+        content: 'https://mega-coffee.uz/',
       },
       {
         hid: 'twitter:title',
         name: 'twitter:title',
-        content: 'Yalla cafe | yalla-cafe.uz',
+        content: 'Mega coffee | mega-coffee.uz',
       },
       {
         hid: 'twitter:description',
@@ -84,7 +84,7 @@ export default {
       {
         hid: 'twitter:image',
         name: 'twitter:image',
-        content: '/logo_1200x630.png',
+        content: '/logo_1200x630.jpg',
       },
       {
         hid: 'keywords',

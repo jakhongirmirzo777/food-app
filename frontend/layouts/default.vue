@@ -10,7 +10,7 @@
       </NuxtLink>
       <div class="d-flex justify-center py-20">
         <NuxtLink :to="parseUrl('/', $route)" class="layout__logo__text">
-          <span>Yalla</span>
+          <span>Mega</span>
         </NuxtLink>
       </div>
       <VCard
