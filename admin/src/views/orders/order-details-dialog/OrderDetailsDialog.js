@@ -25,6 +25,7 @@ import { useState } from 'react'
 import { useSnackbar } from '../../../@core/context/snackbarContext'
 import { useRole } from '../../../layouts/useRole'
 import { ROLES } from '../../../utils/constants/roles'
+import { ORDER_STATUSES } from '../../../utils/constants/orders'
 
 const DeleteButton = styled(LoadingButton)(({ theme }) => ({
   borderRadius: '5px',
@@ -167,18 +168,20 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
                     alignItems: 'center'
                   }}
                 >
-                  <Button
-                    size='small'
-                    color='warning'
-                    variant='contained'
-                    onClick={() => setIsOrderCreateUpdateDialogOpen(true)}
-                    style={{ marginRight: 10 }}
-                  >
-                    <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
-                      Tahrirlash
-                    </Typography>
-                    <PencilIcon fontSize='small' color='white' />
-                  </Button>
+                  {!hasAccessToEditAndDelete &&
+                  (data?.status === ORDER_STATUSES.COMPLETED || data?.status === ORDER_STATUSES.REJECTED) ? null : (
+                    <Button
+                      size='small'
+                      color='warning'
+                      variant='contained'
+                      onClick={() => setIsOrderCreateUpdateDialogOpen(true)}
+                    >
+                      <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
+                        Tahrirlash
+                      </Typography>
+                      <PencilIcon fontSize='small' color='white' />
+                    </Button>
+                  )}
                   {hasAccessToEditAndDelete && (
                     <DeleteButton
                       loading={isDeleteLoading}
@@ -186,6 +189,7 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
                       color='error'
                       variant='contained'
                       onClick={openDeleteConfirmation.bind(null, data?.id)}
+                      style={{ marginLeft: 10 }}
                     >
                       <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
                         O'chirish

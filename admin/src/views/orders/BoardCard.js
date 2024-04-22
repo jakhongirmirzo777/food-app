@@ -16,6 +16,8 @@ import { formatDate } from 'src/utils/formatDate'
 import { formatNumber } from 'src/utils/formatNumber'
 import { useUpdateOrderStatus } from '../../api/hooks/orders'
 import { ORDER_STATUSES } from '../../utils/constants/orders'
+import { useRole } from '../../layouts/useRole'
+import { ROLES } from '../../utils/constants/roles'
 
 const RoundedButton = styled(Button)(({ theme }) => ({
   borderRadius: '50%',
@@ -36,6 +38,8 @@ const RoundedButton = styled(Button)(({ theme }) => ({
 
 const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status }) => {
   const { mutate } = useUpdateOrderStatus()
+  const validateRole = useRole()
+  const isSuperAdmin = validateRole(ROLES.SUPER_ADMIN)
 
   const [showDetails, setShowDetails] = useState(false)
 
@@ -85,12 +89,12 @@ const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status }) =
                 {formatDate(createdAt)}
               </Typography>
             </Box>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minHeight: '40px' }}>
               <Typography variant='subtitle1' color='primary' fontWeight={500}>
                 {formatNumber(price)} so'm
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px' }}>
-                {status !== ORDER_STATUSES.NEW && (
+                {status !== ORDER_STATUSES.NEW && isSuperAdmin && (
                   <RoundedButton size='small' color='secondary' variant='outlined' onClick={updateStatusPrev}>
                     <ArrowLeftIcon />
                   </RoundedButton>
