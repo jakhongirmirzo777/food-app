@@ -5,10 +5,11 @@ import {
   extend,
   configure,
 } from 'vee-validate'
-import { required } from 'vee-validate/dist/rules'
+import { required, length } from 'vee-validate/dist/rules'
 
 const validation = {
   required: "Ushbu qator to'ldirilishi shart",
+  length: "To'g'ri telefon raqam kiriting",
 }
 
 export default function ({ app }) {
@@ -21,6 +22,7 @@ export default function ({ app }) {
 }
 
 extend('required', required)
+extend('length', length)
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)

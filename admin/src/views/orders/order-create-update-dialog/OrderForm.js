@@ -242,7 +242,7 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
               <Grid md xs={12} item>
                 <Box>
                   <Typography id='payment-type' mb={1} sx={{ fontWeight: 'medium' }} variant='subtitle1'>
-                    To'lo'v turi
+                    To'lov turi
                   </Typography>
                   <RadioGroup
                     row
