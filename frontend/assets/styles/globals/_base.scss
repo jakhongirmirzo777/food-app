@@ -96,6 +96,10 @@ p {
   max-height: 100vh;
 }
 
+input[type='radio'] {
+  accent-color: var(--color-red);
+}
+
 @each $name, $weight in $font-weights {
   .font-weight-#{$name} {
     font-family: $font-main;

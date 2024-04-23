@@ -62,7 +62,7 @@
                   class="mb-10"
                   placeholder="Telefon raqamingizni kiriting"
                   vid="userPhoneNumber"
-                  rules="required"
+                  rules="required|length:18"
                 />
                 <VInput
                   v-model="address"
@@ -71,6 +71,43 @@
                   vid="address"
                   rules="required"
                 />
+                <div class="mb-30 d-flex align-center">
+                  <p class="mr-16" style="font-weight: 600; font-size: 16px">
+                    To'lov turi:
+                  </p>
+                  <div class="d-flex align-center">
+                    <div class="d-flex align-center mr-20">
+                      <input
+                        id="cash"
+                        v-model="paymentType"
+                        class="ma-0"
+                        type="radio"
+                        name="paymentType"
+                        :value="PAYMENT_TYPE.CASH"
+                        :checked="paymentType === PAYMENT_TYPE.CASH"
+                        style="transform: scale(1.5)"
+                      />
+                      <label for="cash" class="pl-10" style="font-size: 14px">
+                        Naqt pul
+                      </label>
+                    </div>
+                    <div class="d-flex align-center">
+                      <input
+                        id="card"
+                        v-model="paymentType"
+                        class="ma-0"
+                        type="radio"
+                        name="paymentType"
+                        :value="PAYMENT_TYPE.CARD"
+                        :checked="paymentType === PAYMENT_TYPE.CARD"
+                        style="transform: scale(1.5)"
+                      />
+                      <label for="card" class="pl-10" style="font-size: 14px">
+                        Karta
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Transition>
             <button class="order__btn" type="submit">Buyurtma berish</button>
@@ -99,13 +136,20 @@ import VIcon from '~/components/ui/VIcon.vue'
 import VInput from '~/components/ui/VInput.vue'
 import { parseUrl } from '~/utils/helpers'
 
+const PAYMENT_TYPE = {
+  CASH: 'CASH',
+  CARD: 'CARD',
+}
+
 export default {
   components: { VInput, VIcon },
   data() {
     return {
+      PAYMENT_TYPE,
       address: '',
       userPhoneNumber: '',
       hasOrdered: false,
+      paymentType: PAYMENT_TYPE.CASH,
     }
   },
   computed: {
@@ -120,7 +164,7 @@ export default {
     },
     tableNumber() {
       const tableNumber = this.$route.query?.tableNumber
-      return tableNumber ? +tableNumber : null
+      return tableNumber && +tableNumber > 0 ? +tableNumber : null
     },
   },
   methods: {
@@ -159,6 +203,7 @@ export default {
             mealId: meal.mealId,
             mealQuantity: meal.mealQuantity,
           })),
+          paymentType: this.tableNumber ? null : this.paymentType,
         })
         await this.$store.commit('clearMeals')
         this.userPhoneNumber = ''

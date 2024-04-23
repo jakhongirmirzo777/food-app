@@ -15,6 +15,7 @@ import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { getError } from '../../../utils/getError'
 import { useSnackbar } from '../../../@core/context/snackbarContext'
 import { useAddOrder, useUpdateOrder } from '../../../api/hooks/orders'
+import { PAYMENT_TYPE } from '../../../utils/constants/orders'
 
 export const defaultValues = {
   userPhoneNumber: '',
@@ -36,6 +37,22 @@ const MASK_OPTIONS = {
   }
 }
 
+function formatPhoneNumber(phoneNumber) {
+  // Remove any non-numeric characters from the input
+  const cleaned = ('' + phoneNumber).replace(/\D/g, '')
+
+  // Apply formatting if the number has 12 digits
+  if (cleaned.length === 12) {
+    return `+${cleaned.slice(0, 3)}(${cleaned.slice(3, 5)}) ${cleaned.slice(5, 8)}-${cleaned.slice(
+      8,
+      10
+    )}-${cleaned.slice(10)}`
+  } else {
+    // If the length is not exactly 12, return the original string
+    return phoneNumber
+  }
+}
+
 const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
   const { setSnackbar } = useSnackbar()
   const { mutateAsync: updateOrder } = useUpdateOrder()
@@ -43,6 +60,7 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
 
   const [isLoading, setIsLoading] = useState(false)
   const [orderType, setOrderType] = useState(ORDER_TYPE.TABLE)
+  const [paymentType, setPaymentType] = useState(PAYMENT_TYPE.CASH)
 
   const initialValues = data
     ? {
@@ -58,18 +76,36 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
         setOrderType(ORDER_TYPE.TABLE)
       } else {
         setOrderType(ORDER_TYPE.TAKE_AWAY)
+
+        formik.setFieldValue('userPhoneNumber', formatPhoneNumber(data.userPhoneNumber))
       }
     } else {
       setOrderType(ORDER_TYPE.TABLE)
     }
   }, [data?.tableNumber])
 
+  useEffect(() => {
+    if (data) {
+      if (data.paymentType) {
+        setPaymentType(data.paymentType)
+      } else {
+        setPaymentType(PAYMENT_TYPE.CASH)
+      }
+    } else {
+      setPaymentType(PAYMENT_TYPE.CASH)
+    }
+  }, [data?.paymentType])
+
   const validationSchema =
     orderType === ORDER_TYPE.TABLE
       ? yup.object({
           userPhoneNumber: yup.string().label('Telefon raqam').nullable(),
           address: yup.string().max(280).label('Manzil').nullable(),
-          tableNumber: yup.string().label('Stol raqami').required('Stol raqamini kiriting')
+          tableNumber: yup
+            .number()
+            .min(1, "To'g'ri stol raqami kiriting")
+            .label('Stol raqami')
+            .required('Stol raqamini kiriting')
         })
       : yup.object({
           userPhoneNumber: yup
@@ -78,7 +114,7 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
             .matches(/^\+\d{3}\(\d{2}\) \d{3}-\d{2}-\d{2}$/, "To'g'ri telefon raqam kiriting")
             .required('Telefon raqamni kiriting'),
           address: yup.string().max(280).label('Manzil').required('Manzilni kiriting'),
-          tableNumber: yup.string().label('Stol raqami').nullable()
+          tableNumber: yup.number().label('Stol raqami').nullable()
         })
 
   const formik = useFormik({
@@ -96,9 +132,11 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
           formData['tableNumber'] = values.tableNumber
           formData['userPhoneNumber'] = null
           formData['address'] = null
+          formData['paymentType'] = null
         } else {
           formData['userPhoneNumber'] = values.userPhoneNumber?.replace(/\D/gi, '')
           formData['address'] = values.address
+          formData['paymentType'] = paymentType
           formData['tableNumber'] = null
         }
 
@@ -113,6 +151,8 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
 
         setIsDialogOpen(false)
         resetForm()
+        setOrderType(ORDER_TYPE.TABLE)
+        setPaymentType(PAYMENT_TYPE.CASH)
         setSnackbar({ children: 'Buyurtma saqlandi', severity: 'success' })
       } catch (error) {
         setSnackbar({ children: 'Hatolik yuz berdi', severity: 'error' })
@@ -197,6 +237,24 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
                     fullWidth
                     onChange={formik.handleChange}
                   />
+                </Box>
+              </Grid>
+              <Grid md xs={12} item>
+                <Box>
+                  <Typography id='payment-type' mb={1} sx={{ fontWeight: 'medium' }} variant='subtitle1'>
+                    To'lov turi
+                  </Typography>
+                  <RadioGroup
+                    row
+                    value={paymentType}
+                    onChange={e => setPaymentType(e.target.value)}
+                    aria-labelledby='payment-type'
+                    defaultValue={PAYMENT_TYPE.CASH}
+                    name='radio-buttons-group'
+                  >
+                    <FormControlLabel value={PAYMENT_TYPE.CASH} control={<Radio color='info' />} label='Naqt pul' />
+                    <FormControlLabel value={PAYMENT_TYPE.CARD} control={<Radio color='info' />} label='Karta' />
+                  </RadioGroup>
                 </Box>
               </Grid>
             </>

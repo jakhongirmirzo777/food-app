@@ -38,6 +38,7 @@ export class OrdersService {
         userPhoneNumber: createOrderDto.userPhoneNumber,
         address: createOrderDto.address,
         tableNumber: createOrderDto.tableNumber,
+        paymentType: createOrderDto.paymentType,
         status: OrderStatus.NEW,
         orderNumber: counter,
         orderItems: {
@@ -98,6 +99,7 @@ export class OrdersService {
         userPhoneNumber: updateOrderDto.userPhoneNumber || null,
         address: updateOrderDto.address || null,
         tableNumber: updateOrderDto.tableNumber || null,
+        paymentType: updateOrderDto.paymentType || null,
         orderItems: {
           createMany: {
             data: updateOrderDto.orderItems.map((item) => ({

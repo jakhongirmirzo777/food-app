@@ -16,7 +16,11 @@ import { getError } from '../../utils/getError'
 const NEXT_PUBLIC_FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL
 
 const validationSchema = yup.object({
-  tableNumber: yup.string().label('Stol raqami').required('Stol raqamini kiriting')
+  tableNumber: yup
+    .number()
+    .min(1, "To'g'ri stol raqami kiriting")
+    .label('Stol raqami')
+    .required('Stol raqamini kiriting')
 })
 
 const copyToClipboard = value => {

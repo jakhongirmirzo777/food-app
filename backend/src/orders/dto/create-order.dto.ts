@@ -1,10 +1,12 @@
 import {
   IsArray,
   IsInt,
+  IsEnum,
   IsOptional,
   IsString,
   ValidateNested,
 } from 'class-validator';
+import { OrderPaymentType } from '@prisma/client';
 import { Type } from 'class-transformer';
 
 class OrderItemDto {
@@ -31,4 +33,8 @@ export class CreateOrderDto {
   @IsOptional()
   @IsInt()
   tableNumber?: number;
+
+  @IsOptional()
+  @IsEnum(OrderPaymentType)
+  paymentType?: OrderPaymentType;
 }
