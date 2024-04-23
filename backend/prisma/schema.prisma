@@ -35,17 +35,18 @@ model Admins {
 }
 
 model Order {
-  id              Int         @id @default(autoincrement())
+  id              Int               @id @default(autoincrement())
   totalCost       Int
   userPhoneNumber String?
   address         String?
+  paymentType     OrderPaymentType?
   status          OrderStatus
   orderItems      OrderItem[]
-  createdAt       DateTime    @default(now())
+  createdAt       DateTime          @default(now())
   meals           Meal[]
   tableNumber     Int?
   orderNumber     Int?
-  isDeleted       Boolean     @default(false)
+  isDeleted       Boolean           @default(false)
 }
 
 model OrdersDailyCounter {
@@ -79,6 +80,11 @@ enum OrderStatus {
 enum Roles {
   ADMIN
   SUPER_ADMIN
+}
+
+enum OrderPaymentType {
+  CASH
+  CARD
 }
 
 generator client {
