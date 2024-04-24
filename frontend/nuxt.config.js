@@ -3,7 +3,7 @@ import axios from 'axios'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Mega coffee | mega-coffee.uz',
+    title: 'Mega waffle | mega-waffle.uz',
     htmlAttrs: {
       lang: 'uz',
     },
@@ -23,7 +23,7 @@ export default {
       {
         hid: 'og:title',
         property: 'og:title',
-        content: 'Mega coffee | mega-coffee.uz',
+        content: 'Mega waffle | mega-waffle.uz',
       },
       {
         hid: 'og:description',
@@ -38,7 +38,7 @@ export default {
       {
         hid: 'og:image:alt',
         property: 'og:image:alt',
-        content: 'Mega coffee | mega-coffee.uz',
+        content: 'Mega waffle | mega-waffle.uz',
       },
       {
         hid: 'og:type',
@@ -55,7 +55,7 @@ export default {
         property: 'og:site_name',
         content: 'mega-coffe.uz',
       },
-      { hid: 'og:url', property: 'og:url', content: 'https://mega-coffee.uz/' },
+      { hid: 'og:url', property: 'og:url', content: 'https://mega-waffle.uz/' },
       {
         hid: 'twitter:card',
         name: 'twitter:card',
@@ -64,17 +64,17 @@ export default {
       {
         hid: 'twitter:domain',
         property: 'twitter:domain',
-        content: 'mega-coffee.uz',
+        content: 'mega-waffle.uz',
       },
       {
         hid: 'twitter:url',
         name: 'twitter:url',
-        content: 'https://mega-coffee.uz/',
+        content: 'https://mega-waffle.uz/',
       },
       {
         hid: 'twitter:title',
         name: 'twitter:title',
-        content: 'Mega coffee | mega-coffee.uz',
+        content: 'Mega waffle | mega-waffle.uz',
       },
       {
         hid: 'twitter:description',
