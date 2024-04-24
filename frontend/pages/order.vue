@@ -88,7 +88,7 @@
                         style="transform: scale(1.5)"
                       />
                       <label for="cash" class="pl-10" style="font-size: 14px">
-                        Naqt pul
+                        Naqd pul
                       </label>
                     </div>
                     <div class="d-flex align-center">

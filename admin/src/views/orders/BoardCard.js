@@ -88,7 +88,7 @@ const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status, pay
                 />
                 {paymentType && (
                   <Chip
-                    label={`${paymentType === 'CASH' ? 'Naqt' : 'Karta'}`}
+                    label={`${paymentType === 'CASH' ? 'Naqd' : 'Karta'}`}
                     color={paymentType === 'CASH' ? 'warning' : 'error'}
                     size='small'
                     sx={{ ml: 1 }}

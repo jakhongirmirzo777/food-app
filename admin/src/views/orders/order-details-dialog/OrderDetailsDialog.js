@@ -91,7 +91,7 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
                   <span> Buyurtma #{data?.orderNumber}</span>
                   {data?.paymentType && (
                     <Chip
-                      label={`${data.paymentType === 'CASH' ? 'Naqt' : 'Karta'}`}
+                      label={`${data.paymentType === 'CASH' ? 'Naqd' : 'Karta'}`}
                       color={data.paymentType === 'CASH' ? 'warning' : 'error'}
                       size='small'
                       sx={{ ml: 2 }}
