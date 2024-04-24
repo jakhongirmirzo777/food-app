@@ -74,6 +74,7 @@ const BoardColumn = ({ title, data, isLoading, onChange, borderColor = 'divider'
                   tableNumber={item.tableNumber}
                   orderNumber={item.orderNumber}
                   status={item.status}
+                  paymentType={item.paymentType}
                 />
               ))}
 

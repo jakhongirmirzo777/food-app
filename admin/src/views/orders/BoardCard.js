@@ -36,7 +36,7 @@ const RoundedButton = styled(Button)(({ theme }) => ({
   }
 }))
 
-const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status }) => {
+const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status, paymentType }) => {
   const { mutate } = useUpdateOrderStatus()
   const validateRole = useRole()
   const isSuperAdmin = validateRole(ROLES.SUPER_ADMIN)
@@ -80,11 +80,21 @@ const BoardCard = ({ id, orderNumber, price, createdAt, tableNumber, status }) =
         <Card sx={{ height: '100%', position: 'relative' }} variant='outlined' onClick={openDetails}>
           <Box sx={{ p: 3 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-              <Chip
-                label={`Buyurtma #${orderNumber} ${tableNumber ? '(ST-' + tableNumber + ')' : ''}`}
-                color={tableNumber ? 'info' : 'success'}
-                size='small'
-              />
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Chip
+                  label={`Buyurtma #${orderNumber} ${tableNumber ? '(ST-' + tableNumber + ')' : ''}`}
+                  color={tableNumber ? 'info' : 'success'}
+                  size='small'
+                />
+                {paymentType && (
+                  <Chip
+                    label={`${paymentType === 'CASH' ? 'Naqt' : 'Karta'}`}
+                    color={paymentType === 'CASH' ? 'warning' : 'error'}
+                    size='small'
+                    sx={{ ml: 1 }}
+                  />
+                )}
+              </Box>
               <Typography variant='subtitle2' fontWeight={500}>
                 {formatDate(createdAt)}
               </Typography>

@@ -26,6 +26,7 @@ import { useSnackbar } from '../../../@core/context/snackbarContext'
 import { useRole } from '../../../layouts/useRole'
 import { ROLES } from '../../../utils/constants/roles'
 import { ORDER_STATUSES } from '../../../utils/constants/orders'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const DeleteButton = styled(LoadingButton)(({ theme }) => ({
   borderRadius: '5px',
@@ -40,6 +41,7 @@ const DeleteButton = styled(LoadingButton)(({ theme }) => ({
 }))
 
 const OrderDetailsDialog = ({ id, open, onClose }) => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { data, isFetching } = useGetOrder(id, { enabled: open })
   const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false)
   const [isOrderCreateUpdateDialogOpen, setIsOrderCreateUpdateDialogOpen] = useState(false)
@@ -73,14 +75,29 @@ const OrderDetailsDialog = ({ id, open, onClose }) => {
 
   return (
     <>
-      <Dialog maxWidth='md' scroll='paper' open={open} fullWidth onClose={onClose}>
+      <Dialog maxWidth='md' scroll='paper' open={open} fullWidth onClose={onClose} fullScreen={isMobile}>
         {open ? (
           <>
             <Box
-              sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', position: 'relative' }}
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'space-between',
+                position: 'relative'
+              }}
             >
-              <DialogTitle variant='subtitle1' sx={{ py: 3 }} color='text.primary' fontWeight={500}>
-                Buyurtma #{data?.orderNumber}
+              <DialogTitle variant='subtitle1' sx={{ py: 3, pr: 0 }} color='text.primary' fontWeight={500}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <span> Buyurtma #{data?.orderNumber}</span>
+                  {data?.paymentType && (
+                    <Chip
+                      label={`${data.paymentType === 'CASH' ? 'Naqt' : 'Karta'}`}
+                      color={data.paymentType === 'CASH' ? 'warning' : 'error'}
+                      size='small'
+                      sx={{ ml: 2 }}
+                    />
+                  )}
+                </Box>
                 <Typography component='span' variant='subtitle2' sx={{ display: 'block' }}>
                   {isFetching ? <Skeleton width={150} /> : formatDate(data?.createdAt)}
                 </Typography>

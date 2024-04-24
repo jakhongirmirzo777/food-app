@@ -8,8 +8,10 @@ import OrderedMeals from './OrderedMeals'
 import { useEffect, useState } from 'react'
 import Divider from '@mui/material/Divider'
 import OrderForm from './OrderForm'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 const OrderCreateUpdateDialog = ({ data, isDialogOpen, setIsDialogOpen }) => {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const [orderItems, setOrderItems] = useState([])
 
   useEffect(() => {
@@ -18,7 +20,14 @@ const OrderCreateUpdateDialog = ({ data, isDialogOpen, setIsDialogOpen }) => {
   }, [data?.orderItems, isDialogOpen])
 
   return (
-    <Dialog maxWidth='lg' scroll='paper' open={isDialogOpen} fullWidth onClose={() => setIsDialogOpen(false)}>
+    <Dialog
+      maxWidth='lg'
+      scroll='paper'
+      open={isDialogOpen}
+      fullWidth
+      onClose={() => setIsDialogOpen(false)}
+      fullScreen={isMobile}
+    >
       {isDialogOpen && (
         <>
           <Box sx={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', position: 'relative' }}>
