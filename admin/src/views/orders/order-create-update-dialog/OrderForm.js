@@ -252,7 +252,7 @@ const OrderForm = ({ setIsDialogOpen, data, orderItems }) => {
                     defaultValue={PAYMENT_TYPE.CASH}
                     name='radio-buttons-group'
                   >
-                    <FormControlLabel value={PAYMENT_TYPE.CASH} control={<Radio color='info' />} label='Naqt pul' />
+                    <FormControlLabel value={PAYMENT_TYPE.CASH} control={<Radio color='info' />} label='Naqd pul' />
                     <FormControlLabel value={PAYMENT_TYPE.CARD} control={<Radio color='info' />} label='Karta' />
                   </RadioGroup>
                 </Box>
