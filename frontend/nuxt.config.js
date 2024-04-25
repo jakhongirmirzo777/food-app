@@ -13,7 +13,8 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content: 'Mazali fast food taomlari',
+        content:
+          "Mega vaflida salqinlaning va chanqog'ingizni qondiring:  judaham mazali muzqaymoq va ichimliklar makoni!",
       },
       {
         hid: 'image',
@@ -28,7 +29,8 @@ export default {
       {
         hid: 'og:description',
         property: 'og:description',
-        content: 'Mazali fast food taomlari',
+        content:
+          "Mega vaflida salqinlaning va chanqog'ingizni qondiring:  judaham mazali muzqaymoq va ichimliklar makoni!",
       },
       {
         hid: 'og:image',
@@ -79,7 +81,8 @@ export default {
       {
         hid: 'twitter:description',
         name: 'twitter:description',
-        content: 'Mazali fast food taomlari',
+        content:
+          "Mega vaflida salqinlaning va chanqog'ingizni qondiring:  judaham mazali muzqaymoq va ichimliklar makoni!",
       },
       {
         hid: 'twitter:image',
@@ -89,7 +92,8 @@ export default {
       {
         hid: 'keywords',
         property: 'keywords',
-        content: 'burger, chizburgerlar, hot dog, fast food, mazali taomlar',
+        content:
+          'mega, mega andijan, cofe, coffee, kokteyl, kakteyl, marojna, muzqaymoq, pizza, pitsa, fast food, lavash, gamburger, hot dog, moxito, mohito, suv, ichimlik, taomlar, yegulik, food, restaraunt, cafe, restaran, kafe, mega waffle, mefa coffee, mega vafli, mega kofe, mega-waffle.uz, mega waffle uz',
       },
       { name: 'format-detection', content: 'telephone=no' },
       { hid: 'robots', name: 'robots', content: 'index, follow' },
