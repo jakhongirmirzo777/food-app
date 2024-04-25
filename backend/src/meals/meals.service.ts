@@ -117,22 +117,7 @@ export class MealsService {
       };
     }
     const count = await this.prisma.meal.count({
-      where: {
-        OR: [
-          {
-            description: {
-              contains: title,
-              mode: 'insensitive',
-            },
-          },
-          {
-            title: {
-              contains: title,
-              mode: 'insensitive',
-            },
-          },
-        ],
-      },
+      where: findMealsQuery.where,
     });
     const meals = await this.prisma.meal.findMany(findMealsQuery);
 
