@@ -32,7 +32,11 @@ export class CategoryService {
     const category = await this.prisma.category.findUnique({
       where: { id },
       include: {
-        meals: true,
+        meals: {
+          where: {
+            isDeleted: false,
+          },
+        },
       },
     });
 
