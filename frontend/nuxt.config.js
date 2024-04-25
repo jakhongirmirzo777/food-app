@@ -10,6 +10,8 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'format-detection', content: 'telephone=no' },
+      { hid: 'robots', name: 'robots', content: 'index, follow' },
       {
         hid: 'description',
         name: 'description',
@@ -95,9 +97,6 @@ export default {
         content:
           'mega, mega andijan, cofe, coffee, kokteyl, kakteyl, marojna, muzqaymoq, pizza, pitsa, fast food, lavash, gamburger, hot dog, moxito, mohito, suv, ichimlik, taomlar, yegulik, food, restaraunt, cafe, restaran, kafe, mega waffle, mefa coffee, mega vafli, mega kofe, mega-waffle.uz, mega waffle uz',
       },
-      { name: 'format-detection', content: 'telephone=no' },
-      { hid: 'robots', name: 'robots', content: 'index, follow' },
-      { hid: 'yandex', name: 'yandex', content: 'noindex, follow' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
