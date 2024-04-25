@@ -7,6 +7,8 @@ model Category {
   tagId       String?
   meals       Meal[]
   tag         Tag?     @relation(fields: [tagId], references: [id])
+
+  isDeleted Boolean @default(false)
 }
 
 model Meal {

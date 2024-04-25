@@ -108,7 +108,7 @@ const MealsCRUD = () => {
   const handleDelete = () => {
     mutate(itemToDeleteId, {
       onSuccess() {
-        setSnackbar({ children: "Categoriya o'chirildi", severity: 'success' })
+        setSnackbar({ children: "Taom o'chirildi", severity: 'success' })
         closeDeleteConfirmation()
       },
       onError() {

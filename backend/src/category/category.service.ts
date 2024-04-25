@@ -16,12 +16,14 @@ export class CategoryService {
   }
 
   async findAll(body: GetCategoryDto) {
-    const getCategoryQuery: any = {};
+    const getCategoryQuery: any = {
+      where: {
+        isDeleted: false,
+      },
+    };
 
     if (body.tagId) {
-      getCategoryQuery.where = {
-        tagId: body.tagId,
-      };
+      getCategoryQuery.where.tagId = body.tagId;
     }
 
     const categories = await this.prisma.category.findMany(getCategoryQuery);
@@ -30,9 +32,13 @@ export class CategoryService {
 
   async findOne(id: string) {
     const category = await this.prisma.category.findUnique({
-      where: { id },
+      where: { id, isDeleted: false },
       include: {
-        meals: true,
+        meals: {
+          where: {
+            isDeleted: false,
+          },
+        },
       },
     });
 
@@ -66,9 +72,15 @@ export class CategoryService {
       throw new NotFoundException(`Category with id ${id} not found`);
     }
 
-    const deletedCategory = await this.prisma.category.delete({
-      where: { id },
+    const deletedCategory = await this.prisma.category.update({
+      where: {
+        id,
+      },
+      data: {
+        isDeleted: true,
+      },
     });
+
     return deletedCategory;
   }
 }
