@@ -152,6 +152,8 @@
       Buyurtmani ko'rish
     </NuxtLink>
     <CoolLightBox
+      close-on-click-outside-mobile
+      :enable-scroll-lock="false"
       :effect="'fade'"
       :items="images"
       :index="activeImageIndex"
