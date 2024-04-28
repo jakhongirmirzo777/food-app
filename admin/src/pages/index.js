@@ -60,8 +60,8 @@ const MainPage = () => {
   })
 
   const handleRangeChange = useCallback(({ startDate, endDate }) => {
-    setStartDate(startDate.toISOString())
-    setEndDate(endDate.toISOString())
+    setStartDate(new Date(startDate).toISOString())
+    setEndDate(new Date(endDate).toISOString())
   }, [])
 
   const totalPrice = useMemo(() => {
