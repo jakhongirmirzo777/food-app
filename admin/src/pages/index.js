@@ -60,24 +60,28 @@ const MainPage = () => {
   })
 
   const handleRangeChange = useCallback(({ startDate, endDate }) => {
-    setStartDate(startDate.toISOString())
-    setEndDate(endDate.toISOString())
+    setStartDate(new Date(startDate).toISOString())
+    setEndDate(new Date(endDate).toISOString())
   }, [])
 
   const totalPrice = useMemo(() => {
     return Object.entries(statisticsData).reduce((acc, [_, val]) => {
-      return acc + val?.totalCompletedOrdersPrice || 0
+      return acc + val?.totalRejectedOrdersPrice || 0
     }, 0)
   }, [statisticsData])
 
   const lineChartStatistics = useMemo(() => {
-    const labels = Object.entries(statisticsData).reduce((acc, [key]) => {
-      return [...acc, key.split('-').reverse().join('-')]
-    }, [])
+    const labels = Object.entries(statisticsData)
+      .sort(([dateA], [dateB]) => new Date(dateA) - new Date(dateB))
+      .reduce((acc, [key]) => {
+        return [...acc, key.split('-').reverse().join('-')]
+      }, [])
 
-    const values = Object.entries(statisticsData).reduce((acc, [_, val]) => {
-      return [...acc, val?.totalCompletedOrdersPrice || 0]
-    }, [])
+    const values = Object.entries(statisticsData)
+      .sort(([dateA], [dateB]) => new Date(dateA) - new Date(dateB))
+      .reduce((acc, [_, val]) => {
+        return [...acc, val?.totalRejectedOrdersPrice || 0]
+      }, [])
 
     return {
       options: {
@@ -159,7 +163,7 @@ const MainPage = () => {
         'Yangi buyurtmalar narxi',
         "Bajaruvda bo'lgan buyurtmalar narxi",
         "Tayyor bo'lgan buyurtmalar narxi",
-        'Rad etilgan buyurtmalar narxi',
+        "To'langan buyurtmalar narxi",
         "O'chirib yuborilgan buyurtmalar narxi"
       ],
       responsive: [
@@ -411,7 +415,7 @@ const MainPage = () => {
                       <StripedTableRow>
                         <TableCell sx={{ position: 'relative' }}>
                           <Typography sx={{ fontWeight: 500 }} variant='subtitle1'>
-                            Rad etilgan
+                            To'langan
                           </Typography>
                         </TableCell>
                         <TableCell width='15%' align='center'>
