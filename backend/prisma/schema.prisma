@@ -14,7 +14,7 @@ model Category {
 model Meal {
   id          String    @id @default(uuid())
   title       String
-  description String
+  description String?
   price       Int
   imageUrl    String
   categoryId  String
