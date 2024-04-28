@@ -185,5 +185,7 @@ export default {
     OUR_TELEGRAM_LINK: process.env.OUR_TELEGRAM_LINK,
     OUR_WHATSAPP_TEXT: process.env.OUR_WHATSAPP_TEXT,
     OUR_WHATSAPP_LINK: process.env.OUR_WHATSAPP_LINK,
+    INSTAGRAM_TEXT: process.env.INSTAGRAM_TEXT,
+    INSTAGRAM_LINK: process.env.INSTAGRAM_LINK,
   },
 }

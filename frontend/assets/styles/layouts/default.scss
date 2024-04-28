@@ -49,6 +49,7 @@
   &__address {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 
     a {
       display: flex;
