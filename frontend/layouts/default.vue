@@ -36,6 +36,15 @@
                   <VIcon class="mr-5" icon="phone" size="14" color="#676767" />
                   {{ phoneText }}
                 </a>
+                <a :href="INSTAGRAM_LINK">
+                  <VIcon
+                    class="mr-5"
+                    icon="instagram"
+                    size="14"
+                    color="#676767"
+                  />
+                  {{ INSTAGRAM_TEXT }}
+                </a>
               </span>
               <span class="layout__text">Xizmat ko'rsatish bepul</span>
             </p>
@@ -193,6 +202,12 @@ export default {
     },
     restaurantName() {
       return this.$config.RESTAURANT_NAME
+    },
+    INSTAGRAM_TEXT() {
+      return this.$config.INSTAGRAM_TEXT
+    },
+    INSTAGRAM_LINK() {
+      return this.$config.INSTAGRAM_LINK
     },
     OUR_CONTACT_1() {
       return this.$config.OUR_CONTACT_1
