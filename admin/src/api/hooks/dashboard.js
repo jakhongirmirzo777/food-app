@@ -3,5 +3,8 @@ import { QUERY_STATISTICS } from '../query-keys'
 import { getStatistics } from '../services/dashboard'
 
 export const useGetStatistics = params => {
-  return useQuery([QUERY_STATISTICS, params], () => getStatistics(params.startDate, params.endDate))
+  return useQuery([QUERY_STATISTICS, params], () => getStatistics(params.startDate, params.endDate), {
+    refetchInterval: 10_000, // 10 seconds
+    refetchIntervalInBackground: true
+  })
 }
