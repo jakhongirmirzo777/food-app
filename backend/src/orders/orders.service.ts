@@ -257,12 +257,12 @@ export class OrdersService {
     return updatedOrder;
   }
 
-  async getOrderStatistics(start: string, end: string): Promise<any> {
-    const startDate = new Date(start);
-    startDate.setUTCHours(0, 0, 0, 0);
-    const endDate = new Date(end);
-    endDate.setUTCHours(0, 0, 0, 0);
-    endDate.setDate(endDate.getDate() + 1);
+  async getOrderStatistics(startDate: string, endDate: string): Promise<any> {
+    // const startDate = new Date(start);
+    // startDate.setUTCHours(0, 0, 0, 0);
+    // const endDate = new Date(end);
+    // endDate.setUTCHours(0, 0, 0, 0);
+    // endDate.setDate(endDate.getDate() + 1);
 
     const orders = await this.prisma.order.findMany({
       where: {
@@ -282,7 +282,10 @@ export class OrdersService {
 
     const stats = {};
     orders.forEach((order) => {
-      const date = order.createdAt.toISOString().split('T')[0]; // Extract date without time
+      const dateObj = order.createdAt;
+      dateObj.setTime(dateObj.getTime() + 5 * 60 * 60 * 1000);
+      const date = dateObj.toISOString().split('T')[0]; // Extract date without time
+
       if (!stats[date]) {
         stats[date] = {
           totalOrders: 0,
