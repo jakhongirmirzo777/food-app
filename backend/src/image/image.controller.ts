@@ -43,6 +43,9 @@ export class ImageController {
           return cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
+      limits: {
+        fileSize: 5 * 1024 * 1024, // Set file size limit to 5MB
+      },
     }),
   )
   uploadFile(@UploadedFile() file) {
