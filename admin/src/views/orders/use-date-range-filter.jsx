@@ -8,13 +8,13 @@ import { useState, useEffect, useCallback } from 'react'
 import { updateURLqueries } from 'src/utils/url-queries'
 import _debounce from 'lodash.debounce'
 
-import { format, startOfToday, endOfToday } from 'date-fns'
+import { format } from 'date-fns'
 
 export const getValueFromUrl = queryObject => {
   const { startDate, endDate } = queryObject
 
-  const start = startDate ? new Date(startDate) : startOfToday()
-  const end = endDate ? new Date(endDate) : endOfToday()
+  const start = startDate ? new Date(startDate).toISOString() : new Date().toISOString()
+  const end = endDate ? new Date(endDate).toISOString() : new Date().toISOString()
 
   return {
     startDate: start,

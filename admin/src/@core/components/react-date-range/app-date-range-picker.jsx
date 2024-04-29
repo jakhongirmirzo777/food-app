@@ -14,7 +14,7 @@ import CalendarMonthIcon from 'mdi-material-ui/CalendarMonth'
 import DateRangePickerCard from './date-range-picker-card'
 
 // ** Utils Imports
-import { format, compareAsc, endOfDay, differenceInCalendarDays } from 'date-fns'
+import { format, endOfDay, differenceInCalendarDays } from 'date-fns'
 import PropTypes from 'prop-types'
 
 const RANGE_KEY = 'selection'
@@ -88,7 +88,7 @@ const AppDateRangePicker = ({ value, onChange, onClose, buttonSize = 'medium' })
         color='secondary'
         endIcon={<CalendarMonthIcon />}
         size={buttonSize}
-        sx={{ color: 'text.primary' }}
+        sx={{ color: 'text.primary', height: '40px' }}
         variant='outlined'
         fullWidth
         onClick={handleClick}

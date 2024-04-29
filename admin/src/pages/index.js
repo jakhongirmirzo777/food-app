@@ -12,75 +12,83 @@ import TableBody from '@mui/material/TableBody'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import TabContext from '@mui/lab/TabContext'
-import TabList from '@mui/lab/TabList'
 import Qrcode from 'mdi-material-ui/Qrcode'
 import StripedTableRow from '../@core/components/styled/StripedTableRow'
 
-import { useGetStatistics } from '../api/hooks/dashboard'
-import { useEffect, useMemo, useState } from 'react'
 import dynamic from 'next/dynamic'
+import { useCallback, useMemo, useState } from 'react'
+import { useGetStatistics } from '../api/hooks/dashboard'
 import { formatNumber } from '../utils/formatNumber'
-import CircularProgress from '@mui/material/CircularProgress'
 import WithEmptyState from '../@core/components/app-empty-state/with-empty-state'
-import useMediaQuery from '@mui/material/useMediaQuery'
 import QrCodeDialog from '../views/main/QrCodeDialog'
+import CircularProgress from '@mui/material/CircularProgress'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { ROLES } from 'src/utils/constants/roles'
+import AppDateRangePicker from '../@core/components/react-date-range/app-date-range-picker'
+import { useTheme } from '@mui/material/styles'
 
 const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
+const today = new Date().toISOString()
+const date = new Date()
+date.setDate(date.getDate() - 7)
+const sevenDaysBefore = date.toISOString()
 
 const MainPage = () => {
+  const theme = useTheme()
   const isMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
   const [qrCodeOpen, setQrCodeOpen] = useState(false)
-  const [startDate, setStartDate] = useState(new Date().toISOString())
-  const [endDate, setEndDate] = useState(new Date().toISOString())
-  const [tab, setTab] = useState('1')
+  const [startDate, setStartDate] = useState(sevenDaysBefore)
+  const [endDate, setEndDate] = useState(today)
 
-  const { data: statistics = {}, isLoading } = useGetStatistics({ startDate, endDate })
-
-  useEffect(() => {
-    if (tab === '1') {
-      const today = new Date().toISOString()
-      setStartDate(today)
-      setEndDate(today)
-    } else if (tab === '2') {
-      const date = new Date()
-      date.setDate(date.getDate() - 7)
-      const today = new Date().toISOString()
-      setStartDate(date.toISOString())
-      setEndDate(today)
-    } else {
-      const date = new Date()
-      date.setMonth(date.getMonth() - 1)
-      const today = new Date().toISOString()
-      setStartDate(date.toISOString())
-      setEndDate(today)
+  const dateRange = useMemo(() => {
+    return {
+      startDate,
+      endDate
     }
-  }, [tab])
+  }, [startDate, endDate])
 
-  const barChartStatistics = useMemo(() => {
-    const labels = Object.entries(statistics)
-      .reverse()
-      .reduce((acc, [key]) => {
-        return [...acc, key.split('-').reverse().join('-')]
-      }, [])
+  const { data: statisticsToday = {}, isLoading } = useGetStatistics({
+    startDate: today,
+    endDate: today
+  })
 
-    const values = Object.entries(statistics)
-      .reverse()
-      .reduce((acc, [_, val]) => {
-        return [...acc, val?.totalPrice || 0]
-      }, [])
+  const { data: statisticsData = {}, isLoading: isLoadingData } = useGetStatistics({
+    startDate,
+    endDate
+  })
+
+  const handleRangeChange = useCallback(({ startDate, endDate }) => {
+    setStartDate(new Date(startDate).toISOString())
+    setEndDate(new Date(endDate).toISOString())
+  }, [])
+
+  const totalPrice = useMemo(() => {
+    return Object.entries(statisticsData).reduce((acc, [_, val]) => {
+      return acc + val?.totalCompletedOrdersPrice || 0
+    }, 0)
+  }, [statisticsData])
+
+  const lineChartStatistics = useMemo(() => {
+    const labels = Object.entries(statisticsData).reduce((acc, [key]) => {
+      return [...acc, key.split('-').reverse().join('-')]
+    }, [])
+
+    const values = Object.entries(statisticsData).reduce((acc, [_, val]) => {
+      return [...acc, val?.totalCompletedOrdersPrice || 0]
+    }, [])
 
     return {
       options: {
         chart: {
-          id: 'bar-chart-statistics'
+          id: 'line-chart-statistics'
         },
         xaxis: {
-          categories: labels
+          categories: labels,
+          labels: {
+            rotateAlways: true
+          }
         },
         yaxis: {
           labels: {
@@ -99,129 +107,35 @@ const MainPage = () => {
       },
       series: [
         {
-          name: 'Jami buyurtmalar narxi',
+          name: 'Jami',
           data: values
         }
       ]
     }
-  }, [statistics])
-
-  const stackedBarChartStatistics = useMemo(() => {
-    const labels = Object.entries(statistics)
-      .reverse()
-      .reduce((acc, [key]) => {
-        return [...acc, key.split('-').reverse().join('-')]
-      }, [])
-
-    const totalNewOrdersAll = []
-    const totalPendingOrdersAll = []
-    const totalCompletedOrdersAll = []
-    const totalRejectedOrdersAll = []
-    const totalDeletedOrdersAll = []
-
-    Object.entries(statistics)
-      .reverse()
-      .forEach(
-        ([
-          key,
-          { totalNewOrders, totalPendingOrders, totalCompletedOrders, totalRejectedOrders, totalDeletedOrders }
-        ]) => {
-          totalNewOrdersAll.push(totalNewOrders)
-          totalPendingOrdersAll.push(totalPendingOrders)
-          totalCompletedOrdersAll.push(totalCompletedOrders)
-          totalRejectedOrdersAll.push(totalRejectedOrders)
-          totalDeletedOrdersAll.push(totalDeletedOrders)
-        }
-      )
-
-    return {
-      series: [
-        {
-          name: 'Yangi buyurtmalar',
-          data: totalNewOrdersAll
-        },
-        {
-          name: "Bajaruvda bo'lgan buyurtmalar",
-          data: totalPendingOrdersAll
-        },
-        {
-          name: "Tayyor bo'lgan buyurtmalar",
-          data: totalCompletedOrdersAll
-        },
-        {
-          name: 'Rad etilgan buyurtmalar',
-          data: totalRejectedOrdersAll
-        },
-        {
-          name: "O'chirib yuborilgan buyurtmalar",
-          data: totalDeletedOrdersAll
-        }
-      ],
-      chart: {
-        type: 'bar',
-        stacked: true,
-        stackType: '100%'
-      },
-      plotOptions: {
-        bar: {
-          horizontal: true,
-          dataLabels: {
-            total: {
-              enabled: true,
-              offsetX: 0,
-              style: {
-                fontSize: '13px',
-                fontWeight: 900
-              }
-            }
-          }
-        }
-      },
-      stroke: {
-        width: 1,
-        colors: ['#fff']
-      },
-      xaxis: {
-        categories: labels
-      },
-      yaxis: {
-        title: {
-          text: undefined
-        }
-      },
-      fill: {
-        opacity: 1
-      },
-      legend: {
-        position: 'top',
-        horizontalAlign: 'left',
-        offsetX: 40
-      }
-    }
-  }, [statistics])
+  }, [statisticsData])
 
   const pieChartStatistics = useMemo(() => {
-    const totalNewOrdersPrices = Object.entries(statistics).reduce(
+    const totalNewOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalNewOrdersPrice }]) => acc + totalNewOrdersPrice,
       0
     )
 
-    const totalPendingOrdersPrices = Object.entries(statistics).reduce(
+    const totalPendingOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalPendingOrdersPrice }]) => acc + totalPendingOrdersPrice,
       0
     )
 
-    const totalCompletedOrdersPrices = Object.entries(statistics).reduce(
+    const totalCompletedOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalCompletedOrdersPrice }]) => acc + totalCompletedOrdersPrice,
       0
     )
 
-    const totalRejectedOrdersPrices = Object.entries(statistics).reduce(
+    const totalRejectedOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalRejectedOrdersPrice }]) => acc + totalRejectedOrdersPrice,
       0
     )
 
-    const totalDeletedOrdersPrices = Object.entries(statistics).reduce(
+    const totalDeletedOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalDeletedOrdersPrice }]) => acc + totalDeletedOrdersPrice,
       0
     )
@@ -259,52 +173,55 @@ const MainPage = () => {
         }
       ]
     }
-  }, [statistics])
+  }, [statisticsToday])
 
   const allStatistics = useMemo(() => {
-    const totalNewOrdersPrices = Object.entries(statistics).reduce(
+    const totalNewOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalNewOrdersPrice }]) => acc + totalNewOrdersPrice,
       0
     )
 
-    const totalPendingOrdersPrices = Object.entries(statistics).reduce(
+    const totalPendingOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalPendingOrdersPrice }]) => acc + totalPendingOrdersPrice,
       0
     )
 
-    const totalCompletedOrdersPrices = Object.entries(statistics).reduce(
+    const totalCompletedOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalCompletedOrdersPrice }]) => acc + totalCompletedOrdersPrice,
       0
     )
 
-    const totalRejectedOrdersPrices = Object.entries(statistics).reduce(
+    const totalRejectedOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalRejectedOrdersPrice }]) => acc + totalRejectedOrdersPrice,
       0
     )
 
-    const totalDeletedOrdersPrices = Object.entries(statistics).reduce(
+    const totalDeletedOrdersPrices = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalDeletedOrdersPrice }]) => acc + totalDeletedOrdersPrice,
       0
     )
 
-    const totalNewOrders = Object.entries(statistics).reduce((acc, [_, { totalNewOrders }]) => acc + totalNewOrders, 0)
+    const totalNewOrders = Object.entries(statisticsToday).reduce(
+      (acc, [_, { totalNewOrders }]) => acc + totalNewOrders,
+      0
+    )
 
-    const totalPendingOrders = Object.entries(statistics).reduce(
+    const totalPendingOrders = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalPendingOrders }]) => acc + totalPendingOrders,
       0
     )
 
-    const totalCompletedOrders = Object.entries(statistics).reduce(
+    const totalCompletedOrders = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalCompletedOrders }]) => acc + totalCompletedOrders,
       0
     )
 
-    const totalRejectedOrders = Object.entries(statistics).reduce(
+    const totalRejectedOrders = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalRejectedOrders }]) => acc + totalRejectedOrders,
       0
     )
 
-    const totalDeletedOrders = Object.entries(statistics).reduce(
+    const totalDeletedOrders = Object.entries(statisticsToday).reduce(
       (acc, [_, { totalDeletedOrders }]) => acc + totalDeletedOrders,
       0
     )
@@ -321,58 +238,76 @@ const MainPage = () => {
       totalDeletedOrders,
       totalDeletedOrdersPrices
     }
-  }, [statistics])
+  }, [statisticsToday])
 
   return (
     <>
       <Box
         sx={{ display: 'flex', justifyContent: isMedium ? 'center' : 'space-between', flexWrap: 'wrap', mb: 4, gap: 4 }}
       >
-        <TabContext value={tab}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-            <TabList aria-label='lab API tabs example' onChange={(e, tabValue) => setTab(tabValue)}>
-              <Tab label='1 kunlik' value='1' />
-              <Tab label='7 kunlik' value='2' />
-              <Tab label='1 oylik' value='3' />
-            </TabList>
-          </Box>
-        </TabContext>
-        <Button
-          fullWidth={isMedium}
-          size='small'
-          color='primary'
-          variant='contained'
-          onClick={() => setQrCodeOpen(true)}
+        <Box sx={{ backgroundColor: 'common.white', height: '40px', width: isMedium ? '100%' : 'unset' }}>
+          <AppDateRangePicker value={dateRange} onChange={handleRangeChange} />
+        </Box>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+            flexWrap: 'wrap',
+            width: isMedium ? '100%' : 'unset'
+          }}
         >
-          <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
-            QR code
-          </Typography>
-          <Qrcode fontSize='small' color='white' />
-        </Button>
+          <div
+            style={{
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              border: '1px solid rgba(138, 141, 147, 0.5)',
+              width: isMedium ? '100%' : 'unset',
+              height: '40px',
+              backgroundColor: theme.palette.common.white
+            }}
+          >
+            <div
+              style={{
+                padding: '9px',
+                borderRadius: '12px 0 0 12px',
+                flex: 1,
+                borderRight: '1px solid rgba(138, 141, 147, 0.5)',
+                color: theme.palette.common.black,
+                fontWeight: 600
+              }}
+            >
+              Jami:
+            </div>
+            <div style={{ padding: '9px', borderRadius: '0 12px 12px 0', color: theme.palette.primary.contrastText }}>
+              {formatNumber(totalPrice)}
+            </div>
+          </div>
+          <Button
+            sx={{ height: '40px' }}
+            fullWidth={isMedium}
+            size='small'
+            color='primary'
+            variant='contained'
+            onClick={() => setQrCodeOpen(true)}
+          >
+            <Typography component='span' color='white' variant='subtitle2' sx={{ mr: 1 }}>
+              QR code
+            </Typography>
+            <Qrcode fontSize='small' color='white' />
+          </Button>
+        </Box>
       </Box>
       <Grid container spacing={4}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12}>
           <Card sx={{ p: 4 }}>
-            <CardHeader title='Jami buyurtmalar narxi' />
-            {!isLoading && (
+            <CardHeader title="Jami to'langan buyurtmalar narxi" />
+            {!isLoadingData && (
               <ApexChart
-                options={barChartStatistics.options}
-                series={barChartStatistics.series}
-                type='bar'
-                height='400px'
-                width='100%'
-              />
-            )}
-          </Card>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <Card sx={{ p: 4 }}>
-            <CardHeader title='Jami buyurtmalar soni' />
-            {!isLoading && (
-              <ApexChart
-                options={stackedBarChartStatistics}
-                series={stackedBarChartStatistics.series}
-                type='bar'
+                options={lineChartStatistics.options}
+                series={lineChartStatistics.series}
+                type='line'
                 height='400px'
                 width='100%'
               />
@@ -381,7 +316,7 @@ const MainPage = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Card sx={{ p: 4, height: '100%' }}>
-            <CardHeader title="Jami buyurtmalar narxi kategoriya bo'yicha" />
+            <CardHeader title="Jami buyurtmalar narxi kategoriya bo'yicha (bugungi)" />
             {!isLoading && (
               <ApexChart
                 options={pieChartStatistics}
@@ -395,7 +330,7 @@ const MainPage = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Card sx={{ p: 4, height: '100%' }}>
-            <CardHeader title='Jami buyurtmalar' />
+            <CardHeader title='Jami buyurtmalar (bugungi)' />
             {!isLoading && (
               <TableContainer component={Paper} sx={{ position: 'relative' }}>
                 <Backdrop

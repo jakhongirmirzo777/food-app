@@ -10,6 +10,7 @@
       left: 0;
       top: 0;
       width: 100%;
+      min-height: 176px;
       height: 176px;
       border-radius: 26px;
       background: #252525;
@@ -17,12 +18,17 @@
     }
 
     img {
+      min-height: 176px;
       height: 176px;
       width: 100%;
       background-size: cover;
       object-fit: cover;
       background-position: center;
       border-radius: 26px;
+
+      &.isLoading {
+        background-image: url('/default.jpg');
+      }
     }
 
     h1 {
