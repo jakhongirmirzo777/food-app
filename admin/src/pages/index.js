@@ -25,11 +25,14 @@ import CircularProgress from '@mui/material/CircularProgress'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { ROLES } from 'src/utils/constants/roles'
-import AppDateRangePicker from '../@core/components/react-date-range/app-date-range-picker'
 import { useTheme } from '@mui/material/styles'
+import { startOfToday, endOfToday } from 'date-fns'
+
+const AppDateRangePicker = dynamic(() => import('src/@core/components/react-date-range/app-date-range-picker'), {
+  ssr: false
+})
 
 const ApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
-const today = new Date().toISOString()
 const date = new Date()
 date.setDate(date.getDate() - 7)
 const sevenDaysBefore = date.toISOString()
@@ -40,7 +43,7 @@ const MainPage = () => {
 
   const [qrCodeOpen, setQrCodeOpen] = useState(false)
   const [startDate, setStartDate] = useState(sevenDaysBefore)
-  const [endDate, setEndDate] = useState(today)
+  const [endDate, setEndDate] = useState(endOfToday().toISOString())
 
   const dateRange = useMemo(() => {
     return {
@@ -50,8 +53,8 @@ const MainPage = () => {
   }, [startDate, endDate])
 
   const { data: statisticsToday = {}, isLoading } = useGetStatistics({
-    startDate: today,
-    endDate: today
+    startDate: startOfToday().toISOString(),
+    endDate: endOfToday().toISOString()
   })
 
   const { data: statisticsData = {}, isLoading: isLoadingData } = useGetStatistics({
