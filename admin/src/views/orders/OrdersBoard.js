@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 import { Box } from '@mui/material'
 import LinearProgress from '@mui/material/LinearProgress'
@@ -9,6 +9,7 @@ import ReactSortableWrapperStyled from 'src/@core/styles/libs/react-sortable'
 import { useGetOrders, useUpdateOrderStatus } from 'src/api/hooks/orders'
 
 import { ORDER_STATUSES } from 'src/utils/constants/orders'
+import { useSnackbar } from '../../@core/context/snackbarContext'
 
 const boardColumnStyles = {
   px: 2,
@@ -23,7 +24,11 @@ const boardColumnStyles = {
   }
 }
 
+const LAST_ORDER_TIME_KEY = 'lastOrderTime'
+
 const OrdersBoard = ({ dateRange, searchQuery }) => {
+  const { setSnackbar } = useSnackbar()
+
   const [orders, setOrders] = useState({
     [ORDER_STATUSES.NEW]: [],
     [ORDER_STATUSES.PENDING]: [],
@@ -32,6 +37,33 @@ const OrdersBoard = ({ dateRange, searchQuery }) => {
   })
 
   const { data, isLoading, isFetching } = useGetOrders({ ...dateRange, search: searchQuery })
+
+  const playNotification = useCallback(() => {
+    const audio = new Audio('/notification.wav')
+    audio.play()
+    setSnackbar({ children: 'Yangi buyurtma qabul qilindi', severity: 'success' })
+  }, [])
+
+  useEffect(() => {
+    const lastOrderTime = localStorage.getItem(LAST_ORDER_TIME_KEY)
+    if (lastOrderTime) {
+      let latestOrderTime = new Date(lastOrderTime).toISOString()
+      const lastTime = new Date(lastOrderTime).toISOString()
+      orders.NEW.forEach(order => {
+        const newOrderTime = new Date(order.createdAt).toISOString()
+        if (lastTime < newOrderTime) {
+          playNotification()
+        }
+        if (latestOrderTime < newOrderTime) {
+          latestOrderTime = newOrderTime
+        }
+      })
+      localStorage.setItem(LAST_ORDER_TIME_KEY, latestOrderTime)
+    } else {
+      const now = new Date().toISOString()
+      localStorage.setItem(LAST_ORDER_TIME_KEY, now)
+    }
+  }, [orders.NEW, playNotification])
 
   useEffect(() => {
     const filterByStatus = status => data?.filter(order => order.status === status) ?? []
